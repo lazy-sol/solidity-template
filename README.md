@@ -16,7 +16,7 @@ It is Hardhat/Web3/Truffle based and includes the following components preinstal
 
 Note: search for "awesome" and replace with your own project name
 
-# Yet Another Awesome Project#
+# Yet Another Awesome Project #
 
 The project is built using
 * [Hardhat](https://hardhat.org/), a popular Ethereum development environment,
