@@ -47,7 +47,8 @@ pragma solidity 0.8.7;
  *
  * @author Basil Gorin
  */
-contract AccessControl {
+// TODO: add version history: 2018-2021
+abstract contract AccessControl {
 	/**
 	 * @notice Access manager is responsible for assigning the roles to users,
 	 *      enabling/disabling global features of the smart contract
@@ -92,6 +93,7 @@ contract AccessControl {
 	 * @notice Creates an access control instance,
 	 *      setting contract creator to have full privileges
 	 */
+	// TODO: parametrize initial super admin address (msg.sender)
 	constructor() {
 		// contract creator has full privileges
 		userRoles[msg.sender] = FULL_PRIVILEGES_MASK;
