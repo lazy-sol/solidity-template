@@ -22,11 +22,11 @@ function random_int(from, to) {
 }
 
 // picks random element from the array
-function random_element(array) {
+function random_element(array, flat = true) {
 	assert(array.length, "empty array");
 	const i = random_int(0, array.length);
 	const e = array[i];
-	return {e, i};
+	return flat? e: {e, i};
 }
 
 // user-friendly number printer
