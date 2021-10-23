@@ -42,29 +42,29 @@ Following steps were tested to work in macOS Catalina
     ```cd solidity-template```
 3. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) – latest  
     ```brew install nvm```
-4. Install [Node package manager (npm)](https://www.npmjs.com/) and [Node.js](https://nodejs.org/) – version 15.1.0  
-    ```nvm install v15.1.0```
+4. Install [Node package manager (npm)](https://www.npmjs.com/) and [Node.js](https://nodejs.org/) – version 16.4.0  
+    ```nvm install v16.4.0```
 5. Activate node version installed  
-    ```nvm use v15.1.0```
+    ```nvm use v16.4.0```
 6. Install project dependencies  
     ```npm install```
 
 ### Troubleshooting ###
-* After executing ```nvm use v15.1.0``` I get  
+* After executing ```nvm use v16.4.0``` I get  
     ```
-    nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.35.3/versions/node/v15.1.0"
-    Run `npm config delete prefix` or `nvm use --delete-prefix v15.1.0` to unset it.
+    nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
+    Run `npm config delete prefix` or `nvm use --delete-prefix v16.4.0` to unset it.
     ```
     Fix:  
     ```
-    nvm use --delete-prefix v15.1.0
+    nvm use --delete-prefix v16.4.0
     npm config delete prefix
-    npm config set prefix "/usr/local/Cellar/nvm/0.35.3/versions/node/v15.1.0"
+    npm config set prefix "/usr/local/Cellar/nvm/0.35.3/versions/node/v16.4.0"
     ```
 * After executing ```npm install``` I get
     ```
     npm ERR! code 127
-    npm ERR! path ./game-contracts/node_modules/utf-8-validate
+    npm ERR! path ./solidity-template/node_modules/utf-8-validate
     npm ERR! command failed
     npm ERR! command sh -c node-gyp-build
     npm ERR! sh: node-gyp-build: command not found
