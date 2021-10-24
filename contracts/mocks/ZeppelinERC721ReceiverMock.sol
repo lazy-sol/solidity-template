@@ -3,6 +3,14 @@ pragma solidity 0.8.7;
 
 import "../interfaces/ERC721Spec.sol";
 
+/**
+ * @title Zeppelin ERC721 Receiver Mock
+ *
+ * @notice Zeppelin ERC721 Receiver Mock simulates an ERC721 receiver interface,
+ *      used for testing purposes - to send ERC721 safely;
+ *
+ * @author Basil Gorin
+ */
 contract ZeppelinERC721ReceiverMock is ERC721TokenReceiver {
 	enum Error {
 		None,
