@@ -1,5 +1,4 @@
 // Auxiliary BN stuff
-const {web3} = require("hardhat");
 const BN = web3.utils.BN;
 const TEN = new BN(10);
 

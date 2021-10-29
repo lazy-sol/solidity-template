@@ -1,6 +1,5 @@
 // Both Truffle anf Hardhat with Truffle make an instance of web3 available in the global scope
 // BN constants, functions to work with BN
-const {web3} = require("hardhat");
 const BN = web3.utils.BN;
 const toBN = web3.utils.toBN;
 const isBN = web3.utils.isBN;
