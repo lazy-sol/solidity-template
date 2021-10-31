@@ -69,6 +69,7 @@ function draw_amounts(amounts) {
 	let s = "[";
 	let remainder = new BN(0);
 	for(let amount of amounts) {
+		amount = new BN(amount);
 		const skip = amount.add(remainder).muln(100).div(total_amount);
 		remainder = amount.add(remainder).sub(skip.mul(total_amount).divn(100));
 		if(!skip.isZero()) {
@@ -122,8 +123,12 @@ function print_symbol(amt, max = amt) {
 	return "^";
 }
 // prints values one by one, placing " ", ".", "+", "*", or "!" instead of the values
-function print_symbols(arr, arr_max = new Array(arr.length).fill(arr.reduce((a, v) => a.gte(v)? a: v, new BN(0)))) {
-	return arr.map((r, i) => print_symbol(r, arr_max[i])).join("");
+// prints values one by one, placing " ", ".", "+", "*", or "!" instead of the values
+function print_symbols(
+	arr,
+	arr_max = arr.reduce((a, v) => a.gte(new BN(v))? a: new BN(v), new BN(0))
+) {
+	return arr.map((r, i) => print_symbol(r, arr_max[i] || arr_max)).join("");
 }
 
 // export the constants

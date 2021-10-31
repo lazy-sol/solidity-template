@@ -12,7 +12,7 @@ function date_to_unix(date) {
 
 // sums up an array of numbers, returns Number (or whatever inputs are)
 function sum_n(array) {
-	return array.reduce((accumulator, currentVal) => accumulator + currentVal, new BN(0));
+	return array.reduce((accumulator, currentVal) => accumulator + currentVal, 0);
 }
 
 // generates random integer in [from, to) range
