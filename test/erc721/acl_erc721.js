@@ -17,9 +17,6 @@ const {
 	MAX_UINT256,
 } = constants;
 
-// BN constants and utilities
-const {random_bn255} = require("../include/bn_utils");
-
 // ACL token features and roles
 const {
 	not,
