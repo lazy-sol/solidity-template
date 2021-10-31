@@ -10,6 +10,4 @@ import "../utils/AccessControl.sol";
  *
  * @author Basil Gorin
  */
-contract AccessControlMock is AccessControl {
-
-}
+contract AccessControlMock is AccessControl {}
