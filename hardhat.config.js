@@ -48,7 +48,8 @@ module.exports = {
 	networks: {
 		// https://hardhat.org/hardhat-network/
 		hardhat: {
-			// TODO: set networkId to 0xeeeb04de as for all local networks
+			// set networkId to 0xeeeb04de as for all local networks
+			chainId: 0xeeeb04de,
 			// set the gas price to one for convenient tx costs calculations in tests
 			//gasPrice: 1,
 			accounts: {
