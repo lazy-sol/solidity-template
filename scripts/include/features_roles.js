@@ -35,7 +35,10 @@ const ROLE_TOKEN_CREATOR = BigNumber.from(0x0001_0000);
 const ROLE_TOKEN_DESTROYER = BigNumber.from(0x0002_0000);
 
 // [ERC721] URI manager is responsible for managing base URI part of the token URI ERC721Metadata interface
-const ROLE_URI_MANAGER = BigNumber.from(0x0010_0000);
+const ROLE_URI_MANAGER = BigNumber.from(0x0004_0000);
+
+// [ERC20/ERC721] Rescue manager is responsible for "rescuing" ERC20 tokens
+const ROLE_RESCUE_MANAGER = BigNumber.from(0x0008_0000);
 
 // End: ===== ERC20/ERC721 =====
 
@@ -51,4 +54,5 @@ module.exports = {
 	ROLE_TOKEN_CREATOR,
 	ROLE_TOKEN_DESTROYER,
 	ROLE_URI_MANAGER,
+	ROLE_RESCUE_MANAGER,
 };

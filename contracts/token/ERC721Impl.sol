@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
+import "../interfaces/ERC20Spec.sol";
 import "../interfaces/ERC721SpecExt.sol";
 import "../utils/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -88,7 +89,20 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	 * @dev Role ROLE_URI_MANAGER allows updating the base URI
 	 *      (executing `setBaseURI` function)
 	 */
-	uint32 public constant ROLE_URI_MANAGER = 0x0010_0000;
+	uint32 public constant ROLE_URI_MANAGER = 0x0004_0000;
+
+	/**
+	 * @notice People do mistake and may send ERC20 tokens by mistake; since
+	 *      NFT smart contract is not designed to accept and hold any ERC20 tokens,
+	 *      it allows the rescue manager to "rescue" such lost tokens
+	 *
+	 * @notice Rescue manager is responsible for "rescuing" ERC20 tokens accidentally
+	 *      sent to the smart contract
+	 *
+	 * @dev Role ROLE_RESCUE_MANAGER allows withdrawing any ERC20 tokens stored
+	 *      on the smart contract balance
+	 */
+	uint32 public constant ROLE_RESCUE_MANAGER = 0x0008_0000;
 
 	/**
 	 * @dev Fired in setBaseURI()
@@ -320,5 +334,25 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 
 		// delegate to ERC721Enumerable impl
 		ERC721Enumerable._beforeTokenTransfer(_from, _to, _tokenId);
+	}
+
+	/**
+	 * @dev Restricted access function to rescue accidentally sent ERC20 tokens,
+	 *      the tokens are rescued via `transfer` function call on the
+	 *      contract address specified and with the parameters specified:
+	 *      `_contract.transfer(_to, _value)`
+	 *
+	 * @dev Requires executor to have `ROLE_RESCUE_MANAGER` permission
+	 *
+	 * @param _contract smart contract address to execute `transfer` function on
+	 * @param _to to address in `transfer(_to, _value)`
+	 * @param _value value to transfer in `transfer(_to, _value)`
+	 */
+	function rescueTokens(address _contract, address _to, uint256 _value) public {
+		// verify the access permission
+		require(isSenderInRole(ROLE_RESCUE_MANAGER), "access denied");
+
+		// perform the transfer as requested, without any checks
+		ERC20(_contract).transfer(_to, _value);
 	}
 }
