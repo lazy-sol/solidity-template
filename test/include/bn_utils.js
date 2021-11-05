@@ -22,17 +22,17 @@ function random_bn255() {
 	return new BN(randomBytes(32)).divn(2);
 }
 
-// generates random BN in a [from, from + range) range: r ∈ [from, from + range)
-function random_bn(from, range) {
+// generates random BN in a [from, to) range: r ∈ [from, to)
+function random_bn(from, to) {
 	// convert inputs to BNs if they are not BNs
 	from = new BN(from);
-	range = new BN(range);
+	to = new BN(to);
 
 	// generate 256 bits of randomness, a random number R ∈ [0, 2^256)
 	const rnd256 = new BN(randomBytes(32));
 
 	// map the random number in a [0, 2^256) space onto [from, from + range) space:
-	return from.add(range.mul(rnd256).div(TWO256)); // r = R * range / 2^256 + from
+	return from.add(to.sub(from).mul(rnd256).div(TWO256)); // r = R * range / 2^256 + from
 }
 
 // sums up an array of BNs, returns BN

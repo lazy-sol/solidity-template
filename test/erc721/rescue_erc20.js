@@ -17,10 +17,10 @@ const {
 	MAX_UINT256,
 } = constants;
 
-// number utils
+// BN utils
 const {
-	random_int,
-} = require("../include/number_utils");
+	random_bn,
+} = require("../include/bn_utils");
 
 // deployment routines in use
 const {
@@ -47,8 +47,7 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 	});
 
 	describe("once ERC20 tokens are lost in the ERC721 contract", function() {
-		const value = random_int(2, 1_000_000_000);
-		const rescue_value = random_int(1, value);
+		const value = random_bn(2, 1_000_000_000);
 		let receipt;
 		beforeEach(async function() {
 			receipt = await erc20.transfer(erc721.address, value, {from: H0});
@@ -57,11 +56,11 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 			expectEvent(receipt, "Transfer", {
 				from: H0,
 				to: erc721.address,
-				value: value + "",
+				value: value,
 			});
 		});
 		it("ERC721 contract balance increases as expected", async function() {
-			expect(await erc20.balanceOf(erc721.address)).to.be.bignumber.that.equals(value + "");
+			expect(await erc20.balanceOf(erc721.address)).to.be.bignumber.that.equals(value);
 		});
 
 		function rescue(total_value, rescue_value = total_value) {
@@ -90,12 +89,12 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 			rescue(value);
 		});
 		describe("can rescue some tokens", function() {
-			rescue(value, rescue_value);
+			rescue(value, value.subn(1));
 		});
 
 		it("cannot rescue more than all the tokens", async function() {
 			await expectRevert(
-				erc721.rescueTokens(erc20.address, a1, value + 1, {from: a0}),
+				erc721.rescueTokens(erc20.address, a1, value.addn(1), {from: a0}),
 				"ERC20: transfer amount exceeds balance"
 			);
 		});
