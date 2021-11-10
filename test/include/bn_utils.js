@@ -22,6 +22,21 @@ function random_bn255() {
 	return new BN(randomBytes(32)).divn(2);
 }
 
+// generates random BN of length `bits`
+function random_bits(bits) {
+	return new BN(randomBytes(bits / 8 /* convert bits to bytes */).toString('hex'), 16);
+}
+
+// generates random Ethereum address
+function random_address() {
+	return web3.eth.accounts.create().address;
+}
+
+// generates cryptographically strong pseudo-random HEX strings from a given byte size
+function random_hex(size = 32) {
+	return web3.utils.randomHex(size);
+}
+
 // generates random BN in a [from, to) range: r ∈ [from, to)
 function random_bn(from, to) {
 	// convert inputs to BNs if they are not BNs
@@ -139,6 +154,9 @@ module.exports = {
 	TWO256,
 	random_bn256,
 	random_bn255,
+	random_bits,
+	random_address,
+	random_hex,
 	random_bn,
 	sum_bn,
 	print_amt,
