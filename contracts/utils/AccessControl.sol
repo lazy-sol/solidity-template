@@ -5,15 +5,15 @@ pragma solidity 0.8.7;
  * @title Access Control List
  *
  * @notice Access control smart contract provides an API to check
- *      if specific operation is permitted globally and/or
- *      if particular user has a permission to execute it.
+ *      if a specific operation is permitted globally and/or
+ *      if a particular user has a permission to execute it.
  *
  * @notice It deals with two main entities: features and roles.
  *
- * @notice Features are designed to be used to enable/disable specific
- *      functions (public functions) of the smart contract for everyone.
- * @notice User roles are designed to restrict access to specific
- *      functions (restricted functions) of the smart contract to some users.
+ * @notice Features are designed to be used to enable/disable public functions
+ *      of the smart contract (used by a wide audience).
+ * @notice User roles are designed to control the access to restricted functions
+ *      of the smart contract (used by a limited set of maintainers).
  *
  * @notice Terms "role", "permissions" and "set of permissions" have equal meaning
  *      in the documentation text and may be used interchangeably.
