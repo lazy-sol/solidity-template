@@ -154,7 +154,9 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 	 */
 	function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, ERC721EnumerableUpgradeable) returns (bool) {
 		// calculate based on own and inherited interfaces
-		return ERC721EnumerableUpgradeable.supportsInterface(interfaceId);
+		return ERC721EnumerableUpgradeable.supportsInterface(interfaceId)
+			|| interfaceId == type(MintableERC721).interfaceId
+			|| interfaceId == type(BurnableERC721).interfaceId;
 	}
 
 	/**
