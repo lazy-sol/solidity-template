@@ -292,7 +292,7 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 						await token.updateRole(from, ROLE_RESCUE_MANAGER, {from: a0});
 					});
 					it("sender can rescue ERC20 tokens", async function() {
-						await token.rescueTokens(erc20Contract.address, H0, 1, {from});
+						await token.rescueErc20(erc20Contract.address, H0, 1, {from});
 					});
 				});
 				describe("when sender doesn't have ROLE_RESCUE_MANAGER permission", function() {
@@ -300,7 +300,7 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 						await token.updateRole(from, not(ROLE_RESCUE_MANAGER), {from: a0});
 					});
 					it("sender can't rescue ERC20 tokens", async function() {
-						await expectRevert(token.rescueTokens(erc20Contract.address, H0, 1, {from}), "access denied");
+						await expectRevert(token.rescueErc20(erc20Contract.address, H0, 1, {from}), "access denied");
 					});
 				});
 			}
