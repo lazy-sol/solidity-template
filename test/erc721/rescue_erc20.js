@@ -68,7 +68,7 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 			rescue_value = new BN(rescue_value);
 			let receipt;
 			beforeEach(async function() {
-				receipt = await erc721.rescueTokens(erc20.address, a1, rescue_value, {from: a0});
+				receipt = await erc721.rescueErc20(erc20.address, a1, rescue_value, {from: a0});
 			});
 			it('ERC20 "Transfer" event is emitted', async function() {
 				await expectEvent.inTransaction(receipt.tx, erc20, "Transfer", {
@@ -94,7 +94,7 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 
 		it("cannot rescue more than all the tokens", async function() {
 			await expectRevert(
-				erc721.rescueTokens(erc20.address, a1, value.addn(1), {from: a0}),
+				erc721.rescueErc20(erc20.address, a1, value.addn(1), {from: a0}),
 				"ERC20: transfer amount exceeds balance"
 			);
 		});
