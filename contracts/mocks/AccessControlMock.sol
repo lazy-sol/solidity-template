@@ -10,4 +10,7 @@ import "../utils/AccessControl.sol";
  *
  * @author Basil Gorin
  */
-contract AccessControlMock is AccessControl {}
+contract AccessControlMock is AccessControl {
+	// set contract owner to the deployer address
+	constructor() AccessControl(msg.sender) {}
+}

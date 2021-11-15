@@ -70,7 +70,7 @@ abstract contract ERC20Impl is IERC165, ERC20, AccessControl {
 	 * @param _name token name
 	 * @param _symbol token symbol
 	 */
-	constructor(string memory _name, string memory _symbol) ERC20(_name, _symbol) {}
+	constructor(string memory _name, string memory _symbol) ERC20(_name, _symbol) AccessControl(msg.sender) {}
 
 	/**
 	 * @inheritdoc IERC165

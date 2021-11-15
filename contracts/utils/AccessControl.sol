@@ -90,13 +90,13 @@ abstract contract AccessControl {
 	event RoleUpdated(address indexed _by, address indexed _to, uint256 _requested, uint256 _actual);
 
 	/**
-	 * @notice Creates an access control instance,
-	 *      setting contract creator to have full privileges
+	 * @notice Creates an access control instance,  setting the contract owner to have full privileges
+	 *
+	 * @param _owner smart contract owner having full privileges
 	 */
-	// TODO: parametrize initial super admin address (msg.sender)
-	constructor() {
+	constructor(address _owner) {
 		// contract creator has full privileges
-		userRoles[msg.sender] = FULL_PRIVILEGES_MASK;
+		userRoles[_owner] = FULL_PRIVILEGES_MASK;
 	}
 
 	/**
