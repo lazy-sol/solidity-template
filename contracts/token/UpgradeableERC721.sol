@@ -368,7 +368,7 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 	 * @param _to to address in `transfer(_to, _value)`
 	 * @param _value value to transfer in `transfer(_to, _value)`
 	 */
-	function rescueTokens(address _contract, address _to, uint256 _value) public {
+	function rescueErc20(address _contract, address _to, uint256 _value) public {
 		// verify the access permission
 		require(isSenderInRole(ROLE_RESCUE_MANAGER), "access denied");
 
