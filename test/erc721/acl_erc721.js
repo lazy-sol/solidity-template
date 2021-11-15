@@ -33,6 +33,7 @@ const {
 // deployment routines in use
 const {
 	erc721_deploy_restricted,
+	upgradeable_erc721_deploy_restricted,
 } = require("./include/deployment_routines");
 const {
 	erc20_deploy,
@@ -307,4 +308,5 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 	}
 
 	acl_suite("ERC721Impl", erc721_deploy_restricted, true);
+	acl_suite("UpgradeableERC721", upgradeable_erc721_deploy_restricted, true);
 });

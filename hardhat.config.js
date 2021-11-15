@@ -17,6 +17,10 @@ require('solidity-coverage');
 // https://hardhat.org/plugins/hardhat-gas-reporter.html
 require("hardhat-gas-reporter");
 
+// enable OpenZeppelin upgrades plugin (EIP-1822/EIP-1967 proxies support)
+// https://docs.openzeppelin.com/upgrades-plugins/1.x/hardhat-upgrades
+require('@openzeppelin/hardhat-upgrades');
+
 // verify environment setup, display warning if required, replace missing values with fakes
 const FAKE_MNEMONIC = "test test test test test test test test test test test junk";
 if(!process.env.MNEMONIC1) {
@@ -51,10 +55,18 @@ module.exports = {
 			// set networkId to 0xeeeb04de as for all local networks
 			chainId: 0xeeeb04de,
 			// set the gas price to one for convenient tx costs calculations in tests
-			//gasPrice: 1,
+			gasPrice: 1,
+			// London hard fork fix: impossible to set gas price lower than baseFeePerGas (875,000,000)
+			initialBaseFeePerGas: 0,
 			accounts: {
 				count: 35,
-			}
+			},
+/*
+			forking: {
+				url: "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
+				enabled: !!(process.env.HARDHAT_FORK),
+			},
+*/
 		},
 		// https://etherscan.io/
 		mainnet: {

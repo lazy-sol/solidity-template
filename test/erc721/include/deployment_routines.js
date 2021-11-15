@@ -44,6 +44,39 @@ async function erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 }
 
 /**
+ * Deploys Upgradeable ERC721 token with no features enabled
+ *
+ * @param a0 smart contract deployer, owner, super admin
+ * @param name token name, ERC-721 compatible descriptive name
+ * @param symbol token symbol, ERC-721 compatible abbreviated name
+ * @returns UpgradeableERC721 instance
+ */
+async function upgradeable_erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
+	// smart contracts required
+	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock");
+
+	// deploy the proxy and return the reference
+	const {deployProxy, upgradeProxy} = require('@openzeppelin/truffle-upgrades');
+	return await deployProxy(ERC721Contract, [name, symbol, a0], {kind: "uups"});
+}
+
+/**
+ * Upgrades Upgradeable ERC721 token with no features enabled
+ *
+ * @param a0 smart contract deployer, owner, super admin
+ * @param instance previously deployed instance
+ * @returns UpgradeableERC721 instance
+ */
+async function upgradeable_erc721_upgrade_restricted(a0, instance) {
+	// smart contracts required
+	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock2");
+
+	// deploy the proxy and return the reference
+	const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+	return await upgradeProxy(instance.address, ERC721Contract);
+}
+
+/**
  * Deploys Zeppelin ERC721 Receiver Mock
  *
  * @param a0 deployer, smart contract deployer, owner, super admin
@@ -64,6 +97,8 @@ async function erc721_receiver_deploy(a0, retval = "0x150b7a02", error = 0) {
 module.exports = {
 	erc721_deploy,
 	erc721_deploy_restricted,
+	upgradeable_erc721_deploy_restricted,
+	upgradeable_erc721_upgrade_restricted,
 	erc721_receiver_deploy,
 	NAME,
 	SYMBOL,
