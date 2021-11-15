@@ -92,7 +92,7 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	uint32 public constant ROLE_URI_MANAGER = 0x0004_0000;
 
 	/**
-	 * @notice People do mistake and may send ERC20 tokens by mistake; since
+	 * @notice People do mistakes and may send ERC20 tokens by mistake; since
 	 *      NFT smart contract is not designed to accept and hold any ERC20 tokens,
 	 *      it allows the rescue manager to "rescue" such lost tokens
 	 *
@@ -136,7 +136,9 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	 */
 	function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
 		// calculate based on own and inherited interfaces
-		return ERC721Enumerable.supportsInterface(interfaceId);
+		return ERC721Enumerable.supportsInterface(interfaceId)
+			|| interfaceId == type(MintableERC721).interfaceId
+			|| interfaceId == type(BurnableERC721).interfaceId;
 	}
 
 	/**
