@@ -7,7 +7,6 @@ const {
 	SYMBOL,
 } = require("./erc721_constants");
 
-
 /**
  * Deploys ERC721 token with all the features enabled
  *
