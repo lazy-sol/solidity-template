@@ -129,7 +129,7 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	 * @param _name token name (ERC721Metadata)
 	 * @param _symbol token symbol (ERC721Metadata)
 	 */
-	constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
+	constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) AccessControl(msg.sender) {}
 
 	/**
 	 * @inheritdoc IERC165
