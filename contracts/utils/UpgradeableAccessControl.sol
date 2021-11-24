@@ -111,7 +111,7 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
-	function _initialize(address _owner) internal virtual initializer {
+	function _postConstruct(address _owner) internal virtual initializer {
 		// grant owner full privileges
 		userRoles[_owner] = FULL_PRIVILEGES_MASK;
 	}

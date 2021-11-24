@@ -32,9 +32,9 @@ contract UpgradeableAccessControlMock is UpgradeableAccessControl {
 	 *
 	 * param _owner smart contract owner having full privileges
 	 */
-	function initialize() public virtual initializer {
+	function postConstruct() public virtual initializer {
 		// execute parent initializer
-		_initialize(msg.sender);
+		_postConstruct(msg.sender);
 
 		// self init
 		v1 = "v1";
@@ -57,9 +57,9 @@ contract UpgradeableAccessControlMock2 is UpgradeableAccessControlMock {
 	 *
 	 * param _owner smart contract owner having full privileges
 	 */
-	function initialize() public virtual override initializer {
+	function postConstruct() public virtual override initializer {
 		// execute parent initializer
-		_initialize(msg.sender);
+		_postConstruct(msg.sender);
 
 		// self init
 		v2 = "v2";

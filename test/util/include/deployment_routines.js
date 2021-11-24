@@ -34,7 +34,7 @@ async function upgradeable_acl_mock_deploy(a0, version) {
  * @param version version number to deploy, optional
  * @returns ERC1967Proxy –> UpgradeableAccessControl instance
  */
-async function upgradeable_acl_mock_deploy_proxy(a0, version) {
+async function upgradeable_acl_mock_deploy_via_proxy(a0, version) {
 	// smart contracts required
 	const ACL = artifacts.require("./UpgradeableAccessControlMock" + (version || ""));
 	const Proxy = artifacts.require("./ERC1967Proxy");
@@ -43,7 +43,7 @@ async function upgradeable_acl_mock_deploy_proxy(a0, version) {
 	const instance = await ACL.new({from: a0});
 
 	// prepare the initialization call bytes
-	const init_data = instance.contract.methods.initialize().encodeABI();
+	const init_data = instance.contract.methods.postConstruct().encodeABI();
 
 	// deploy proxy, and initialize the impl (inline)
 	const proxy = await Proxy.new(instance.address, init_data, {from: a0});
@@ -56,5 +56,5 @@ async function upgradeable_acl_mock_deploy_proxy(a0, version) {
 module.exports = {
 	acl_mock_deploy,
 	upgradeable_acl_mock_deploy,
-	upgradeable_acl_mock_deploy_proxy,
+	upgradeable_acl_mock_deploy_via_proxy,
 }

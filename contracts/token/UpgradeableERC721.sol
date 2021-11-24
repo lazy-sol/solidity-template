@@ -131,19 +131,19 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 	event TokenURIUpdated(address indexed _by, uint256 tokenId, string oldVal, string newVal);
 
 	/**
-	 * @dev An initializer, a "constructor replacement",
+	 * @dev "Constructor replacement" for upgradeable, must be execute immediately after deployment
 	 *      see https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#initializers
 	 *
 	 * @param _name token name (ERC721Metadata)
 	 * @param _symbol token symbol (ERC721Metadata)
 	 * @param _owner smart contract owner having full privileges
 	 */
-	function _initialize(string memory _name, string memory _symbol, address _owner) internal virtual initializer {
+	function _postConstruct(string memory _name, string memory _symbol, address _owner) internal virtual initializer {
 		// execute all parent initializers in cascade
 		__ERC721_init(_name, _symbol);
 		__ERC721Enumerable_init_unchained();
 		__ERC721URIStorage_init_unchained();
-		UpgradeableAccessControl._initialize(_owner);
+		UpgradeableAccessControl._postConstruct(_owner);
 
 		// initialize self
 		baseURI = "";

@@ -37,7 +37,7 @@ const {
 // deployment routines in use
 const {
 	upgradeable_acl_mock_deploy,
-	upgradeable_acl_mock_deploy_proxy,
+	upgradeable_acl_mock_deploy_via_proxy,
 } = require("./include/deployment_routines");
 
 // run UpgradeableAccessControl (U-ACL) tests
@@ -50,9 +50,9 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 	const [A0, a0, H0, a1, a2, a3] = accounts;
 
 	// run the core ACL behaviour test
-	behavesLikeACL(upgradeable_acl_mock_deploy_proxy, a0, a1, a2);
+	behavesLikeACL(upgradeable_acl_mock_deploy_via_proxy, a0, a1, a2);
 	behavesLikeACL(async function() {
-		const acl = await upgradeable_acl_mock_deploy_proxy(a0);
+		const acl = await upgradeable_acl_mock_deploy_via_proxy(a0);
 		const v2 = await upgradeable_acl_mock_deploy(a0, 2);
 		await acl.upgradeTo(v2.address, {from: a0});
 		return acl;
@@ -65,7 +65,7 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 	// deploy the ACL
 	let acl;
 	beforeEach(async function() {
-		acl = await upgradeable_acl_mock_deploy_proxy(a0);
+		acl = await upgradeable_acl_mock_deploy_via_proxy(a0);
 	});
 
 	describe("when there is new (v2) implementation available", function() {
