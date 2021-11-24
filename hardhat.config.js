@@ -21,6 +21,10 @@ require("hardhat-gas-reporter");
 // https://docs.openzeppelin.com/upgrades-plugins/1.x/hardhat-upgrades
 require('@openzeppelin/hardhat-upgrades');
 
+// compile Solidity sources directly from NPM dependencies
+// https://github.com/ItsNickBarry/hardhat-dependency-compiler
+require('hardhat-dependency-compiler');
+
 // verify environment setup, display warning if required, replace missing values with fakes
 const FAKE_MNEMONIC = "test test test test test test test test test test test junk";
 if(!process.env.MNEMONIC1) {
@@ -135,4 +139,13 @@ module.exports = {
 	gasReporter: {
 		enabled: !!(process.env.REPORT_GAS)
 	},
+
+	// compile Solidity sources directly from NPM dependencies
+	// https://github.com/ItsNickBarry/hardhat-dependency-compiler
+	dependencyCompiler: {
+		paths: [
+			// ERC1967 is used to deploy upgradeable contracts
+			'@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol',
+		],
+	}
 }

@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 /**
- * @title Access Control List
+ * @title Upgradeable Access Control List // ERC1967Proxy
  *
  * @notice Access control smart contract provides an API to check
  *      if a specific operation is permitted globally and/or
@@ -47,6 +46,11 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
  *
  * @dev Access manager permission has a bit 255 set.
  *      This bit must not be used by inheriting contracts for any other permissions/features.
+ *
+ * @dev This is an upgradeable version of the ACL, based on Zeppelin implementation for ERC1967,
+ *      see https://docs.openzeppelin.com/contracts/4.x/upgradeable
+ *      see https://docs.openzeppelin.com/contracts/4.x/api/proxy#UUPSUpgradeable
+ *      see https://forum.openzeppelin.com/t/uups-proxies-tutorial-solidity-javascript/7786
  *
  * @author Basil Gorin
  */
@@ -262,8 +266,5 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	function _authorizeUpgrade(address newImplementation) internal virtual override {
 		// caller must have a permission to upgrade the contract
 		require(isSenderInRole(ROLE_UPGRADE_MANAGER), "access denied");
-
-		// verify new implementation is set
-		require(newImplementation != address(0), "new implementation is not set");
 	}
 }
