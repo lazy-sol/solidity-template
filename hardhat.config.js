@@ -17,10 +17,6 @@ require('solidity-coverage');
 // https://hardhat.org/plugins/hardhat-gas-reporter.html
 require("hardhat-gas-reporter");
 
-// enable OpenZeppelin upgrades plugin (EIP-1822/EIP-1967 proxies support)
-// https://docs.openzeppelin.com/upgrades-plugins/1.x/hardhat-upgrades
-require('@openzeppelin/hardhat-upgrades');
-
 // compile Solidity sources directly from NPM dependencies
 // https://github.com/ItsNickBarry/hardhat-dependency-compiler
 require('hardhat-dependency-compiler');

@@ -51,7 +51,7 @@ const ROLE_RESCUE_MANAGER = 0x0008_0000;
 
 // End: ===== ERC20/ERC721 =====
 
-// export all the copied constants
+// export public module API
 module.exports = {
 	ROLE_ACCESS_MANAGER,
 	FULL_PRIVILEGES_MASK,

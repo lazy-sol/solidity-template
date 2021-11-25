@@ -146,7 +146,7 @@ function print_symbols(
 	return arr.map((r, i) => print_symbol(r, arr_max[i] || arr_max)).join("");
 }
 
-// export the constants
+// export public module API
 module.exports = {
 	BN,
 	toBN,

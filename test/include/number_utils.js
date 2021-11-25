@@ -55,6 +55,7 @@ function print_f2(n) {
 	return Math.round(n * 100) / 100;
 }
 
+// export public module API
 module.exports = {
 	unix_to_date,
 	date_to_unix,
