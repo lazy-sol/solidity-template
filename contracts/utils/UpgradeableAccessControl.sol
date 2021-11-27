@@ -117,6 +117,17 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	}
 
 	/**
+	 * @notice Returns an address of the implementation smart contract,
+	 *      see ERC1967Upgrade._getImplementation()
+	 *
+	 * @return the current implementation address
+	 */
+	function getImplementation() public view virtual returns(address) {
+		// delegate to `ERC1967Upgrade._getImplementation()`
+		return _getImplementation();
+	}
+
+	/**
 	 * @notice Retrieves globally set of features enabled
 	 *
 	 * @dev Effectively reads userRoles role for the contract itself
