@@ -57,6 +57,26 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 // TODO: add version history: 2018-2021
 abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	/**
+	 * @notice Privileged addresses with defined roles/permissions
+	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
+	 *      allow minting or burning tokens, transferring on behalf and so on
+	 *
+	 * @dev Maps user address to the permissions bitmask (role), where each bit
+	 *      represents a permission
+	 * @dev Bitmask 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+	 *      represents all possible permissions
+	 * @dev 'This' address mapping represents global features of the smart contract
+	 */
+	mapping(address => uint256) public userRoles;
+
+	/**
+	 * @dev Empty reserved space in storage. The size of the __gap array is calculated so that
+	 *      the amount of storage used by a contract always adds up to the 50.
+	 *      See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+	 */
+	uint256[49] private __gap;
+
+	/**
 	 * @notice Access manager is responsible for assigning the roles to users,
 	 *      enabling/disabling global features of the smart contract
 	 * @notice Access manager can add, remove and update user roles,
@@ -82,19 +102,6 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	 * @dev Has all the bits are enabled (2^256 - 1 value)
 	 */
 	uint256 private constant FULL_PRIVILEGES_MASK = type(uint256).max; // before 0.8.0: uint256(-1) overflows to 0xFFFF...
-
-	/**
-	 * @notice Privileged addresses with defined roles/permissions
-	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
-	 *      allow minting or burning tokens, transferring on behalf and so on
-	 *
-	 * @dev Maps user address to the permissions bitmask (role), where each bit
-	 *      represents a permission
-	 * @dev Bitmask 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-	 *      represents all possible permissions
-	 * @dev 'This' address mapping represents global features of the smart contract
-	 */
-	mapping(address => uint256) public userRoles;
 
 	/**
 	 * @dev Fired in updateRole() and updateFeatures()
@@ -274,7 +281,7 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	/**
 	 * @inheritdoc UUPSUpgradeable
 	 */
-	function _authorizeUpgrade(address newImplementation) internal virtual override {
+	function _authorizeUpgrade(address) internal virtual override {
 		// caller must have a permission to upgrade the contract
 		require(isSenderInRole(ROLE_UPGRADE_MANAGER), "access denied");
 	}
