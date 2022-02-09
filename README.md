@@ -12,6 +12,7 @@ It is Hardhat/Web3/Truffle based and includes the following components preinstal
    * chai – provides a convenient [BDD](https://devhints.io/chai) unit testing support
    * solidity-coverage – test coverage for Solidity, preconfigured in [.solcover.js](.solcover.js)
 * Deployment
+   * hardhat-deploy – a hardhat plugin for replicable deployments and easy testing by Ronan Sandford
    * @nomiclabs/hardhat-etherscan – etherscan source code verification made easy
 
 Note: search for "awesome" and replace with your own project name
@@ -59,7 +60,7 @@ Following steps were tested to work in macOS Catalina
     ```
     nvm use --delete-prefix v16.4.0
     npm config delete prefix
-    npm config set prefix "/usr/local/Cellar/nvm/0.35.3/versions/node/v16.4.0"
+    npm config set prefix "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
     ```
 * After executing ```npm install``` I get
     ```
@@ -123,6 +124,51 @@ export INFURA_KEY="000ba27dfb1b3663aadfc74c3ab092ae"
 export ETHERSCAN_KEY="9GEEN6VPKUR7O6ZFBJEKCWSK49YGMPUBBG"
 ```
 
+## Alternative Configuration: Using Private Keys instead of Mnemonics ##
+[hardhat.config-p_key.js](hardhat.config-p_key.js) contains an alternative Hardhat configuration using private keys
+instead of mnemonics
+
+1. Create or import private keys of the accounts for
+   1. Mainnet
+   2. Ropsten
+   3. Rinkeby
+   4. Kovan
+
+   You can use metamask to export private keys: https://metamask.io/
+
+   Note: you can use the same private key for test networks (ropsten, rinkeby and kovan).
+   Always use a separate one for mainnet, keep it secure.
+
+2. Create an infura access key at https://infura.io/
+
+3. Create etherscan API key at https://etherscan.io/
+
+4. Export private keys, infura access key, and etherscan API key as system environment variables
+   (they should be available for hardhat):
+
+   | Name         | Value               |
+   |--------------|---------------------|
+   | P_KEY1       | Mainnet private key |
+   | P_KEY3       | Ropsten private key |
+   | P_KEY4       | Rinkeby private key |
+   | P_KEY42      | Kovan private key   |
+   | INFURA_KEY   | Infura access key   |
+   | ETHERSCAN_KEY| Etherscan API key   |
+
+Notes:
+* private keys should start with ```0x```
+* use ```--config hardhat.config-p_key.js``` command line option to run hardhat using an alternative configuration
+
+### Example Script: macOS Catalina ###
+```
+export P_KEY1="0x5ed21858f273023c7fc0683a1e853ec38636553203e531a79d677cb39b3d85ad"
+export P_KEY3="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
+export P_KEY4="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
+export P_KEY42="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
+export INFURA_KEY="000ba27dfb1b3663aadfc74c3ab092ae"
+export ETHERSCAN_KEY="9GEEN6VPKUR7O6ZFBJEKCWSK49YGMPUBBG"
+```
+
 ## Compilation ##
 Execute ```npx hardhat compile``` command to compile smart contracts.
 
@@ -153,62 +199,49 @@ Example: ```npx hardhat test ./test/awesome.js```
     ```
 
 ## Deployment ##
-Deployments are implemented as [hardhat scripts](https://hardhat.org/guides/deploying.html), without migrations.
+Deployments are implemented via [hardhat-deploy plugin](https://github.com/wighawag/hardhat-deploy) by Ronan Sandford.
 
 Deployment scripts perform smart contracts deployment itself and their setup configuration.
 Executing a script may require several transactions to complete, which may fail. To help troubleshoot
 partially finished deployment, the scripts are designed to be rerunnable and execute only the transactions
 which were not executed in previous run(s).
 
-Deployment scripts are located under [scripts](./scripts) folder.
+Deployment scripts are located under [deploy](./deploy) folder.
+Deployment execution state is saved under [deployments](./deployments) folder.
 
-To run fresh deployment:
+To run fresh deployment (rinkeby):
 
-1. Open [scripts/config.js](./scripts/config.js)
+1. Delete [deployments/rinkeby](./deployments/rinkeby) folder contents.
 
-2. For the network of interest (where the deployment is going to happen to) locate the deployed instances address(es) and
-erase them. For example, if we are to deploy all the contracts into the Rinkeby network:
-    ```
-    ...
+2. Run the deployment of interest with the ```npx hardhat deploy``` command
+   ```
+   npx hardhat deploy --network rinkeby --tags v1_deploy
+   ```
+   where ```v1_deploy``` specifies the deployment script tag to run,
+   and ```--network rinkeby``` specifies the network to run script for
+   (see [hardhat.config.js](./hardhat.config.js) for network definitions).
 
-		// Rinkeby Configuration
-		case "rinkeby":
-			return {
-				AwesomeToken: "",
-			};
+3. Verify source code on Etherscan with the ```npx hardhat etherscan-verify``` command
+   ```
+   npx hardhat etherscan-verify --network rinkeby
+   ```
 
-    ...
-    ```
+4. Enable the roles (see Access Control) required by the protocol
+   ```
+   npx hardhat deploy --network rinkeby --tags v1_roles
+   ```
+   Note: this step can be done via Etherscan UI manually
 
-3. Run the deployment script of interest with the ```npx hardhat run``` command
-    ```
-    npx hardhat run --network rinkeby ./scripts/deploy_awesome.js
-    ```
-where ```./scripts/deploy_awesome.js``` specifies the deployment script,
-and ```--network rinkeby``` specifies the network to run script for
-(see [hardhat.config.js](./hardhat.config.js) for network definitions). 
+5. Enable the features (see Access Control) required by the protocol
+   ```
+   npx hardhat deploy --network rinkeby --tags v1_features
+   ```
+   Note: this step can be done via Etherscan UI manually
 
-To rerun the deployment script and continue partially completed script:
+To rerun the deployment script and continue partially completed script skip the first step
+(do not cleanup the [deployments](./deployments) folder).
 
-1. Open [scripts/config.js](./scripts/config.js)
+## Contributing
+// TODO:
 
-2. For the network of interest locate the deployed instances address(es) and fill with the correct (previously deployed)
-values. For example, if we already deployed some contracts into Rinkeby network, but are missing other contracts:
-    ```
-    ...
-
-		// Rinkeby Configuration
-		case "rinkeby":
-			return {
-				AwesomeToken: "0xec26a4df98f885DD15F74bc647d5fc192134A608",
-			};
-
-    ...
-    ```
-
-3. Run the deployment script with the ```npx hardhat run``` command, for example:
-    ```
-    npx hardhat run --network rinkeby ./scripts/deploy_awesome.js
-    ```
-
-(c) 2017–2021 Basil Gorin
+(c) 2017–2022 Basil Gorin

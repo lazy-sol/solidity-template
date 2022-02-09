@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
+pragma solidity ^0.8.4;
 
 /**
  * @title Access Control List
@@ -106,7 +106,7 @@ abstract contract AccessControl {
 	 *
 	 * @return 256-bit bitmask of the features enabled
 	 */
-	function features() public view returns(uint256) {
+	function features() public view returns (uint256) {
 		// features are stored in 'this' address  mapping of `userRoles` structure
 		return userRoles[address(this)];
 	}
@@ -183,7 +183,7 @@ abstract contract AccessControl {
 	 * @param desired desired set of permissions operator would like to set
 	 * @return resulting set of permissions given operator will set
 	 */
-	function evaluateBy(address operator, uint256 target, uint256 desired) public view returns(uint256) {
+	function evaluateBy(address operator, uint256 target, uint256 desired) public view returns (uint256) {
 		// read operator's permissions
 		uint256 p = userRoles[operator];
 
@@ -203,7 +203,7 @@ abstract contract AccessControl {
 	 * @param required set of features to check against
 	 * @return true if all the features requested are enabled, false otherwise
 	 */
-	function isFeatureEnabled(uint256 required) public view returns(bool) {
+	function isFeatureEnabled(uint256 required) public view returns (bool) {
 		// delegate call to `__hasRole`, passing `features` property
 		return __hasRole(features(), required);
 	}
@@ -214,7 +214,7 @@ abstract contract AccessControl {
 	 * @param required set of permissions (role) to check against
 	 * @return true if all the permissions requested are enabled, false otherwise
 	 */
-	function isSenderInRole(uint256 required) public view returns(bool) {
+	function isSenderInRole(uint256 required) public view returns (bool) {
 		// delegate call to `isOperatorInRole`, passing transaction sender
 		return isOperatorInRole(msg.sender, required);
 	}
@@ -226,7 +226,7 @@ abstract contract AccessControl {
 	 * @param required set of permissions (role) to check
 	 * @return true if all the permissions requested are enabled, false otherwise
 	 */
-	function isOperatorInRole(address operator, uint256 required) public view returns(bool) {
+	function isOperatorInRole(address operator, uint256 required) public view returns (bool) {
 		// delegate call to `__hasRole`, passing operator's permissions (role)
 		return __hasRole(userRoles[operator], required);
 	}
@@ -238,7 +238,7 @@ abstract contract AccessControl {
 	 * @param required required role
 	 * @return true if actual has required role (all permissions), false otherwise
 	 */
-	function __hasRole(uint256 actual, uint256 required) internal pure returns(bool) {
+	function __hasRole(uint256 actual, uint256 required) internal pure returns (bool) {
 		// check the bitmask for the role required and return the result
 		return actual & required == required;
 	}

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
+pragma solidity ^0.8.4;
 
 import "../token/UpgradeableERC721.sol";
 
@@ -19,9 +19,9 @@ contract UpgradeableERC721Mock is UpgradeableERC721 {
 	 * @param _name token name (ERC721Metadata)
 	 * @param _symbol token symbol (ERC721Metadata)
 	 */
-	function postConstruct(string memory _name, string memory _symbol, address _owner) public virtual initializer {
+	function postConstruct(string memory _name, string memory _symbol) public virtual initializer {
 		// execute all parent initializers in cascade
-		UpgradeableERC721._postConstruct(_name, _symbol, _owner);
+		UpgradeableERC721._postConstruct(_name, _symbol, msg.sender);
 	}
 }
 
@@ -44,9 +44,9 @@ contract UpgradeableERC721Mock2 is UpgradeableERC721Mock {
 	 * @param _name token name (ERC721Metadata)
 	 * @param _symbol token symbol (ERC721Metadata)
 	 */
-	function postConstruct(string memory _name, string memory _symbol, address _owner) public virtual override initializer {
+	function postConstruct(string memory _name, string memory _symbol) public virtual override initializer {
 		// execute all parent initializers in cascade
-		super._postConstruct(_name, _symbol, _owner);
+		super._postConstruct(_name, _symbol, msg.sender);
 
 		// set thee version!
 		version = "Version 2 (Upgraded)!";

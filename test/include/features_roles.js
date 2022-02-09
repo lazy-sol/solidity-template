@@ -8,6 +8,9 @@ const TWO = new BN(2);
 // enabling/disabling global features of the smart contract
 const ROLE_ACCESS_MANAGER = TWO.pow(new BN(255));
 
+// Upgrade manager is responsible for smart contract upgrades
+const ROLE_UPGRADE_MANAGER = TWO.pow(new BN(254));
+
 // Bitmask representing all the possible permissions (super admin role)
 const FULL_PRIVILEGES_MASK = TWO.pow(new BN(256)).subn(1);
 
@@ -54,6 +57,7 @@ const ROLE_RESCUE_MANAGER = 0x0008_0000;
 // export public module API
 module.exports = {
 	ROLE_ACCESS_MANAGER,
+	ROLE_UPGRADE_MANAGER,
 	FULL_PRIVILEGES_MASK,
 	FEATURE_ALL,
 	not,

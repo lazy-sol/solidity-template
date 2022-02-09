@@ -53,26 +53,43 @@ async function erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 async function upgradeable_erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
 	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock");
+	const Proxy = artifacts.require("./ERC1967Proxy");
 
-	// deploy the proxy and return the reference
-	const {deployProxy, upgradeProxy} = require('@openzeppelin/truffle-upgrades');
-	return await deployProxy(ERC721Contract, [name, symbol, a0], {kind: "uups"});
+	// deploy an instance without a proxy
+	const instance = await ERC721Contract.new({from: a0});
+
+	// prepare the initialization call bytes
+	const init_data = instance.contract.methods.postConstruct(name, symbol).encodeABI();
+
+	// deploy proxy, and initialize the implementation (inline)
+	const proxy = await Proxy.new(instance.address, init_data, {from: a0});
+
+	// wrap the proxy into the implementation ABI and return
+	return await ERC721Contract.at(proxy.address);
 }
 
 /**
  * Upgrades Upgradeable ERC721 token with no features enabled
  *
  * @param a0 smart contract deployer, owner, super admin
- * @param instance previously deployed instance
+ * @param proxy previously deployed instance (as a proxy)
  * @returns UpgradeableERC721 instance
  */
-async function upgradeable_erc721_upgrade_restricted(a0, instance) {
+async function upgradeable_erc721_upgrade_restricted(a0, proxy) {
 	// smart contracts required
 	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock2");
 
-	// deploy the proxy and return the reference
-	const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
-	return await upgradeProxy(instance.address, ERC721Contract);
+	// deploy new instance without a proxy
+	const instance = await ERC721Contract.new({from: a0});
+
+	// prepare the initialization call bytes
+	const init_data = proxy.contract.methods.postConstruct(name, symbol).encodeABI();
+
+	// and upgrade the implementation
+	await proxy.upgradeTo/*AndCall*/(instance.address/*, init_data*/, {from: a0});
+
+	// return the proxy itself
+	return proxy;
 }
 
 /**
