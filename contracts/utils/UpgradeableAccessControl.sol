@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+
 /**
- * @title Access Control List
+ * @title Upgradeable Access Control List // ERC1967Proxy
  *
  * @notice Access control smart contract provides an API to check
  *      if a specific operation is permitted globally and/or
@@ -45,10 +47,15 @@ pragma solidity ^0.8.4;
  * @dev Access manager permission has a bit 255 set.
  *      This bit must not be used by inheriting contracts for any other permissions/features.
  *
+ * @dev This is an upgradeable version of the ACL, based on Zeppelin implementation for ERC1967,
+ *      see https://docs.openzeppelin.com/contracts/4.x/upgradeable
+ *      see https://docs.openzeppelin.com/contracts/4.x/api/proxy#UUPSUpgradeable
+ *      see https://forum.openzeppelin.com/t/uups-proxies-tutorial-solidity-javascript/7786
+ *
  * @author Basil Gorin
  */
 // TODO: add version history: 2018-2021
-abstract contract AccessControl {
+abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	/**
 	 * @notice Privileged addresses with defined roles/permissions
 	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
@@ -63,6 +70,13 @@ abstract contract AccessControl {
 	mapping(address => uint256) public userRoles;
 
 	/**
+	 * @dev Empty reserved space in storage. The size of the __gap array is calculated so that
+	 *      the amount of storage used by a contract always adds up to the 50.
+	 *      See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+	 */
+	uint256[49] private __gap;
+
+	/**
 	 * @notice Access manager is responsible for assigning the roles to users,
 	 *      enabling/disabling global features of the smart contract
 	 * @notice Access manager can add, remove and update user roles,
@@ -72,6 +86,16 @@ abstract contract AccessControl {
 	 * @dev Role ROLE_ACCESS_MANAGER has single bit at position 255 enabled
 	 */
 	uint256 public constant ROLE_ACCESS_MANAGER = 0x8000000000000000000000000000000000000000000000000000000000000000;
+
+	/**
+	 * @notice Upgrade manager is responsible for smart contract upgrades,
+	 *      see https://docs.openzeppelin.com/contracts/4.x/api/proxy#UUPSUpgradeable
+	 *      see https://docs.openzeppelin.com/contracts/4.x/upgradeable
+	 *
+	 * @dev Role ROLE_UPGRADE_MANAGER allows passing the _authorizeUpgrade() check
+	 * @dev Role ROLE_UPGRADE_MANAGER has single bit at position 254 enabled
+	 */
+	uint256 public constant ROLE_UPGRADE_MANAGER = 0x4000000000000000000000000000000000000000000000000000000000000000;
 
 	/**
 	 * @dev Bitmask representing all the possible permissions (super admin role)
@@ -90,13 +114,24 @@ abstract contract AccessControl {
 	event RoleUpdated(address indexed _by, address indexed _to, uint256 _requested, uint256 _actual);
 
 	/**
-	 * @notice Creates an access control instance,  setting the contract owner to have full privileges
+	 * @dev UUPS initializer, sets the contract owner to have full privileges
 	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
-	constructor(address _owner) {
-		// contract creator has full privileges
+	function _postConstruct(address _owner) internal virtual initializer {
+		// grant owner full privileges
 		userRoles[_owner] = FULL_PRIVILEGES_MASK;
+	}
+
+	/**
+	 * @notice Returns an address of the implementation smart contract,
+	 *      see ERC1967Upgrade._getImplementation()
+	 *
+	 * @return the current implementation address
+	 */
+	function getImplementation() public view virtual returns (address) {
+		// delegate to `ERC1967Upgrade._getImplementation()`
+		return _getImplementation();
 	}
 
 	/**
@@ -241,5 +276,13 @@ abstract contract AccessControl {
 	function __hasRole(uint256 actual, uint256 required) internal pure returns (bool) {
 		// check the bitmask for the role required and return the result
 		return actual & required == required;
+	}
+
+	/**
+	 * @inheritdoc UUPSUpgradeable
+	 */
+	function _authorizeUpgrade(address) internal virtual override {
+		// caller must have a permission to upgrade the contract
+		require(isSenderInRole(ROLE_UPGRADE_MANAGER), "access denied");
 	}
 }

@@ -23,11 +23,16 @@
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^4.2.0",
+    "@openzeppelin/contracts-upgradeable": "^4.3.3",
     "@openzeppelin/test-helpers": "^0.5.12",
     "chai": "^4.3.4",
     "hardhat": "^2.6.0",
+    "hardhat-dependency-compiler": "^1.1.2",
+    "hardhat-deploy": "^0.10.5",
     "hardhat-gas-reporter": "^1.0.4",
     "loglevel": "^1.7.1",
-    "solidity-coverage": "^0.7.16"
+    "solidity-coverage": "^0.7.16",
+    "truffle-contract-size": "^2.0.1",
+    "truffle-plugin-verify": "^0.5.18"
   }
 }

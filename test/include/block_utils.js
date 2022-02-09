@@ -9,6 +9,7 @@ function extract_gas(receipt) {
 	return receipt.receipt? receipt.receipt.gasUsed: receipt.gasUsed;
 }
 
+// export public module API
 module.exports = {
 	default_deadline,
 	extract_gas,

@@ -7,7 +7,6 @@ const {
 	SYMBOL,
 } = require("./erc721_constants");
 
-
 /**
  * Deploys ERC721 token with all the features enabled
  *
@@ -44,6 +43,56 @@ async function erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 }
 
 /**
+ * Deploys Upgradeable ERC721 token with no features enabled
+ *
+ * @param a0 smart contract deployer, owner, super admin
+ * @param name token name, ERC-721 compatible descriptive name
+ * @param symbol token symbol, ERC-721 compatible abbreviated name
+ * @returns UpgradeableERC721 instance
+ */
+async function upgradeable_erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
+	// smart contracts required
+	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock");
+	const Proxy = artifacts.require("./ERC1967Proxy");
+
+	// deploy an instance without a proxy
+	const instance = await ERC721Contract.new({from: a0});
+
+	// prepare the initialization call bytes
+	const init_data = instance.contract.methods.postConstruct(name, symbol).encodeABI();
+
+	// deploy proxy, and initialize the implementation (inline)
+	const proxy = await Proxy.new(instance.address, init_data, {from: a0});
+
+	// wrap the proxy into the implementation ABI and return
+	return await ERC721Contract.at(proxy.address);
+}
+
+/**
+ * Upgrades Upgradeable ERC721 token with no features enabled
+ *
+ * @param a0 smart contract deployer, owner, super admin
+ * @param proxy previously deployed instance (as a proxy)
+ * @returns UpgradeableERC721 instance
+ */
+async function upgradeable_erc721_upgrade_restricted(a0, proxy) {
+	// smart contracts required
+	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock2");
+
+	// deploy new instance without a proxy
+	const instance = await ERC721Contract.new({from: a0});
+
+	// prepare the initialization call bytes
+	const init_data = proxy.contract.methods.postConstruct(name, symbol).encodeABI();
+
+	// and upgrade the implementation
+	await proxy.upgradeTo/*AndCall*/(instance.address/*, init_data*/, {from: a0});
+
+	// return the proxy itself
+	return proxy;
+}
+
+/**
  * Deploys Zeppelin ERC721 Receiver Mock
  *
  * @param a0 deployer, smart contract deployer, owner, super admin
@@ -64,6 +113,8 @@ async function erc721_receiver_deploy(a0, retval = "0x150b7a02", error = 0) {
 module.exports = {
 	erc721_deploy,
 	erc721_deploy_restricted,
+	upgradeable_erc721_deploy_restricted,
+	upgradeable_erc721_upgrade_restricted,
 	erc721_receiver_deploy,
 	NAME,
 	SYMBOL,

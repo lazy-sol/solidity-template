@@ -59,5 +59,4 @@ contract("ERC721: OpenZeppelin ERC721 Tests", function(accounts) {
 		shouldBehaveLikeERC721Metadata("", NAME, SYMBOL, H0);
 		shouldBehaveLikeERC721URIStorage(H0);
 	});
-
 });
