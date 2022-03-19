@@ -121,6 +121,9 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	function _postConstruct(address _owner) internal virtual initializer {
 		// grant owner full privileges
 		userRoles[_owner] = FULL_PRIVILEGES_MASK;
+
+		// fire an event
+		emit RoleUpdated(msg.sender, _owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
 	}
 
 	/**

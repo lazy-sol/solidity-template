@@ -97,6 +97,9 @@ abstract contract AccessControl {
 	constructor(address _owner) {
 		// contract creator has full privileges
 		userRoles[_owner] = FULL_PRIVILEGES_MASK;
+
+		// fire an event
+		emit RoleUpdated(msg.sender, _owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
 	}
 
 	/**

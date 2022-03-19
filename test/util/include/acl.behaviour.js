@@ -54,48 +54,90 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 				await acl.updateRole(by, MAX_UINT256, {from: a0});
 			});
 			describe("what you set", function() {
-				let set;
+				let receipt, set;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
 					set = random_bn255();
-					await acl.updateRole(to, set, {from: by});
+					receipt = await acl.updateRole(to, set, {from: by});
 				});
-				it("is what you get", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals(set);
+				describe("is what you get", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.equals(set);
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: set,
+							_actual: set,
+						});
+					});
 				});
 			});
 			describe("what you remove", function() {
-				let remove;
+				let receipt, remove;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
 					remove = random_bn255();
-					await acl.updateRole(to, not(remove), {from: by});
+					receipt = await acl.updateRole(to, not(remove), {from: by});
 				});
-				it("is what gets removed", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals(not(remove));
+				describe("is what gets removed", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.equals(not(remove));
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: not(remove),
+							_actual: not(remove),
+						});
+					});
 				});
 			});
 		});
 		describe("when ACCESS_MANAGER doesn't have any permissions", function() {
 			describe("what you get, independently of what you set", function() {
+				let receipt, set;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
-					const set = random_bn255();
-					await acl.updateRole(to, set, {from: by});
+					set = random_bn255();
+					receipt = await acl.updateRole(to, set, {from: by});
 				});
-				it("is always zero", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals('0');
+				describe("is always zero", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.is.zero;
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: set,
+							_actual: "0",
+						});
+					});
 				});
 			});
 			describe("what you get, independently of what you remove", function() {
+				let receipt, remove;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
-					const remove = random_bn255();
+					remove = random_bn255();
 					await acl.updateRole(to, MAX_UINT256, {from: a0});
-					await acl.updateRole(to, not(remove), {from: by});
+					receipt = await acl.updateRole(to, not(remove), {from: by});
 				});
-				it("is always what you had", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals(MAX_UINT256);
+				describe("is always what you had", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.equals(MAX_UINT256);
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: not(remove),
+							_actual: MAX_UINT256,
+						});
+					});
 				});
 			});
 		});
@@ -107,26 +149,46 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 				await acl.updateRole(by, ROLE_ACCESS_MANAGER.or(role), {from: a0});
 			});
 			describe("what you get", function() {
-				let set;
+				let receipt, set;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
 					set = random_bn255();
-					await acl.updateRole(to, set, {from: by});
+					receipt = await acl.updateRole(to, set, {from: by});
 				});
-				it("is an intersection of what you set and what you have", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals(role.and(set));
+				describe("is an intersection of what you set and what you have", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.equals(role.and(set));
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: set,
+							_actual: role.and(set),
+						});
+					});
 				});
 			});
 			describe("what you remove", function() {
-				let remove;
+				let receipt, remove;
 				beforeEach(async function() {
 					// do not touch the highest permission bit (ACCESS_MANAGER permission)
 					remove = random_bn255();
 					await acl.updateRole(to, MAX_UINT256, {from: a0});
-					await acl.updateRole(to, not(remove), {from: by});
+					receipt = await acl.updateRole(to, not(remove), {from: by});
 				});
-				it("is an intersection of what you tried to remove and what you have", async function() {
-					expect(await acl.userRoles(to)).to.be.bignumber.that.equals(not(role.and(remove)));
+				describe("is an intersection of what you tried to remove and what you have", function() {
+					it('"userRoles" value', async function() {
+						expect(await acl.userRoles(to)).to.be.bignumber.that.equals(not(role.and(remove)));
+					});
+					it('"RoleUpdated" event', async function() {
+						await expectEvent(receipt, "RoleUpdated", {
+							_by: by,
+							_to: to,
+							_requested: not(remove),
+							_actual: not(role.and(remove)),
+						});
+					});
 				});
 			});
 		});
@@ -160,7 +222,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 			beforeEach(async function() {
 				await acl.updateRole(by, 0, {from: by});
 			});
-			it("operator becomes an ACCESS_MANAGER", async function() {
+			it("operator ceases to be an ACCESS_MANAGER", async function() {
 				expect(await acl.isOperatorInRole(by, ROLE_ACCESS_MANAGER), "operator").to.be.false;
 				expect(await acl.isSenderInRole(ROLE_ACCESS_MANAGER, {from: by}), "sender").to.be.false;
 			});
