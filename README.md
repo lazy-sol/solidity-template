@@ -38,77 +38,81 @@ What's inside?
 Following steps were tested to work in macOS Catalina
 
 1. Clone the repository  
-    ```git clone git@github.com:vgorin/solidity-template.git```
+   ```git clone git@github.com:vgorin/solidity-template.git```
 2. Navigate into the cloned repository  
-    ```cd solidity-template```
+   ```cd solidity-template```
 3. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) – latest  
-    ```brew install nvm```
+   ```brew install nvm```
 4. Install [Node package manager (npm)](https://www.npmjs.com/) and [Node.js](https://nodejs.org/) – version 16.4.0  
-    ```nvm install v16.4.0```
+   ```nvm install v16.4.0```
 5. Activate node version installed  
-    ```nvm use v16.4.0```
+   ```nvm use v16.4.0```
 6. Install project dependencies  
-    ```npm install```
+   ```npm install```
 
 ### Troubleshooting ###
 * After executing ```nvm use v16.4.0``` I get  
-    ```
-    nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
-    Run `npm config delete prefix` or `nvm use --delete-prefix v16.4.0` to unset it.
-    ```
-    Fix:  
-    ```
-    nvm use --delete-prefix v16.4.0
-    npm config delete prefix
-    npm config set prefix "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
-    ```
+   ```
+   nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
+   Run `npm config delete prefix` or `nvm use --delete-prefix v16.4.0` to unset it.
+   ```
+   Fix:  
+   ```
+   nvm use --delete-prefix v16.4.0
+   npm config delete prefix
+   npm config set prefix "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.4.0"
+   ```
 * After executing ```npm install``` I get
-    ```
-    npm ERR! code 127
-    npm ERR! path ./solidity-template/node_modules/utf-8-validate
-    npm ERR! command failed
-    npm ERR! command sh -c node-gyp-build
-    npm ERR! sh: node-gyp-build: command not found
-    
-    npm ERR! A complete log of this run can be found in:
-    npm ERR!     ~/.npm/_logs/2021-08-30T07_10_23_362Z-debug.log
-    ```
-    Fix:  
-    ```
-    npm install -g node-gyp
-    npm install -g node-gyp-build
-    ```
+   ```
+   npm ERR! code 127
+   npm ERR! path ./solidity-template/node_modules/utf-8-validate
+   npm ERR! command failed
+   npm ERR! command sh -c node-gyp-build
+   npm ERR! sh: node-gyp-build: command not found
+   
+   npm ERR! A complete log of this run can be found in:
+   npm ERR!     ~/.npm/_logs/2021-08-30T07_10_23_362Z-debug.log
+   ```
+   Fix:  
+   ```
+   npm install -g node-gyp
+   npm install -g node-gyp-build
+   ```
+
+### Notes on Ubuntu 20.04 LTS ###
+- [How to install Node.js 16 on Ubuntu 20.04 LTS](https://joshtronic.com/2021/05/09/how-to-install-nodejs-16-on-ubuntu-2004-lts/)
+- [How to Run Linux Commands in Background](https://linuxize.com/post/how-to-run-linux-commands-in-background/)
 
 ## Configuration ##
 1. Create or import 12-word mnemonics for
-    1. Mainnet
-    2. Ropsten
-    3. Rinkeby
-    4. Kovan
+   1. Mainnet
+   2. Ropsten
+   3. Rinkeby
+   4. Kovan
 
-    You can use metamask to create mnemonics: https://metamask.io/
+   You can use metamask to create mnemonics: https://metamask.io/
 
-    Note: you can use same mnemonic for test networks (ropsten, rinkeby and kovan).
-    Always use a separate one for mainnet, keep it secure.
+   Note: you can use same mnemonic for test networks (ropsten, rinkeby and kovan).
+   Always use a separate one for mainnet, keep it secure.
 
-    Note: you can add more configurations to connect to the networks not listed above.
-    Check and add configurations required into the [hardhat.config.js](hardhat.config.js).
+   Note: you can add more configurations to connect to the networks not listed above.
+   Check and add configurations required into the [hardhat.config.js](hardhat.config.js).
 
 2. Create an infura access key at https://infura.io/
 
 3. Create etherscan API key at https://etherscan.io/
 
 4. Export mnemonics, infura access key, and etherscan API key as system environment variables
-    (they should be available for hardhat):
+   (they should be available for hardhat):
 
-    | Name         | Value             |
-    |--------------|-------------------|
-    | MNEMONIC1    | Mainnet mnemonic  |
-    | MNEMONIC3    | Ropsten mnemonic  |
-    | MNEMONIC4    | Rinkeby mnemonic  |
-    | MNEMONIC42   | Kovan mnemonic    |
-    | INFURA_KEY   | Infura access key |
-    | ETHERSCAN_KEY| Etherscan API key |
+   | Name         | Value             |
+   |--------------|-------------------|
+   | MNEMONIC1    | Mainnet mnemonic  |
+   | MNEMONIC3    | Ropsten mnemonic  |
+   | MNEMONIC4    | Rinkeby mnemonic  |
+   | MNEMONIC42   | Kovan mnemonic    |
+   | INFURA_KEY   | Infura access key |
+   | ETHERSCAN_KEY| Etherscan API key |
 
 Note:  
 Read [How do I set an environment variable?](https://www.schrodinger.com/kb/1842) article for more info on how to
@@ -188,15 +192,55 @@ Example: ```npx hardhat test ./test/awesome.js```
 
 ### Troubleshooting ###
 * After running any test (executing ```npx hardhat test ./test/awesome.js``` for example) I get
-    ```
-    An unexpected error occurred:
-    
-    Error: This method only supports Buffer but input was: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-    ```
-    Fix: downgrade @nomiclabs/hardhat-truffle5 plugin to 2.0.0 (see https://issueexplorer.com/issue/nomiclabs/hardhat/1885)
-    ```
-    npm install -D @nomiclabs/hardhat-truffle5@2.0.0
-    ```
+   ```
+   An unexpected error occurred:
+   
+   Error: This method only supports Buffer but input was: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+   ```
+   Fix: downgrade @nomiclabs/hardhat-truffle5 plugin to 2.0.0 (see https://issueexplorer.com/issue/nomiclabs/hardhat/1885)
+   ```
+   npm install -D @nomiclabs/hardhat-truffle5@2.0.0
+   ```
+
+## Test Coverage ##
+Smart contracts test coverage is powered by [solidity-coverage] plugin.
+
+Run `npx hardhat coverage` to run test coverage and generate the report.
+
+### Troubleshooting ###
+* After running the coverage I get
+   ```
+   <--- Last few GCs --->
+
+   [48106:0x7f9b09900000]  3878743 ms: Scavenge 3619.3 (4127.7) -> 3606.1 (4128.2) MB, 5.2 / 0.0 ms  (average mu = 0.262, current mu = 0.138) task
+   [48106:0x7f9b09900000]  3878865 ms: Scavenge 3620.6 (4128.2) -> 3606.9 (4129.2) MB, 4.9 / 0.0 ms  (average mu = 0.262, current mu = 0.138) allocation failure
+   [48106:0x7f9b09900000]  3882122 ms: Mark-sweep 3619.5 (4129.2) -> 3579.6 (4128.4) MB, 3221.6 / 0.7 ms  (average mu = 0.372, current mu = 0.447) task scavenge might not succeed
+
+
+   <--- JS stacktrace --->
+
+   FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+    1: 0x10610e065 node::Abort() (.cold.1) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    2: 0x104dabc19 node::Abort() [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    3: 0x104dabd8f node::OnFatalError(char const*, char const*) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    4: 0x104f29ef7 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    5: 0x104f29e93 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    6: 0x1050f8be5 v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    7: 0x1050fccb6 v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    8: 0x1050f94f6 v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+    9: 0x1050f6c4d v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   10: 0x105103dca v8::internal::Heap::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   11: 0x105103e51 v8::internal::Heap::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   12: 0x1050d425c v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   13: 0x10546fe0f v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   14: 0x105839d19 Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/usr/local/opt/nvm/versions/node/v14.18.0/bin/node]
+   Abort trap: 6
+   ```
+
+   Fix: increase Node.js memory limit to 8 GB:
+   ```
+   export NODE_OPTIONS="--max-old-space-size=8192"
+   ```
 
 ## Deployment ##
 Deployments are implemented via [hardhat-deploy plugin](https://github.com/wighawag/hardhat-deploy) by Ronan Sandford.

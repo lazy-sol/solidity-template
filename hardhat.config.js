@@ -6,6 +6,9 @@
 //   - INFURA_KEY – Infura API key (Project ID)
 //   - ETHERSCAN_KEY – Etherscan API key
 
+// Loads env variables from .env file
+require('dotenv').config()
+
 // Enable Truffle 5 plugin for tests
 // https://hardhat.org/guides/truffle-testing.html
 require("@nomiclabs/hardhat-truffle5");
@@ -151,7 +154,7 @@ module.exports = {
 	dependencyCompiler: {
 		paths: [
 			// ERC1967 is used to deploy upgradeable contracts
-			'@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol',
+			"@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
 		],
 	},
 

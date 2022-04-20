@@ -22,12 +22,20 @@ require("@nomiclabs/hardhat-etherscan");
 // https://hardhat.org/plugins/solidity-coverage.html
 require("solidity-coverage");
 
+// enable hardhat-gas-reporter
+// https://hardhat.org/plugins/hardhat-gas-reporter.html
+require("hardhat-gas-reporter");
+
+// compile Solidity sources directly from NPM dependencies
+// https://github.com/ItsNickBarry/hardhat-dependency-compiler
+require("hardhat-dependency-compiler");
+
 // adds a mechanism to deploy contracts to any network,
 // keeping track of them and replicating the same environment for testing
 // https://www.npmjs.com/package/hardhat-deploy
 require("hardhat-deploy");
 
-// verify environment setup and display warning if required
+// verify environment setup, display warning if required, replace missing values with fakes
 // m/44'/60'/0'/0/0 for "test test test test test test test test test test test junk" mnemonic
 const FAKE_P_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 if(!process.env.P_KEY1) {
@@ -80,6 +88,12 @@ module.exports = {
 			accounts: {
 				count: 35,
 			},
+/*
+			forking: {
+				url: "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
+				enabled: !!(process.env.HARDHAT_FORK),
+			},
+*/
 		},
 		// https://etherscan.io/
 		mainnet: {
@@ -143,14 +157,19 @@ module.exports = {
 		apiKey: process.env.ETHERSCAN_KEY
 	},
 
-	// namedAccounts allows you to associate names to addresses and have them configured per chain
-	// https://github.com/wighawag/hardhat-deploy#1-namedaccounts-ability-to-name-addresses
-	namedAccounts: {
-		// ALI ERC20 v2
-		AliERC20v2: {
-			"mainnet": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
-			"rinkeby": "0x088effA8E63DF55F3736f04ED25581326f9798BA",
-		},
+	// hardhat-gas-reporter will be disabled by default, use REPORT_GAS environment variable to enable it
+	// https://hardhat.org/plugins/hardhat-gas-reporter.html
+	gasReporter: {
+		enabled: !!(process.env.REPORT_GAS)
+	},
+
+	// compile Solidity sources directly from NPM dependencies
+	// https://github.com/ItsNickBarry/hardhat-dependency-compiler
+	dependencyCompiler: {
+		paths: [
+			// ERC1967 is used to deploy upgradeable contracts
+			"@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+		],
 	},
 
 }
