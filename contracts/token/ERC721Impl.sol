@@ -212,7 +212,7 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	 * @param _tokenId ID of the token to query existence for
 	 * @return whether the token exists (true - exists, false - doesn't exist)
 	 */
-	function exists(uint256 _tokenId) public view virtual override returns(bool) {
+	function exists(uint256 _tokenId) public view virtual override returns (bool) {
 		// delegate to super implementation
 		return _exists(_tokenId);
 	}
@@ -313,11 +313,13 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 			// if `_from` is equal to sender, require own burns feature to be enabled
 			// otherwise require burns on behalf feature to be enabled
 			require(_from == msg.sender && isFeatureEnabled(FEATURE_OWN_BURNS)
-				   || _from != msg.sender && isFeatureEnabled(FEATURE_BURNS_ON_BEHALF),
-				      _from == msg.sender? "burns are disabled": "burns on behalf are disabled");
+			     || _from != msg.sender && isFeatureEnabled(FEATURE_BURNS_ON_BEHALF),
+			        _from == msg.sender? "burns are disabled": "burns on behalf are disabled");
 
 			// verify sender is either token owner, or approved by the token owner to burn tokens
-			require(_from == msg.sender || msg.sender == getApproved(_tokenId) || isApprovedForAll(_from, msg.sender), "access denied");
+			require(msg.sender == _from
+			     || msg.sender == getApproved(_tokenId)
+			     || isApprovedForAll(_from, msg.sender), "access denied");
 		}
 
 		// delegate to the super implementation with URI burning
@@ -327,12 +329,16 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	/**
 	 * @inheritdoc ERC721
 	 */
-	function _beforeTokenTransfer(address _from, address _to, uint256 _tokenId) internal virtual override(ERC721, ERC721Enumerable) {
+	function _beforeTokenTransfer(
+		address _from,
+		address _to,
+		uint256 _tokenId
+	) internal virtual override(ERC721, ERC721Enumerable) {
 		// for transfers only - verify if transfers are enabled
 		require(_from == address(0) || _to == address(0) // won't affect minting/burning
-			   || _from == msg.sender && isFeatureEnabled(FEATURE_TRANSFERS)
-			   || _from != msg.sender && isFeatureEnabled(FEATURE_TRANSFERS_ON_BEHALF),
-			      _from == msg.sender? "transfers are disabled": "transfers on behalf are disabled");
+		     || _from == msg.sender && isFeatureEnabled(FEATURE_TRANSFERS)
+		     || _from != msg.sender && isFeatureEnabled(FEATURE_TRANSFERS_ON_BEHALF),
+		        _from == msg.sender? "transfers are disabled": "transfers on behalf are disabled");
 
 		// delegate to ERC721Enumerable impl
 		ERC721Enumerable._beforeTokenTransfer(_from, _to, _tokenId);
