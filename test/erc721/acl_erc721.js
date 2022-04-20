@@ -28,7 +28,7 @@ const {
 	ROLE_TOKEN_DESTROYER,
 	ROLE_URI_MANAGER,
 	ROLE_RESCUE_MANAGER,
-} = require("../include/features_roles");
+} = require("../../scripts/include/features_roles");
 
 // deployment routines in use
 const {

@@ -5,7 +5,7 @@
 const {
 	ROLE_TOKEN_CREATOR,
 	ROLE_TOKEN_DESTROYER,
-} = require("../include/features_roles");
+} = require("../../scripts/include/features_roles");
 
 // Zeppelin unit tests – delivered as behaviours
 // basic ERC20 behaviours

@@ -18,7 +18,7 @@ const {
 } = constants;
 
 // BN constants and utilities
-const {random_bn255} = require("../include/bn_utils");
+const {random_bn255} = require("../../scripts/include/bn_utils");
 
 // ACL token features and roles
 const {
@@ -29,7 +29,7 @@ const {
 	FEATURE_BURNS_ON_BEHALF,
 	ROLE_TOKEN_CREATOR,
 	ROLE_TOKEN_DESTROYER,
-} = require("../include/features_roles");
+} = require("../../scripts/include/features_roles");
 
 // deployment routines in use
 const {

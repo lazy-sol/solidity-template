@@ -1,5 +1,5 @@
 // ACL token features and roles
-const {FEATURE_ALL} = require("../../include/features_roles");
+const {FEATURE_ALL} = require("../../../scripts/include/features_roles");
 
 // token constants
 const {
@@ -7,7 +7,7 @@ const {
 	SYMBOL,
 	DECIMALS,
 	TOTAL_SUPPLY: S0,
-} = require("./erc20_constants");
+} = require("../../../scripts/include/erc20_constants");
 
 /**
  * Deploys ERC20 token with all the features enabled

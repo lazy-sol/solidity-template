@@ -20,7 +20,7 @@ const {
 // BN utils
 const {
 	random_bn,
-} = require("../include/bn_utils");
+} = require("../../scripts/include/bn_utils");
 
 // deployment routines in use
 const {

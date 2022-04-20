@@ -1,11 +1,11 @@
 // ACL token features and roles
-const {FEATURE_ALL} = require("../../include/features_roles");
+const {FEATURE_ALL} = require("../../../scripts/include/features_roles");
 
 // token constants
 const {
 	NAME,
 	SYMBOL,
-} = require("./erc721_constants");
+} = require("../../../scripts/include/erc721_constants");
 
 /**
  * Deploys ERC721 token with all the features enabled

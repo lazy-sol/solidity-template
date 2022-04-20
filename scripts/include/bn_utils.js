@@ -24,7 +24,7 @@ function random_bn255() {
 
 // generates random BN of length `bits`
 function random_bits(bits) {
-	return new BN(randomBytes(bits / 8 /* convert bits to bytes */).toString('hex'), 16);
+	return new BN(randomBytes(bits >> 3 /* convert bits to bytes */).toString('hex'), 16);
 }
 
 // generates random Ethereum address
@@ -98,6 +98,33 @@ function draw_amounts(amounts) {
 	return s;
 }
 
+// graphically draw the percent value as a string to be printed in the consoles
+// example: [............................................................|.......................................] 60%
+function draw_percent(percent) {
+	let s = "[";
+	for(let i = 0; i < Math.round(percent) - 1; i++) {
+		s += ".";
+	}
+	s += "|";
+	for(let i = Math.round(percent); i < 100; i++) {
+		s += ".";
+	}
+	s += `] ${print_percent(percent)}`;
+	return s;
+}
+
+// calculates a/b % with the 2 digits after the decimal dot precision, like 14.55
+function to_percent(a, b) {
+	a = new BN(a);
+	b = new BN(b);
+	return a.muln(100_00).div(b).toNumber() / 100;
+}
+
+// prints the percent with the 2 digits after the decimal dot precision, like 14.00%
+function print_percent(percent) {
+	return `${percent.toFixed(2)}%`;
+}
+
 // prints a value using "*" (asterisk) if its defined and is not zero, or using " " (whitespace) otherwise
 function print_bool(bool) {
 	return bool? "*": " ";
@@ -138,7 +165,6 @@ function print_symbol(amt, max = amt) {
 	return "^";
 }
 // prints values one by one, placing " ", ".", "+", "*", or "!" instead of the values
-// prints values one by one, placing " ", ".", "+", "*", or "!" instead of the values
 function print_symbols(
 	arr,
 	arr_max = arr.reduce((a, v) => a.gte(new BN(v))? a: new BN(v), new BN(0))
@@ -161,6 +187,9 @@ module.exports = {
 	sum_bn,
 	print_amt,
 	draw_amounts,
+	draw_percent,
+	to_percent,
+	print_percent,
 	print_booleans,
 	print_symbols,
 };
