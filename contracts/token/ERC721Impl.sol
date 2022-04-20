@@ -355,6 +355,6 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 		require(isSenderInRole(ROLE_RESCUE_MANAGER), "access denied");
 
 		// perform the transfer as requested, without any checks
-		ERC20(_contract).transfer(_to, _value);
+		require(ERC20(_contract).transfer(_to, _value), "ERC20 transfer failed");
 	}
 }

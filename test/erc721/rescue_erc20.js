@@ -98,5 +98,9 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 				"ERC20: transfer amount exceeds balance"
 			);
 		});
+		it("reverts if ERC20 transfer fails", async function() {
+			await erc20.setTransferSuccessOverride(false, {from: a0});
+			await expectRevert(erc721.rescueErc20(erc20.address, a1, 1, {from: a0}), "ERC20 transfer failed");
+		});
 	});
 });
