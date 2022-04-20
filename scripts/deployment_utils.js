@@ -17,7 +17,7 @@ async function print_erc20_acl_details(a0, abi, address, a1) {
 	const features = toBN(await web3_contract.methods.features().call());
 	const r0 = toBN(await web3_contract.methods.userRoles(a0).call());
 	const r1 = toBN(a1? await web3_contract.methods.userRoles(a1).call(): 0);
-	console.log("successfully connected to sILV ERC20 at %o", address);
+	console.log("successfully connected to ERC20 at %o", address);
 	console.table([
 		{"key": "Name", "value": name},
 		{"key": "Symbol", "value": symbol},
@@ -38,7 +38,7 @@ async function print_nft_acl_details(a0, abi, address, a1) {
 	const features = toBN(await web3_contract.methods.features().call());
 	const r0 = toBN(await web3_contract.methods.userRoles(a0).call());
 	const r1 = toBN(a1? await web3_contract.methods.userRoles(a1).call(): 0);
-	console.log("successfully connected to LandERC721 at %o", address);
+	console.log("successfully connected to ERC721 at %o", address);
 	console.table([
 		{"key": "Name", "value": name},
 		{"key": "Symbol", "value": symbol},

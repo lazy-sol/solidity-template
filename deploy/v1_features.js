@@ -37,8 +37,8 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 	// ERC20
 	{
 		// get the ERC20 v1 implementation and proxy deployments
-		const proxy_deployment = await deployments.get("ERC721_v1"); // ERC721_Proxy
-		const v1_deployment = await deployments.get("ERC721_v1");
+		const proxy_deployment = await deployments.get("ERC20_v1"); // ERC20_Proxy
+		const v1_deployment = await deployments.get("ERC20_v1");
 
 		// print ERC20 proxy info, and determine if transfers are enabled
 		const {features} = await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
