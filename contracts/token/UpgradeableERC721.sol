@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "../interfaces/ERC20Spec.sol";
 import "../interfaces/ERC721SpecExt.sol";
+import "../lib/SafeERC20.sol";
 import "../utils/UpgradeableAccessControl.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
@@ -21,6 +22,9 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URISto
  * @author Basil Gorin
  */
 abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, UpgradeableAccessControl {
+	// using ERC20.transfer wrapper from OpenZeppelin adopted SafeERC20
+	using SafeERC20 for ERC20;
+
 	/**
 	 * @dev Base URI is used to construct ERC721Metadata.tokenURI as
 	 *      `base URI + token ID` if token URI is not set (not present in `_tokenURIs` mapping)
@@ -376,6 +380,6 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 		require(isSenderInRole(ROLE_RESCUE_MANAGER), "access denied");
 
 		// perform the transfer as requested, without any checks
-		require(ERC20(_contract).transfer(_to, _value), "ERC20 transfer failed");
+		ERC20(_contract).safeTransfer(_to, _value);
 	}
 }

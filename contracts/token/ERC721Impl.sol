@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "../interfaces/ERC20Spec.sol";
 import "../interfaces/ERC721SpecExt.sol";
+import "../lib/SafeERC20.sol";
 import "../utils/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -21,6 +22,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
  * @author Basil Gorin
  */
 abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
+	// using ERC20.transfer wrapper from OpenZeppelin adopted SafeERC20
+	using SafeERC20 for ERC20;
+
 	/**
 	 * @dev Base URI is used to construct ERC721Metadata.tokenURI as
 	 *      `base URI + token ID` if token URI is not set (not present in `_tokenURIs` mapping)
@@ -361,6 +365,6 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 		require(isSenderInRole(ROLE_RESCUE_MANAGER), "access denied");
 
 		// perform the transfer as requested, without any checks
-		require(ERC20(_contract).transfer(_to, _value), "ERC20 transfer failed");
+		ERC20(_contract).safeTransfer(_to, _value);
 	}
 }

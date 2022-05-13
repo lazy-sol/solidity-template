@@ -43,6 +43,25 @@ async function erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 }
 
 /**
+ * Deploys Upgradeable ERC721 token with all the features enabled
+ *
+ * @param a0 smart contract owner, super admin
+ * @param name ERC721 token name
+ * @param symbol ERC721 token symbol
+ * @returns UpgradeableERC721 instance
+ */
+async function upgradeable_erc721_deploy(a0, name = NAME, symbol = SYMBOL) {
+	// deploy the token
+	const token = await upgradeable_erc721_deploy_restricted(a0, name, symbol);
+
+	// enable all permissions on the token
+	await token.updateFeatures(FEATURE_ALL, {from: a0});
+
+	// return the reference
+	return token;
+}
+
+/**
  * Deploys Upgradeable ERC721 token with no features enabled
  *
  * @param a0 smart contract deployer, owner, super admin
@@ -113,6 +132,7 @@ async function erc721_receiver_deploy(a0, retval = "0x150b7a02", error = 0) {
 module.exports = {
 	erc721_deploy,
 	erc721_deploy_restricted,
+	upgradeable_erc721_deploy,
 	upgradeable_erc721_deploy_restricted,
 	upgradeable_erc721_upgrade_restricted,
 	erc721_receiver_deploy,

@@ -48,7 +48,8 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 	// a1, a2,... – working accounts to perform tests on
 	const [A0, a0, H0, a1, a2, a3] = accounts;
 
-	function acl_suite(contract_name, deployment_fn, burnable) {
+	// define test suite: it will be reused to test several contracts
+	function acl_suite(contract_name, deployment_fn, burnable = true) {
 		describe(`${contract_name}: ACL`, function() {
 			// deploy token
 			let token;
@@ -307,6 +308,7 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 		});
 	}
 
-	acl_suite("ERC721Impl", erc721_deploy_restricted, true);
-	acl_suite("UpgradeableERC721", upgradeable_erc721_deploy_restricted, true);
+	// run the suite
+	acl_suite("ERC721Impl", erc721_deploy_restricted);
+	acl_suite("UpgradeableERC721", upgradeable_erc721_deploy_restricted);
 });
