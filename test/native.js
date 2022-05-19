@@ -22,6 +22,16 @@ const {
 	MAX_UINT256,
 } = constants;
 
+// BN utils
+const {
+	print_amt,
+} = require("../scripts/include/bn_utils");
+
+// block utils
+const {
+	extract_gas_cost,
+} = require("./include/block_utils");
+
 // Truffle style contract testing
 contract("Native Tests: no smart contract interaction", function(accounts) {
 	// native transfer cost: 21,000 gas
@@ -38,22 +48,46 @@ contract("Native Tests: no smart contract interaction", function(accounts) {
 	it(`default account has more than ${min_balance} native currency`, async function() {
 		expect(await balance.current(accounts[0])).to.be.bignumber.greaterThan(min_balance);
 	});
+	it("at least 2 accounts exist", async function() {
+		expect(accounts.length, "accounts array is empty").to.be.gt(1);
+	});
+	it("account0 balance can be fetched", async function() {
+		const tracker = await balance.tracker(accounts[0]);
+		console.log("account0 %o balance: %o", accounts[0], print_amt(await tracker.get()));
+	});
+	it("account1 balance can be fetched", async function() {
+		const tracker = await balance.tracker(accounts[1]);
+		console.log("account1 %o balance: %o", accounts[1], print_amt(await tracker.get()));
+	});
 	describe("native transfer succeeds", function() {
 		let tracker0, tracker1;
-		beforeEach(async function() {
+		before(async function() {
 			tracker0 = await balance.tracker(accounts[0]);
 			tracker1 = await balance.tracker(accounts[1]);
 		});
 
 		let value, receipt;
-		beforeEach(async function() {
+		before(async function() {
 			const balance0 = await tracker0.get();
 			value = BN.min(balance0.sub(min_balance), new BN(10).pow(new BN(15)));
+			console.log("sending %o from account0 to account1", print_amt(value));
 			receipt = await web3.eth.sendTransaction({
 				from: accounts[0],
 				to: accounts[1],
 				value,
 			});
+			console.log("%o: fee %o", receipt.transactionHash, print_amt(await extract_gas_cost(receipt)));
+		});
+		after(async function() {
+			const balance1 = await tracker1.get();
+			value = balance1.sub(min_balance);
+			console.log("sending %o from account1 to account0", print_amt(value));
+			receipt = await web3.eth.sendTransaction({
+				from: accounts[1],
+				to: accounts[0],
+				value,
+			});
+			console.log("%o: fee %o", receipt.transactionHash, print_amt(await extract_gas_cost(receipt)));
 		});
 		it("transfer cost is 21,000 gas", async function() {
 			expect(receipt.gasUsed).to.be.equal(21_000);

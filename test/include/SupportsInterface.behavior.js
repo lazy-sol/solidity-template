@@ -68,7 +68,7 @@ function shouldSupportInterfaces (interfaces = [], contractInstance) {
             expect(await this.contractUnderTest.supportsInterface.estimateGas(interfaceId)).to.be.lte(30000);
           });
 
-          it('claims support', async function () {
+          it(`claims support ${k}: ${interfaceId}`, async function () {
             expect(await this.contractUnderTest.supportsInterface(interfaceId)).to.equal(true);
           });
         });
@@ -87,5 +87,6 @@ function shouldSupportInterfaces (interfaces = [], contractInstance) {
 }
 
 module.exports = {
+  INTERFACE_IDS,
   shouldSupportInterfaces,
 };
