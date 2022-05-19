@@ -94,7 +94,9 @@ contract("Native Tests: no smart contract interaction", function(accounts) {
 		});
 		it("account 0 balance decreases as expected", async function() {
 			const deltaWithFees = await tracker0.deltaWithFees();
-			expect(deltaWithFees.delta).to.be.bignumber.that.equals(value.neg().sub(deltaWithFees.fees));
+			const delta = deltaWithFees.delta;
+			const fees = deltaWithFees.fees;
+			expect(delta).to.be.bignumber.that.equals(value.neg().sub(fees));
 		});
 		it("account 1 balance increases as expected", async function() {
 			expect(await tracker1.delta()).to.be.bignumber.that.equals(value);
