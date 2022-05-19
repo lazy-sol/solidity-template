@@ -116,6 +116,24 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 	uint32 public constant ROLE_RESCUE_MANAGER = 0x0008_0000;
 
 	/**
+	 * @dev Fired in _mint() and all the dependent functions like mint(), safeMint()
+	 *
+	 * @param _by an address which executed update
+	 * @param _to an address token was minted to
+	 * @param _tokenId token ID minted
+	 */
+	event Minted(address indexed _by, address indexed _to, uint256 indexed _tokenId);
+
+	/**
+	 * @dev Fired in _burn() and all the dependent functions like burn()
+	 *
+	 * @param _by an address which executed update
+	 * @param _from an address token was burnt from
+	 * @param _tokenId token ID burnt
+	 */
+	event Burnt(address indexed _by, address indexed _from, uint256 indexed _tokenId);
+
+	/**
 	 * @dev Fired in setBaseURI()
 	 *
 	 * @param _by an address which executed update
@@ -316,6 +334,9 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 
 		// delegate to super implementation
 		super._mint(_to, _tokenId);
+
+		// emit an additional event to better track who performed the operation
+		emit Minted(msg.sender, _to, _tokenId);
 	}
 
 	/**
@@ -343,6 +364,9 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 
 		// delegate to the super implementation with URI burning
 		ERC721URIStorageUpgradeable._burn(_tokenId);
+
+		// emit an additional event to better track who performed the operation
+		emit Burnt(msg.sender, _from, _tokenId);
 	}
 
 	/**

@@ -65,6 +65,24 @@ abstract contract ERC20Impl is IERC165, ERC20, AccessControl {
 	uint32 public constant ROLE_TOKEN_DESTROYER = 0x0002_0000;
 
 	/**
+	 * @dev Fired in _mint() and all the dependent functions like mint(), safeMint()
+	 *
+	 * @param by an address which executed update
+	 * @param to an address tokens ware minted to
+	 * @param value amount of tokens minted
+	 */
+	event Minted(address indexed by, address indexed to, uint256 value);
+
+	/**
+	 * @dev Fired in _burn() and all the dependent functions like burn()
+	 *
+	 * @param by an address which executed update
+	 * @param from an address tokens were burnt from
+	 * @param value amount of tokens burnt
+	 */
+	event Burnt(address indexed by, address indexed from, uint256 value);
+
+	/**
 	 * @dev Creates/deploys an ERC20 token
 	 *
 	 * @param _name token name
@@ -138,6 +156,9 @@ abstract contract ERC20Impl is IERC165, ERC20, AccessControl {
 
 		// delegate to Zeppelin impl
 		_burn(_from, _value);
+
+		// emit an additional event to better track who performed the operation
+		emit Burnt(msg.sender, _from, _value);
 	}
 
 	/**
@@ -149,6 +170,9 @@ abstract contract ERC20Impl is IERC165, ERC20, AccessControl {
 
 		// delegate to super implementation
 		super._mint(_to, _value);
+
+		// emit an additional event to better track who performed the operation
+		emit Minted(msg.sender, _to, _value);
 	}
 
 	/**
