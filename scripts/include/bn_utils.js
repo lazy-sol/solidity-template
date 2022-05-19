@@ -67,10 +67,14 @@ function print_amt(amt, dm = new BN(10).pow(new BN(18))) {
 	const THOUSAND = new BN(1_000);
 	const MILLION = new BN(1_000_000);
 	if(amt.div(dm).lt(THOUSAND)) {
-		return amt.div(MILLION).toNumber() / dm.div(MILLION).toNumber() + '';
+		return dm.lt(MILLION)? amt.div(dm).toNumber(): amt.div(MILLION).toNumber() / dm.div(MILLION).toNumber() + '';
 	}
-	const k = amt.div(dm).toNumber() / 1000;
-	return k + "k";
+	else if(amt.div(dm).lt(MILLION)) {
+		const k = amt.div(dm).toNumber() / 1000;
+		return k + "k";
+	}
+	const m = amt.div(dm).div(THOUSAND).toNumber() / 1000;
+	return m + "m";
 }
 
 // graphically draw amounts array as a string to be printed in the consoles
