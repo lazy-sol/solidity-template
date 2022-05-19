@@ -51,14 +51,12 @@ contract("Native Tests: no smart contract interaction", function(accounts) {
 	it("at least 2 accounts exist", async function() {
 		expect(accounts.length, "accounts array is empty").to.be.gt(1);
 	});
-	it("account0 balance can be fetched", async function() {
-		const tracker = await balance.tracker(accounts[0]);
-		console.log("account0 %o balance: %o", accounts[0], print_amt(await tracker.get()));
-	});
-	it("account1 balance can be fetched", async function() {
-		const tracker = await balance.tracker(accounts[1]);
-		console.log("account1 %o balance: %o", accounts[1], print_amt(await tracker.get()));
-	});
+	for(let i = 0; i < accounts.length; i++) {
+		it(`account${i} balance can be fetched`, async function() {
+			const tracker = await balance.tracker(accounts[i]);
+			console.log(`account${i} %o balance: %o`, accounts[i], print_amt(await tracker.get()));
+		});
+	}
 	describe("native transfer succeeds", function() {
 		let tracker0, tracker1;
 		before(async function() {
@@ -78,6 +76,7 @@ contract("Native Tests: no smart contract interaction", function(accounts) {
 			});
 			console.log("%o: fee %o", receipt.transactionHash, print_amt(await extract_gas_cost(receipt)));
 		});
+/*
 		after(async function() {
 			const balance1 = await tracker1.get();
 			value = balance1.sub(min_balance);
@@ -89,6 +88,7 @@ contract("Native Tests: no smart contract interaction", function(accounts) {
 			});
 			console.log("%o: fee %o", receipt.transactionHash, print_amt(await extract_gas_cost(receipt)));
 		});
+*/
 		it("transfer cost is 21,000 gas", async function() {
 			expect(receipt.gasUsed).to.be.equal(21_000);
 		});
