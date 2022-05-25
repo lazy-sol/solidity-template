@@ -83,7 +83,7 @@ else if(process.env.P_KEY42 && !process.env.P_KEY42.startsWith("0x")) {
 	process.env.P_KEY42 = "0x" + process.env.P_KEY42;
 }
 if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
-	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments won't be available");
+	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments may not be available");
 	process.env.INFURA_KEY = "";
 	process.env.ALCHEMY_KEY = "";
 }
@@ -118,10 +118,7 @@ module.exports = {
 		},
 		// https://etherscan.io/
 		mainnet: {
-			url: process.env.ALCHEMY_KEY?
-				"https://eth-mainnet.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY: // create a key: https://www.alchemy.com/
-				"https://mainnet.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
-
+			url: get_endpoint_url("mainnet"),
 
 			accounts: process.env.P_KEY1? [
 				process.env.P_KEY1, // export private key from mnemonic: https://metamask.io/
@@ -131,10 +128,7 @@ module.exports = {
 		},
 		// https://ropsten.etherscan.io/
 		ropsten: {
-			url: process.env.ALCHEMY_KEY?
-				"https://eth-ropsten.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY: // create a key: https://www.alchemy.com/
-				"https://ropsten.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
-
+			url: get_endpoint_url("ropsten"),
 
 			accounts: process.env.P_KEY3? [
 				process.env.P_KEY3, // export private key from mnemonic: https://metamask.io/
@@ -144,10 +138,7 @@ module.exports = {
 		},
 		// https://rinkeby.etherscan.io/
 		rinkeby: {
-			url: process.env.ALCHEMY_KEY?
-				"https://eth-rinkeby.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY: // create a key: https://www.alchemy.com/
-				"https://rinkeby.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
-
+			url: get_endpoint_url("rinkeby"),
 
 			accounts: process.env.P_KEY4? [
 				process.env.P_KEY4, // export private key from mnemonic: https://metamask.io/
@@ -157,11 +148,7 @@ module.exports = {
 		},
 		// https://kovan.etherscan.io/
 		kovan: {
-			url: process.env.ALCHEMY_KEY?
-				"https://eth-kovan.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY: // create a key: https://www.alchemy.com/
-				"https://kovan.infura.io/v3/" + process.env.INFURA_KEY, // create a key: https://infura.io/
-
-			gasPrice: 2000000000, // 2 Gwei
+			url: get_endpoint_url("kovan"),
 
 			accounts: process.env.P_KEY42? [
 				process.env.P_KEY42, // export private key from mnemonic: https://metamask.io/
@@ -230,4 +217,55 @@ module.exports = {
 		],
 	},
 
+}
+
+/**
+ * Determines a JSON-RPC endpoint to use to connect to the node
+ * based on the requested network name and environment variables set
+ *
+ * Tries to use custom RPC URL first (MAINNET_RPC_URL/ROPSTEN_RPC_URL/RINKEBY_RPC_URL/KOVAN_RPC_URL)
+ * Tries to use alchemy RPC URL next (if ALCHEMY_KEY is set)
+ * Fallbacks to infura RPC URL
+ *
+ * @param network_name one of mainnet/ropsten/rinkeby/kovan
+ * @return JSON-RPC endpoint URL
+ */
+function get_endpoint_url(network_name) {
+	// try custom RPC endpoint first (private node, quicknode, etc.)
+	// create a quicknode key: https://www.quicknode.com/
+	if(process.env.MAINNET_RPC_URL && network_name === "mainnet") {
+		return process.env.MAINNET_RPC_URL;
+	}
+	if(process.env.ROPSTEN_RPC_URL && network_name === "ropsten") {
+		return process.env.ROPSTEN_RPC_URL;
+	}
+	if(process.env.RINKEBY_RPC_URL && network_name === "rinkeby") {
+		return process.env.RINKEBY_RPC_URL;
+	}
+	if(process.env.KOVAN_RPC_URL && network_name === "kovan") {
+		return process.env.KOVAN_RPC_URL;
+	}
+	if(process.env.RIOCHAIN_RPC_URL && network_name === "riochain") {
+		return process.env.RIOCHAIN_RPC_URL;
+	}
+
+	// try the alchemy next
+	// create a key: https://www.alchemy.com/
+	if(process.env.ALCHEMY_KEY) {
+		switch(network_name) {
+			case "mainnet": return "https://eth-mainnet.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
+			case "ropsten": return "https://eth-ropsten.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
+			case "rinkeby": return "https://eth-rinkeby.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
+			case "kovan": return "https://eth-kovan.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
+		}
+	}
+
+	// fallback to infura
+	// create a key: https://infura.io/
+	switch(network_name) {
+		case "mainnet": return "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY;
+		case "ropsten": return "https://ropsten.infura.io/v3/" + process.env.INFURA_KEY;
+		case "rinkeby": return "https://rinkeby.infura.io/v3/" + process.env.INFURA_KEY;
+		case "kovan": return "https://kovan.infura.io/v3/" + process.env.INFURA_KEY;
+	}
 }
