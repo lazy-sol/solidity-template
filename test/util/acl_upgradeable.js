@@ -50,9 +50,11 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 	const [A0, a0, H0, a1, a2, a3] = accounts;
 
 	// run the core ACL behaviour test
-	behavesLikeACL(upgradeable_acl_mock_deploy_via_proxy, a0, a1, a2);
 	behavesLikeACL(async function() {
-		const acl = await upgradeable_acl_mock_deploy_via_proxy(a0);
+		return (await upgradeable_acl_mock_deploy_via_proxy(a0)).proxy;
+	}, a0, a1, a2);
+	behavesLikeACL(async function() {
+		const {proxy: acl} = await upgradeable_acl_mock_deploy_via_proxy(a0);
 		const v2 = await upgradeable_acl_mock_deploy(a0, 2);
 		await acl.upgradeTo(v2.address, {from: a0});
 		return acl;
@@ -63,42 +65,71 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 	const to = a2;
 
 	// deploy the ACL
-	let acl;
+	let acl, impl1;
 	beforeEach(async function() {
-		acl = await upgradeable_acl_mock_deploy_via_proxy(a0);
+		({proxy: acl, implementation: impl1} = await upgradeable_acl_mock_deploy_via_proxy(a0));
 	});
 
 	describe("when there is new (v2) implementation available", function() {
-		let v2;
+		let impl2;
 		beforeEach(async function() {
-			v2 = await upgradeable_acl_mock_deploy(a0, 2);
+			impl2 = await upgradeable_acl_mock_deploy(a0, 2);
 		});
 		describe("when performed by UPGRADE_MANAGER", function() {
 			beforeEach(async function() {
 				await acl.updateRole(by, ROLE_UPGRADE_MANAGER, {from: a0});
 			});
-			describe("implementation upgrade succeeds", function() {
+			it("implementation upgrade with initialization fails (already initialized)", async function() {
+				// prepare the initialization call bytes
+				const init_data = acl.contract.methods.postConstruct().encodeABI();
+
+				// and upgrade the implementation
+				await expectRevert(
+					acl.upgradeToAndCall(impl2.address, init_data, {from: by}),
+					"Initializable: contract is already initialized"
+				);
+			});
+			describe("implementation upgrade without initialization succeeds", function() {
 				let receipt;
 				beforeEach(async function() {
-					// prepare the initialization call bytes
-					const init_data = acl.contract.methods.postConstruct().encodeABI();
-					// and upgrade the implementation
-					receipt = await acl.upgradeTo/*AndCall*/(v2.address/*, init_data*/, {from: by});
+					receipt = await acl.upgradeTo(impl2.address, {from: by});
 				});
 				it('"Upgraded" event is emitted', async function() {
-					expectEvent(receipt, "Upgraded", {implementation: v2.address});
+					expectEvent(receipt, "Upgraded", {implementation: impl2.address});
 				});
-				it("implementation address is as expected", async function() {
-					expect(await acl.getImplementation()).to.be.equal(v2.address);
+				it("implementation address is set as expected", async function() {
+					expect(await acl.getImplementation()).to.be.equal(impl2.address);
 				});
+			});
+			it("direct initialization of the implementation (bypassing proxy) fails", async function() {
+				await expectRevert(impl1.postConstruct({from: by}), "invalid context");
+			});
+			it("direct upgrade of the implementation (bypassing proxy) fails", async function() {
+				await expectRevert(impl1.upgradeTo(impl2.address, {from: by}), "Function must be called through delegatecall");
 			});
 		});
 		describe("otherwise (no UPGRADE_MANAGER permission)", function() {
 			beforeEach(async function() {
 				await acl.updateRole(by, not(ROLE_UPGRADE_MANAGER), {from: a0});
 			});
-			it("implementation upgrade reverts", async function() {
-				await expectRevert(acl.upgradeTo(v2.address, {from: by}), "access denied");
+			it("implementation upgrade with initialization fails (already initialized)", async function() {
+				// prepare the initialization call bytes
+				const init_data = acl.contract.methods.postConstruct().encodeABI();
+
+				// and upgrade the implementation
+				await expectRevert(
+					acl.upgradeToAndCall(impl2.address, init_data, {from: by}),
+					"access denied"
+				);
+			});
+			it("implementation upgrade without initialization reverts", async function() {
+				await expectRevert(acl.upgradeTo(impl2.address, {from: by}), "access denied");
+			});
+			it("direct initialization of the implementation (bypassing proxy) fails", async function() {
+				await expectRevert(impl1.postConstruct({from: by}), "invalid context");
+			});
+			it("direct upgrade of the implementation (bypassing proxy) fails", async function() {
+				await expectRevert(impl1.upgradeTo(impl2.address, {from: by}), "Function must be called through delegatecall");
 			});
 		});
 	});

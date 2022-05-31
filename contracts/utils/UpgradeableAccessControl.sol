@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 /**
@@ -116,9 +117,20 @@ abstract contract UpgradeableAccessControl is UUPSUpgradeable {
 	/**
 	 * @dev UUPS initializer, sets the contract owner to have full privileges
 	 *
+	 * @dev Can be executed only in constructor during deployment,
+	 *      reverts when executed in already deployed contract
+	 *
+	 * @dev IMPORTANT:
+	 *      this function MUST be executed during proxy deployment (in proxy constructor),
+	 *      otherwise it renders useless and cannot be executed at all,
+	 *      resulting in no admin control over the proxy and no possibility to do future upgrades
+	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
 	function _postConstruct(address _owner) internal virtual initializer {
+		// ensure this function is execute only in constructor
+		require(!AddressUpgradeable.isContract(address(this)), "invalid context");
+
 		// grant owner full privileges
 		userRoles[_owner] = FULL_PRIVILEGES_MASK;
 

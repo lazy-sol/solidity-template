@@ -21,7 +21,7 @@ contract UpgradeableERC721Mock is UpgradeableERC721 {
 	 */
 	function postConstruct(string memory _name, string memory _symbol) public virtual initializer {
 		// execute all parent initializers in cascade
-		UpgradeableERC721._postConstruct(_name, _symbol, msg.sender);
+		super._postConstruct(_name, _symbol, msg.sender);
 	}
 }
 
@@ -33,7 +33,7 @@ contract UpgradeableERC721Mock is UpgradeableERC721 {
  *
  * @author Basil Gorin
  */
-contract UpgradeableERC721Mock2 is UpgradeableERC721Mock {
+contract UpgradeableERC721Mock2 is UpgradeableERC721 {
 	// add version!
 	string public version;
 
@@ -44,7 +44,7 @@ contract UpgradeableERC721Mock2 is UpgradeableERC721Mock {
 	 * @param _name token name (ERC721Metadata)
 	 * @param _symbol token symbol (ERC721Metadata)
 	 */
-	function postConstruct(string memory _name, string memory _symbol) public virtual override initializer {
+	function postConstruct(string memory _name, string memory _symbol) public virtual initializer {
 		// execute all parent initializers in cascade
 		super._postConstruct(_name, _symbol, msg.sender);
 

@@ -48,8 +48,8 @@ async function upgradeable_acl_mock_deploy_via_proxy(a0, version) {
 	// deploy proxy, and initialize the impl (inline)
 	const proxy = await Proxy.new(instance.address, init_data, {from: a0});
 
-	// wrap the proxy into the impl ABI and return
-	return await ACL.at(proxy.address);
+	// wrap the proxy into the impl ABI and return both proxy and instance
+	return {proxy: await ACL.at(proxy.address), implementation: instance};
 }
 
 // export public deployment API
