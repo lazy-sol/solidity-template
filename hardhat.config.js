@@ -103,7 +103,7 @@ module.exports = {
 			// set networkId to 0xeeeb04de as for all local networks
 			chainId: 0xeeeb04de,
 			// set the gas price to one for convenient tx costs calculations in tests
-			gasPrice: 1,
+			// gasPrice: 1,
 			// London hard fork fix: impossible to set gas price lower than baseFeePerGas (875,000,000)
 			initialBaseFeePerGas: 0,
 			accounts: {
@@ -119,42 +119,22 @@ module.exports = {
 		// https://etherscan.io/
 		mainnet: {
 			url: get_endpoint_url("mainnet"),
-
-			accounts: process.env.P_KEY1? [
-				process.env.P_KEY1, // export private key from mnemonic: https://metamask.io/
-			]: {
-				mnemonic: process.env.MNEMONIC1, // create 12 words: https://metamask.io/
-			}
+			accounts: get_accounts(process.env.P_KEY1, process.env.MNEMONIC1),
 		},
 		// https://ropsten.etherscan.io/
 		ropsten: {
 			url: get_endpoint_url("ropsten"),
-
-			accounts: process.env.P_KEY3? [
-				process.env.P_KEY3, // export private key from mnemonic: https://metamask.io/
-			]: {
-				mnemonic: process.env.MNEMONIC3, // create 12 words: https://metamask.io/
-			}
+			accounts: get_accounts(process.env.P_KEY3, process.env.MNEMONIC3),
 		},
 		// https://rinkeby.etherscan.io/
 		rinkeby: {
 			url: get_endpoint_url("rinkeby"),
-
-			accounts: process.env.P_KEY4? [
-				process.env.P_KEY4, // export private key from mnemonic: https://metamask.io/
-			]: {
-				mnemonic: process.env.MNEMONIC4, // create 12 words: https://metamask.io/
-			}
+			accounts: get_accounts(process.env.P_KEY4, process.env.MNEMONIC4),
 		},
 		// https://kovan.etherscan.io/
 		kovan: {
 			url: get_endpoint_url("kovan"),
-
-			accounts: process.env.P_KEY42? [
-				process.env.P_KEY42, // export private key from mnemonic: https://metamask.io/
-			]: {
-				mnemonic: process.env.MNEMONIC42, // create 12 words: https://metamask.io/
-			}
+			accounts: get_accounts(process.env.P_KEY42, process.env.MNEMONIC42),
 		},
 	},
 
@@ -245,9 +225,6 @@ function get_endpoint_url(network_name) {
 	if(process.env.KOVAN_RPC_URL && network_name === "kovan") {
 		return process.env.KOVAN_RPC_URL;
 	}
-	if(process.env.RIOCHAIN_RPC_URL && network_name === "riochain") {
-		return process.env.RIOCHAIN_RPC_URL;
-	}
 
 	// try the alchemy next
 	// create a key: https://www.alchemy.com/
@@ -268,4 +245,16 @@ function get_endpoint_url(network_name) {
 		case "rinkeby": return "https://rinkeby.infura.io/v3/" + process.env.INFURA_KEY;
 		case "kovan": return "https://kovan.infura.io/v3/" + process.env.INFURA_KEY;
 	}
+}
+
+/**
+ * Depending on which of the inputs are available (private key or mnemonic),
+ * constructs an account object for use in the hardhat config
+ *
+ * @param p_key account private key, export private key from mnemonic: https://metamask.io/
+ * @param mnemonic 12 words mnemonic, create 12 words: https://metamask.io/
+ * @return either [p_key] if p_key is defined, or {mnemonic} if mnemonic is defined
+ */
+function get_accounts(p_key, mnemonic) {
+	return p_key? [p_key]: mnemonic? {mnemonic}: undefined;
 }
