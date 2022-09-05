@@ -92,9 +92,11 @@ async function upgradeable_erc721_deploy_restricted(a0, name = NAME, symbol = SY
  *
  * @param a0 smart contract deployer, owner, super admin
  * @param proxy previously deployed instance (as a proxy)
+ * @param name token name, ERC-721 compatible descriptive name
+ * @param symbol token symbol, ERC-721 compatible abbreviated name
  * @returns UpgradeableERC721 instance
  */
-async function upgradeable_erc721_upgrade_restricted(a0, proxy) {
+async function upgradeable_erc721_upgrade_restricted(a0, proxy, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
 	const ERC721Contract = artifacts.require("./UpgradeableERC721Mock2");
 

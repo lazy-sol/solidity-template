@@ -25,6 +25,7 @@ const {
 // deployment routines in use
 const {
 	erc20_deploy,
+	upgradeable_erc20_deploy,
 	NAME,
 	SYMBOL,
 	DECIMALS,
@@ -40,47 +41,51 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 	// a1, a2,... – working accounts to perform tests on
 	const [A0, a0, H0, a1, a2] = accounts;
 
-	let erc20;
-	beforeEach(async function() {
-		erc20 = await erc20_deploy(a0, H0);
-	});
-
-	function run_zeppelin_erc20_tests(S0, H0, a1, a2) {
-		// Zeppelin global setup
+	// define test suite: it will be reused to test several contracts
+	function zeppelin_suite(contract_name, deployment_fn) {
+		let erc20;
 		beforeEach(async function() {
-			// Zeppelin uses this.token shortcut to access token instance
-			this.token = erc20;
+			erc20 = await deployment_fn(a0, H0);
 		});
 
-		describe("ERC20 token shouldBehaveLikeERC20", function() {
-			// Zeppelin setup for ERC20 transfers: not required, full set of features already on deployment
-			shouldBehaveLikeERC20("ERC20: ", S0, H0, a1, a2);
-		});
-		describe("ERC20 token shouldHaveMint (ext)", function() {
-			// Zeppelin setup for token minting
+		describe(`${contract_name}: Zeppelin Suite`, function() {
+			// Zeppelin global setup
 			beforeEach(async function() {
-				// Zeppelin uses default zero account A0 (accounts[0]) to mint tokens,
-				// grant this address a permission to mint
-				await erc20.updateRole(A0, ROLE_TOKEN_CREATOR, {from: a0});
+				// Zeppelin uses this.token shortcut to access token instance
+				this.token = erc20;
 			});
-			shouldHaveMint("ERC20: ", S0, H0, a1);
-		});
-		describe("ERC20 token shouldHaveBurn (ext)", function() {
-			// Zeppelin setup for token burning
-			beforeEach(async function() {
-				// Zeppelin uses default zero account A0 (accounts[0]) to burn tokens,
-				// grant this address a permission to burn
-				await erc20.updateRole(A0, ROLE_TOKEN_DESTROYER, {from: a0});
+
+			describe("ERC20 token shouldBehaveLikeERC20", function() {
+				// Zeppelin setup for ERC20 transfers: not required, full set of features already on deployment
+				shouldBehaveLikeERC20("ERC20: ", S0, H0, a1, a2);
 			});
-			shouldHaveBurn("ERC20: ", S0, H0);
-		});
-		describe("ERC20 token shouldHaveBasicProps (ext)", function() {
-			shouldHaveBasicProps(NAME, SYMBOL, DECIMALS);
-		});
-		describe("ERC20 token shouldHaveApprove (ext)", function() {
-			shouldHaveAtomicApprove("ERC20: ", S0, H0, a1);
+			describe("ERC20 token shouldHaveMint (ext)", function() {
+				// Zeppelin setup for token minting
+				beforeEach(async function() {
+					// Zeppelin uses default zero account A0 (accounts[0]) to mint tokens,
+					// grant this address a permission to mint
+					await erc20.updateRole(A0, ROLE_TOKEN_CREATOR, {from: a0});
+				});
+				shouldHaveMint("ERC20: ", S0, H0, a1);
+			});
+			describe("ERC20 token shouldHaveBurn (ext)", function() {
+				// Zeppelin setup for token burning
+				beforeEach(async function() {
+					// Zeppelin uses default zero account A0 (accounts[0]) to burn tokens,
+					// grant this address a permission to burn
+					await erc20.updateRole(A0, ROLE_TOKEN_DESTROYER, {from: a0});
+				});
+				shouldHaveBurn("ERC20: ", S0, H0);
+			});
+			describe("ERC20 token shouldHaveBasicProps (ext)", function() {
+				shouldHaveBasicProps(NAME, SYMBOL, DECIMALS);
+			});
+			describe("ERC20 token shouldHaveApprove (ext)", function() {
+				shouldHaveAtomicApprove("ERC20: ", S0, H0, a1);
+			});
 		});
 	}
 
-	run_zeppelin_erc20_tests(S0, H0, a1, a2);
+	zeppelin_suite("ERC20Impl", erc20_deploy);
+	zeppelin_suite("UpgradeableERC20", upgradeable_erc20_deploy);
 });

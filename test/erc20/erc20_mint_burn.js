@@ -23,6 +23,7 @@ const {random_bn} = require("../../scripts/include/bn_utils");
 // deployment routines in use
 const {
 	erc20_deploy,
+	upgradeable_erc20_deploy,
 	NAME,
 	SYMBOL,
 	DECIMALS,
@@ -38,35 +39,38 @@ contract("ERC20: Mint/Burn Tests addons", function(accounts) {
 	// a1, a2,... – working accounts to perform tests on
 	const [A0, a0, H0, a1, a2] = accounts;
 
-	let erc20;
-	beforeEach(async function() {
-		erc20 = await erc20_deploy(a0, H0);
-	});
+	function run_erc20_mint_burn_tests_addon(contract_name, deployment_fn) {
+		describe(`${contract_name}: Mint/Burn Tests addons`, function() {
+			let erc20;
+			beforeEach(async function() {
+				erc20 = await deployment_fn(a0, H0);
+			});
 
-	function run_erc20_mint_burn_tests_addon(S0, H0, a1, a2) {
-		const by = a0;
-		const to = a1;
-		const from = H0;
-		const value = random_bn(1, S0);
-		describe("mint", function() {
-			let receipt;
-			beforeEach(async function() {
-				receipt = await erc20.mint(to, value, {from: by});
+			const by = a0;
+			const to = a1;
+			const from = H0;
+			const value = random_bn(1, S0);
+			describe("mint", function() {
+				let receipt;
+				beforeEach(async function() {
+					receipt = await erc20.mint(to, value, {from: by});
+				});
+				it('should emit "Minted" event', async function() {
+					expectEvent(receipt, "Minted", {by, to, value});
+				});
 			});
-			it('should emit "Minted" event', async function() {
-				expectEvent(receipt, "Minted", {by, to, value});
-			});
-		});
-		describe("burn", function() {
-			let receipt;
-			beforeEach(async function() {
-				receipt = await erc20.burn(from, value, {from: by});
-			});
-			it('should emit "Burnt" event', async function() {
-				expectEvent(receipt, "Burnt", {by, from, value});
+			describe("burn", function() {
+				let receipt;
+				beforeEach(async function() {
+					receipt = await erc20.burn(from, value, {from: by});
+				});
+				it('should emit "Burnt" event', async function() {
+					expectEvent(receipt, "Burnt", {by, from, value});
+				});
 			});
 		});
 	}
 
-	run_erc20_mint_burn_tests_addon(S0, H0, a1, a2);
+	run_erc20_mint_burn_tests_addon("ERC20Impl", erc20_deploy);
+	run_erc20_mint_burn_tests_addon("UpgradeableERC20", upgradeable_erc20_deploy);
 });

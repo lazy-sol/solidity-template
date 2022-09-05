@@ -25,6 +25,7 @@ const {
 // deployment routines in use
 const {
 	erc20_deploy_restricted,
+	upgradeable_erc20_deploy_restricted,
 } = require("./include/deployment_routines");
 
 // run ERC165 Interface ID tests
@@ -36,16 +37,22 @@ contract("ERC20: ERC165 Interface ID tests", function(accounts) {
 	// a1, a2,... – working accounts to perform tests on
 	const [A0, a0, H0, a1, a2] = accounts;
 
-	let token;
-	beforeEach(async function() {
-		token = await erc20_deploy_restricted(a0, H0);
-	});
-
-	describe("run vittominacori's shouldSupportInterfaces", function() {
+	// define test suite: it will be reused to test several contracts
+	function erc165_suite(contract_name, deployment_fn) {
+		let token;
 		beforeEach(async function() {
-			// shouldSupportInterfaces uses this.token shortcut to access token instance
-			this.token = token;
+			token = await deployment_fn(a0, H0);
 		});
-		shouldSupportInterfaces(["ERC20"]);
-	});
+
+		describe("run vittominacori's shouldSupportInterfaces", function() {
+			beforeEach(async function() {
+				// shouldSupportInterfaces uses this.token shortcut to access token instance
+				this.token = token;
+			});
+			shouldSupportInterfaces(["ERC20"]);
+		});
+	}
+
+	erc165_suite("ERC20Impl", erc20_deploy_restricted);
+	erc165_suite("UpgradeableERC20", upgradeable_erc20_deploy_restricted);
 });
