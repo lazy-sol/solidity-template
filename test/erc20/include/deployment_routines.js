@@ -108,9 +108,11 @@ async function upgradeable_erc20_deploy_restricted(a0, H0 = a0, name = NAME, sym
  *
  * @param a0 smart contract deployer, owner, super admin
  * @param proxy previously deployed instance (as a proxy)
+ * @param name token name, ERC20 compatible descriptive name
+ * @param symbol token symbol, ERC20 compatible abbreviated name
  * @returns UpgradeableERC20 instance
  */
-async function upgradeable_erc721_upgrade_restricted(a0, proxy) {
+async function upgradeable_erc20_upgrade_restricted(a0, proxy, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
 	const ERC20Contract = artifacts.require("./UpgradeableERC20Mock2");
 
@@ -157,7 +159,7 @@ module.exports = {
 	erc20_deploy_restricted,
 	upgradeable_erc20_deploy,
 	upgradeable_erc20_deploy_restricted,
-	upgradeable_erc721_upgrade_restricted,
+	upgradeable_erc20_upgrade_restricted,
 	usdt_deploy,
 	NAME,
 	SYMBOL,

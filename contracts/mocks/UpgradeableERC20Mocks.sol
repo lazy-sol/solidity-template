@@ -6,7 +6,7 @@ import "../token/UpgradeableERC20.sol";
 /**
  * @title Zeppelin ERC20 Mock
  *
- * @notice Zeppelin ERC20 Mock simulates an NFT token, used for testing purposes;
+ * @notice Zeppelin ERC20 Mock simulates a ERC20 token, used for testing purposes;
  *      it still has restricted access to the mint() function
  *
  * @author Basil Gorin
