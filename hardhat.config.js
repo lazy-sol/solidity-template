@@ -13,6 +13,10 @@
  *     or
  *   - MNEMONIC4 – rinkeby mnemonic, 12 words
  *
+ *   - P_KEY5 – goerli private key, should start with 0x
+ *     or
+ *   - MNEMONIC5 – goerli mnemonic, 12 words
+ *
  *   - ALCHEMY_KEY – Alchemy API key
  *     or
  *   - INFURA_KEY – Infura API key (Project ID)
@@ -82,6 +86,14 @@ else if(process.env.P_KEY42 && !process.env.P_KEY42.startsWith("0x")) {
 	console.warn("P_KEY42 doesn't start with 0x. Appended 0x");
 	process.env.P_KEY42 = "0x" + process.env.P_KEY42;
 }
+if(!process.env.MNEMONIC5 && !process.env.P_KEY5) {
+	console.warn("neither MNEMONIC5 nor P_KEY5 is not set. Goerli deployments won't be available");
+	process.env.MNEMONIC5 = FAKE_MNEMONIC;
+}
+else if(process.env.P_KEY5 && !process.env.P_KEY5.startsWith("0x")) {
+	console.warn("P_KEY5 doesn't start with 0x. Appended 0x");
+	process.env.P_KEY5 = "0x" + process.env.P_KEY5;
+}
 if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
 	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments may not be available");
 	process.env.INFURA_KEY = "";
@@ -135,6 +147,11 @@ module.exports = {
 		kovan: {
 			url: get_endpoint_url("kovan"),
 			accounts: get_accounts(process.env.P_KEY42, process.env.MNEMONIC42),
+		},
+		// https://goerli.etherscan.io/
+		goerli: {
+			url: get_endpoint_url("goerli"),
+			accounts: get_accounts(process.env.P_KEY5, process.env.MNEMONIC5),
 		},
 	},
 
@@ -225,6 +242,9 @@ function get_endpoint_url(network_name) {
 	if(process.env.KOVAN_RPC_URL && network_name === "kovan") {
 		return process.env.KOVAN_RPC_URL;
 	}
+	if(process.env.GOERLI_RPC_URL && network_name === "goerli") {
+		return process.env.GOERLI_RPC_URL;
+	}
 
 	// try the alchemy next
 	// create a key: https://www.alchemy.com/
@@ -234,6 +254,7 @@ function get_endpoint_url(network_name) {
 			case "ropsten": return "https://eth-ropsten.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
 			case "rinkeby": return "https://eth-rinkeby.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
 			case "kovan": return "https://eth-kovan.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
+			case "goerli": return "https://eth-goerli.alchemyapi.io/v2/" + process.env.ALCHEMY_KEY;
 		}
 	}
 
@@ -244,6 +265,7 @@ function get_endpoint_url(network_name) {
 		case "ropsten": return "https://ropsten.infura.io/v3/" + process.env.INFURA_KEY;
 		case "rinkeby": return "https://rinkeby.infura.io/v3/" + process.env.INFURA_KEY;
 		case "kovan": return "https://kovan.infura.io/v3/" + process.env.INFURA_KEY;
+		case "goerli": return "https://goerli.infura.io/v3/" + process.env.INFURA_KEY;
 	}
 }
 

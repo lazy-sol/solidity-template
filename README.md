@@ -89,6 +89,7 @@ Following steps were tested to work in macOS Catalina
    2. Ropsten
    3. Rinkeby
    4. Kovan
+   5. Goerli
 
    You can use MetaMask to create mnemonics: https://metamask.io/
 
@@ -115,6 +116,7 @@ Following steps were tested to work in macOS Catalina
    | MNEMONIC3    | Ropsten mnemonic  |
    | MNEMONIC4    | Rinkeby mnemonic  |
    | MNEMONIC42   | Kovan mnemonic    |
+   | MNEMONIC5    | Goerli mnemonic   |
    | INFURA_KEY   | Infura access key |
    | ETHERSCAN_KEY| Etherscan API key |
 
@@ -128,6 +130,7 @@ export MNEMONIC1="witch collapse practice feed shame open despair creek road aga
 export MNEMONIC3="someone relief rubber remove donkey jazz segment nose spray century put beach"
 export MNEMONIC4="someone relief rubber remove donkey jazz segment nose spray century put beach"
 export MNEMONIC42="someone relief rubber remove donkey jazz segment nose spray century put beach"
+export MNEMONIC5="someone relief rubber remove donkey jazz segment nose spray century put beach"
 export INFURA_KEY="000ba27dfb1b3663aadfc74c3ab092ae"
 export ETHERSCAN_KEY="9GEEN6VPKUR7O6ZFBJEKCWSK49YGMPUBBG"
 ```
@@ -144,6 +147,7 @@ If both infura and alchemy keys are set, alchemy is used.
    2. Ropsten
    3. Rinkeby
    4. Kovan
+   5. Goerli
 
    You can use MetaMask to export private keys: https://metamask.io/
 
@@ -163,6 +167,7 @@ If both infura and alchemy keys are set, alchemy is used.
    | P_KEY3       | Ropsten private key |
    | P_KEY4       | Rinkeby private key |
    | P_KEY42      | Kovan private key   |
+   | P_KEY5       | Goerli private key  |
    | ALCHEMY_KEY  | Alchemy API key   |
    | ETHERSCAN_KEY| Etherscan API key   |
 
@@ -174,6 +179,7 @@ export P_KEY1="0x5ed21858f273023c7fc0683a1e853ec38636553203e531a79d677cb39b3d85a
 export P_KEY3="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
 export P_KEY4="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
 export P_KEY42="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
+export P_KEY5="0xfb84b845b8ea672939f5f6c9a43b2ae53b3ee5eb8480a4bfc5ceeefa459bf20c"
 export ALCHEMY_KEY="hLe1XqWAUlvmlW42Ka5fdgbpb97ENsMJ"
 export ETHERSCAN_KEY="9GEEN6VPKUR7O6ZFBJEKCWSK49YGMPUBBG"
 ```
