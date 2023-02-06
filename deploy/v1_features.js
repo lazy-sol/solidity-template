@@ -36,21 +36,21 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 
 	// ERC20
 	{
-		// get the ERC20 v1 implementation and proxy deployments
+		// get the v1 implementation and proxy deployments
 		const proxy_deployment = await deployments.get("ERC20_v1"); // ERC20_Proxy
 		const v1_deployment = await deployments.get("ERC20_v1");
 
-		// print ERC20 proxy info, and determine if transfers are enabled
+		// print proxy info, and determine if transfers are enabled
 		const {features} = await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
-		// verify if transfers are enabled on the ERC20 and enable if required
+		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF);
 		if(!features.eq(requested_features)) {
 			// prepare the updateFeatures call bytes for ERC20 proxy call
 			const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
 			const call_data = proxy.methods.updateFeatures(requested_features).encodeABI();
 
-			// grant the sale permissions to mint NFTs and set metadata
+			// update the features as required
 			const receipt = await deployments.rawTx({
 				from: A0,
 				to: proxy_deployment.address,
@@ -62,21 +62,21 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 
 	// ERC721
 	{
-		// get the ERC721 v1 implementation and proxy deployments
+		// get the v1 implementation and proxy deployments
 		const proxy_deployment = await deployments.get("ERC721_Proxy");
 		const v1_deployment = await deployments.get("ERC721_v1");
 
-		// print ERC721 proxy info, and determine if transfers are enabled
+		// print proxy info, and determine if transfers are enabled
 		const {features} = await print_nft_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
-		// verify if transfers are enabled on the ERC721 and enable if required
+		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF);
 		if(!features.eq(requested_features)) {
 			// prepare the updateFeatures call bytes for ERC721 proxy call
 			const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
 			const update_features_data = proxy.methods.updateFeatures(requested_features).encodeABI();
 
-			// grant the sale permissions to mint NFTs and set metadata
+			// update the features as required
 			const receipt = await deployments.rawTx({
 				from: A0,
 				to: proxy_deployment.address,

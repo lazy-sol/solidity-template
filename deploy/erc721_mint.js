@@ -29,18 +29,18 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 
 	// ERC721
 	{
-		// get the ERC721 v1 implementation and proxy deployments
+		// get the v1 implementation and proxy deployments
 		const proxy_deployment = await deployments.get("ERC721_Proxy");
 		const v1_deployment = await deployments.get("ERC721_v1");
 
-		// print ERC721 proxy info
+		// print proxy info
 		await print_nft_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// determine mint function params
 		const to = A0;
 		const token_id = random_bn256();
 
-		// prepare the mint call bytes for ERC721 proxy call
+		// prepare the mint call bytes for the proxy call
 		const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
 		const call_data = proxy.methods.mint(to, token_id).encodeABI();
 

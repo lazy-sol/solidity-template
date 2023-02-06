@@ -29,18 +29,18 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 
 	// ERC20
 	{
-		// get the ERC20 v1 implementation and proxy deployments
+		// get the v1 implementation and proxy deployments
 		const proxy_deployment = await deployments.get("ERC20_v1"); // ERC20_Proxy
 		const v1_deployment = await deployments.get("ERC20_v1");
 
-		// print ERC20 proxy info
+		// print proxy info
 		await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// determine mint function params
 		const to = A0;
 		const value = toBN(10).pow(toBN(18));
 
-		// prepare the mint call bytes for ERC20 proxy call
+		// prepare the mint call bytes for the proxy call
 		const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
 		const call_data = proxy.methods.mint(to, value).encodeABI();
 
