@@ -375,7 +375,8 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 	function _beforeTokenTransfer(
 		address _from,
 		address _to,
-		uint256 _tokenId
+		uint256 _tokenId,
+		uint256 _batchSize
 	) internal virtual override(ERC721Upgradeable, ERC721EnumerableUpgradeable) {
 		// for transfers only - verify if transfers are enabled
 		require(_from == address(0) || _to == address(0) // won't affect minting/burning
@@ -384,7 +385,7 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 		        _from == msg.sender? "transfers are disabled": "transfers on behalf are disabled");
 
 		// delegate to ERC721Enumerable impl
-		ERC721EnumerableUpgradeable._beforeTokenTransfer(_from, _to, _tokenId);
+		ERC721EnumerableUpgradeable._beforeTokenTransfer(_from, _to, _tokenId, _batchSize);
 	}
 
 	/**

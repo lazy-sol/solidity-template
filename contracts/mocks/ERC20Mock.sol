@@ -11,7 +11,7 @@ import "../token/ERC20Impl.sol";
  *
  * @author Basil Gorin
  */
-contract ZeppelinERC20Mock is ERC20Impl {
+contract ERC20Mock is ERC20Impl {
 	/// @dev Defines if balanceOf() return value should be overridden
 	bool private _balanceOfOverride;
 

@@ -46,7 +46,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		// address (or private key) that will perform the transaction.
 		// you can use `getNamedAccounts` to retrieve the address you want by name.
 		from: A0,
-		contract: "ZeppelinERC20Mock",
+		contract: "ERC20Mock",
 		// the list of argument for the constructor (or the upgrade function in case of proxy)
 		args: [ERC20_NAME, ERC20_SYMBOL],
 		// if set it to true, will not attempt to deploy even if the contract deployed under the same name is different

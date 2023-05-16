@@ -36,7 +36,7 @@ async function erc721_deploy(a0, name = NAME, symbol = SYMBOL) {
  */
 async function erc721_deploy_restricted(a0, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
-	const ERC721Contract = artifacts.require("./ZeppelinERC721Mock");
+	const ERC721Contract = artifacts.require("./ERC721Mock");
 
 	// deploy ERC721 and return the reference
 	return await ERC721Contract.new(name, symbol, {from: a0});
@@ -114,7 +114,7 @@ async function upgradeable_erc721_upgrade_restricted(a0, proxy, name = NAME, sym
 }
 
 /**
- * Deploys Zeppelin ERC721 Receiver Mock
+ * Deploys ERC721 Receiver Mock
  *
  * @param a0 deployer, smart contract deployer, owner, super admin
  * @param retval return value receiver returns when receives the token,
@@ -124,10 +124,10 @@ async function upgradeable_erc721_upgrade_restricted(a0, proxy, name = NAME, sym
  */
 async function erc721_receiver_deploy(a0, retval = "0x150b7a02", error = 0) {
 	// smart contracts required
-	const ZeppelinERC721ReceiverMock = artifacts.require("./ZeppelinERC721ReceiverMock");
+	const ERC721ReceiverMock = artifacts.require("./ERC721ReceiverMock");
 
 	// deploy ERC721 receiver and return the reference
-	return await ZeppelinERC721ReceiverMock.new(retval, error, {from: a0});
+	return await ERC721ReceiverMock.new(retval, error, {from: a0});
 }
 
 // export public deployment API

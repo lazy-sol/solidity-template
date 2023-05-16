@@ -11,7 +11,7 @@ import "../token/ERC721Impl.sol";
  *
  * @author Basil Gorin
  */
-contract ZeppelinERC721Mock is ERC721Impl {
+contract ERC721Mock is ERC721Impl {
 	/**
 	 * @dev Creates/deploys an NFT Mock instance
 	 *

@@ -360,7 +360,8 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	function _beforeTokenTransfer(
 		address _from,
 		address _to,
-		uint256 _tokenId
+		uint256 _tokenId,
+		uint256 _batchSize
 	) internal virtual override(ERC721, ERC721Enumerable) {
 		// for transfers only - verify if transfers are enabled
 		require(_from == address(0) || _to == address(0) // won't affect minting/burning
@@ -369,7 +370,7 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 		        _from == msg.sender? "transfers are disabled": "transfers on behalf are disabled");
 
 		// delegate to ERC721Enumerable impl
-		ERC721Enumerable._beforeTokenTransfer(_from, _to, _tokenId);
+		ERC721Enumerable._beforeTokenTransfer(_from, _to, _tokenId, _batchSize);
 	}
 
 	/**

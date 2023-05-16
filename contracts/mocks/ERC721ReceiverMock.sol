@@ -11,7 +11,7 @@ import "../interfaces/ERC721Spec.sol";
  *
  * @author Basil Gorin
  */
-contract ZeppelinERC721ReceiverMock is ERC721TokenReceiver {
+contract ERC721ReceiverMock is ERC721TokenReceiver {
 	enum Error {
 		None,
 		RevertWithMessage,
