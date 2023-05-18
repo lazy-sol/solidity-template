@@ -26,7 +26,14 @@ const {
 const {
 	erc20_deploy_restricted,
 	upgradeable_erc20_deploy_restricted,
+	S0,
 } = require("./include/deployment_routines");
+
+// deployment fixture routines in use
+const {
+	get_erc20_deployment,
+	get_erc20_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
 
 // run ERC165 Interface ID tests
 contract("ERC20: ERC165 Interface ID tests", function(accounts) {
@@ -41,7 +48,8 @@ contract("ERC20: ERC165 Interface ID tests", function(accounts) {
 	function erc165_suite(contract_name, deployment_fn) {
 		let token;
 		beforeEach(async function() {
-			token = await deployment_fn(a0, H0);
+			// a0 and H0 are ignored when using a fixture
+			token = await deployment_fn.call(this, a0, H0);
 		});
 
 		describe("run vittominacori's shouldSupportInterfaces", function() {
@@ -53,6 +61,6 @@ contract("ERC20: ERC165 Interface ID tests", function(accounts) {
 		});
 	}
 
-	erc165_suite("ERC20Impl", erc20_deploy_restricted);
-	erc165_suite("UpgradeableERC20", upgradeable_erc20_deploy_restricted);
+	erc165_suite("ERC20Impl", get_erc20_deployment);
+	erc165_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
 });

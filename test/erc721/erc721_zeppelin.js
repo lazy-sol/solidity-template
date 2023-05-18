@@ -28,6 +28,12 @@ const {
 	SYMBOL,
 } = require("./include/deployment_routines");
 
+// deployment fixture routines in use
+const {
+	get_erc721_deployment,
+	get_erc721_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
+
 // run OpenZeppelin ERC721 tests
 contract("ERC721: OpenZeppelin ERC721 Tests", function(accounts) {
 	// extract accounts to be used:
@@ -40,10 +46,16 @@ contract("ERC721: OpenZeppelin ERC721 Tests", function(accounts) {
 	// define test suite: it will be reused to test several contracts
 	function zeppelin_suite(contract_name, deployment_fn) {
 		describe(`${contract_name} shouldBehaveLikeERC721 +Enumerable +Metadata`, function() {
+			let token;
+			beforeEach(async function() {
+				// a0 is ignored when using a fixture
+				token = await deployment_fn.call(this, a0);
+			});
+
 			// Zeppelin token setup
 			beforeEach(async function() {
 				// Zeppelin uses this.token shortcut to access token instance
-				this.token = await deployment_fn(a0);
+				this.token = token;
 			});
 
 			// Zeppelin setup for transfers: not required, full set of features already on deployment
@@ -65,6 +77,7 @@ contract("ERC721: OpenZeppelin ERC721 Tests", function(accounts) {
 	}
 
 	// run the suite
+	// TODO: use fixtures (currently slows down the test significantly)
 	zeppelin_suite("ERC721Impl", erc721_deploy);
 	zeppelin_suite("UpgradeableERC721", upgradeable_erc721_deploy);
 });

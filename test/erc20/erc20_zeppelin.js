@@ -32,6 +32,12 @@ const {
 	S0,
 } = require("./include/deployment_routines");
 
+// deployment fixture routines in use
+const {
+	get_erc20_deployment,
+	get_erc20_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
+
 // run OpenZeppelin ERC20 tests
 contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 	// extract accounts to be used:
@@ -43,16 +49,19 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 
 	// define test suite: it will be reused to test several contracts
 	function zeppelin_suite(contract_name, deployment_fn) {
-		let erc20;
-		beforeEach(async function() {
-			erc20 = await deployment_fn(a0, H0);
-		});
-
 		describe(`${contract_name}: Zeppelin Suite`, function() {
+			let token;
+			beforeEach(async function() {
+				// a0 and H0 are ignored when using a fixture
+				token = await deployment_fn.call(this, a0, H0);
+				// when using a fixture, there is no initial token supply minted
+				await token.mint(H0, S0,{from: a0});
+			});
+
 			// Zeppelin global setup
 			beforeEach(async function() {
 				// Zeppelin uses this.token shortcut to access token instance
-				this.token = erc20;
+				this.token = token;
 			});
 
 			describe("ERC20 token shouldBehaveLikeERC20", function() {
@@ -64,7 +73,7 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 				beforeEach(async function() {
 					// Zeppelin uses default zero account A0 (accounts[0]) to mint tokens,
 					// grant this address a permission to mint
-					await erc20.updateRole(A0, ROLE_TOKEN_CREATOR, {from: a0});
+					await token.updateRole(A0, ROLE_TOKEN_CREATOR, {from: a0});
 				});
 				shouldHaveMint("ERC20: ", S0, H0, a1);
 			});
@@ -73,7 +82,7 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 				beforeEach(async function() {
 					// Zeppelin uses default zero account A0 (accounts[0]) to burn tokens,
 					// grant this address a permission to burn
-					await erc20.updateRole(A0, ROLE_TOKEN_DESTROYER, {from: a0});
+					await token.updateRole(A0, ROLE_TOKEN_DESTROYER, {from: a0});
 				});
 				shouldHaveBurn("ERC20: ", S0, H0);
 			});
@@ -86,6 +95,6 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 		});
 	}
 
-	zeppelin_suite("ERC20Impl", erc20_deploy);
-	zeppelin_suite("UpgradeableERC20", upgradeable_erc20_deploy);
+	zeppelin_suite("ERC20Impl", get_erc20_deployment);
+	zeppelin_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
 });

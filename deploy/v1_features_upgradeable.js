@@ -1,4 +1,4 @@
-// run: npx hardhat deploy --network goerli --tags v1_features
+// run: npx hardhat deploy --network goerli --tags v1_features_upgradeable
 
 // script is built for hardhat-deploy plugin:
 // A Hardhat Plugin For Replicable Deployments And Easy Testing
@@ -41,50 +41,52 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 	// ERC20
 	{
 		// get the v1 implementation and proxy deployments
-		const deployment = await deployments.get("ERC20");
+		const proxy_deployment = await deployments.get("ERC20_Proxy");
+		const v1_deployment = await deployments.get("ERC20_v1");
 
 		// print proxy info, and determine if transfers are enabled
-		const {features} = await print_erc20_acl_details(A0, deployment.abi, deployment.address);
+		const {features} = await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF);
 		if(!features.eq(requested_features)) {
-			// prepare the updateFeatures call bytes for ERC20 contract call
-			const contract = new web3.eth.Contract(deployment.abi, deployment.address);
-			const call_data = contract.methods.updateFeatures(requested_features).encodeABI();
+			// prepare the updateFeatures call bytes for ERC20 proxy call
+			const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
+			const call_data = proxy.methods.updateFeatures(requested_features).encodeABI();
 
 			// update the features as required
 			const receipt = await deployments.rawTx({
 				from: A0,
-				to: deployment.address,
+				to: proxy_deployment.address,
 				data: call_data, // updateFeatures(requested_features)
 			});
-			console.log("ERC20.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
+			console.log("ERC20_Proxy.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
 		}
 	}
 
 	// ERC721
 	{
-		// get the implementation and proxy deployments
-		const deployment = await deployments.get("ERC721");
+		// get the v1 implementation and proxy deployments
+		const proxy_deployment = await deployments.get("ERC721_Proxy");
+		const v1_deployment = await deployments.get("ERC721_v1");
 
 		// print proxy info, and determine if transfers are enabled
-		const {features} = await print_nft_acl_details(A0, deployment.abi, deployment.address);
+		const {features} = await print_nft_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF | FEATURE_OWN_BURNS | FEATURE_BURNS_ON_BEHALF);
 		if(!features.eq(requested_features)) {
-			// prepare the updateFeatures call bytes for ERC721 contract call
-			const contract = new web3.eth.Contract(deployment.abi, deployment.address);
-			const update_features_data = contract.methods.updateFeatures(requested_features).encodeABI();
+			// prepare the updateFeatures call bytes for ERC721 proxy call
+			const proxy = new web3.eth.Contract(v1_deployment.abi, proxy_deployment.address);
+			const update_features_data = proxy.methods.updateFeatures(requested_features).encodeABI();
 
 			// update the features as required
 			const receipt = await deployments.rawTx({
 				from: A0,
-				to: deployment.address,
+				to: proxy_deployment.address,
 				data: update_features_data, // updateFeatures(requested_features)
 			});
-			console.log("ERC721.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
+			console.log("ERC721_Proxy.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
 		}
 	}
 };
@@ -94,5 +96,5 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 // Then if another deploy script has such tag as a dependency, then when the latter deploy script has a specific tag
 // and that tag is requested, the dependency will be executed first.
 // https://www.npmjs.com/package/hardhat-deploy#deploy-scripts-tags-and-dependencies
-module.exports.tags = ["v1_features"];
-module.exports.dependencies = ["v1_deploy"];
+module.exports.tags = ["v1_features_upgradeable"];
+module.exports.dependencies = ["v1_deploy_upgradeable"];

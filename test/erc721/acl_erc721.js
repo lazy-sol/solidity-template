@@ -39,6 +39,13 @@ const {
 	erc20_deploy,
 } = require("../erc20/include/deployment_routines");
 
+// deployment fixture routines in use
+const {
+	get_erc20_deployment,
+	get_erc721_deployment,
+	get_erc721_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
+
 // run AccessControl (ACL) tests
 contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 	// extract accounts to be used:
@@ -54,7 +61,16 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 			// deploy token
 			let token;
 			beforeEach(async function() {
+				// a0 is ignored when using a fixture
 				token = await deployment_fn.call(this, a0);
+				// disable all the features to make the deployment "restricted"
+				await token.updateFeatures(0, {from: a0});
+			});
+
+			let erc20;
+			beforeEach(async function() {
+				// a0 and H0 are ignored when using a fixture
+				erc20 = await get_erc20_deployment(a0, H0);
 			});
 
 			// run the suite
@@ -283,17 +299,16 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 			});
 			// Rescuing ERC20 tokens
 			{
-				let erc20Contract;
 				beforeEach(async function() {
-					erc20Contract = await erc20_deploy(a0, H0);
-					await erc20Contract.transfer(token.address, 1, {from: H0});
+					// when using a fixture, there is no initial token supply minted
+					await erc20.mint(token.address, 1, {from: a0});
 				});
 				describe("when sender has ROLE_RESCUE_MANAGER permission", function() {
 					beforeEach(async function() {
 						await token.updateRole(from, ROLE_RESCUE_MANAGER, {from: a0});
 					});
 					it("sender can rescue ERC20 tokens", async function() {
-						await token.rescueErc20(erc20Contract.address, H0, 1, {from});
+						await token.rescueErc20(erc20.address, H0, 1, {from});
 					});
 				});
 				describe("when sender doesn't have ROLE_RESCUE_MANAGER permission", function() {
@@ -301,7 +316,7 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 						await token.updateRole(from, not(ROLE_RESCUE_MANAGER), {from: a0});
 					});
 					it("sender can't rescue ERC20 tokens", async function() {
-						await expectRevert(token.rescueErc20(erc20Contract.address, H0, 1, {from}), "access denied");
+						await expectRevert(token.rescueErc20(erc20.address, H0, 1, {from}), "access denied");
 					});
 				});
 			}
@@ -309,6 +324,6 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 	}
 
 	// run the suite
-	acl_suite("ERC721Impl", erc721_deploy_restricted);
-	acl_suite("UpgradeableERC721", upgradeable_erc721_deploy_restricted);
+	acl_suite("ERC721Impl", get_erc721_deployment);
+	acl_suite("UpgradeableERC721", get_erc721_upgradeable_deployment);
 });
