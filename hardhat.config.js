@@ -13,15 +13,39 @@
  *     or
  *   - MNEMONIC4 – rinkeby mnemonic, 12 words
  *
+ *   - P_KEY41 – kovan private key, should start with 0x
+ *     or
+ *   - MNEMONIC41 – kovan mnemonic, 12 words
+ *
  *   - P_KEY5 – goerli private key, should start with 0x
  *     or
  *   - MNEMONIC5 – goerli mnemonic, 12 words
+ *
+ *   - P_KEY137 – polygon/matic private key, should start with 0x
+ *     or
+ *   - MNEMONIC137 – polygon/matic mnemonic, 12 words
+ *
+ *   - P_KEY80001 – mumbai (polygon testnet) private key, should start with 0x
+ *     or
+ *   - MNEMONIC80001 – mumbai (polygon testnet) mnemonic, 12 words
+ *
+ *   - P_KEY56 – Binance Smart Chain (BSC) mainnet private key, should start with 0x
+ *     or
+ *   - MNEMONIC56 – Binance Smart Chain (BSC) mainnet mnemonic, 12 words
+ *
+ *   - P_KEY97 – Binance Smart Chain (BSC) testnet private key, should start with 0x
+ *     or
+ *   - MNEMONIC97 – Binance Smart Chain (BSC) testnet mnemonic, 12 words
  *
  *   - ALCHEMY_KEY – Alchemy API key
  *     or
  *   - INFURA_KEY – Infura API key (Project ID)
  *
  *   - ETHERSCAN_KEY – Etherscan API key
+ *
+ *   - POLYSCAN_KEY – polygonscan API key
+ *
+ *   - BSCSCAN_KEY – BscScan API key
  */
 
 // Loads env variables from .env file
@@ -94,6 +118,38 @@ else if(process.env.P_KEY5 && !process.env.P_KEY5.startsWith("0x")) {
 	console.warn("P_KEY5 doesn't start with 0x. Appended 0x");
 	process.env.P_KEY5 = "0x" + process.env.P_KEY5;
 }
+if(!process.env.MNEMONIC137 && !process.env.P_KEY137) {
+	console.warn("neither MNEMONIC137 nor P_KEY137 is not set. Polygon mainnet deployments won't be available");
+	process.env.MNEMONIC137 = FAKE_MNEMONIC;
+}
+else if(process.env.P_KEY137 && !process.env.P_KEY137.startsWith("0x")) {
+	console.warn("P_KEY137 doesn't start with 0x. Appended 0x");
+	process.env.P_KEY137 = "0x" + process.env.P_KEY137;
+}
+if(!process.env.MNEMONIC80001 && !process.env.P_KEY80001) {
+	console.warn("neither MNEMONIC80001 nor P_KEY80001 is not set. Mumbai (matic/polygon L2 testnet) deployments won't be available");
+	process.env.MNEMONIC80001 = FAKE_MNEMONIC;
+}
+else if(process.env.P_KEY80001 && !process.env.P_KEY80001.startsWith("0x")) {
+	console.warn("P_KEY80001 doesn't start with 0x. Appended 0x");
+	process.env.P_KEY80001 = "0x" + process.env.P_KEY80001;
+}
+if(!process.env.MNEMONIC56 && !process.env.P_KEY56) {
+	console.warn("neither MNEMONIC56 nor P_KEY56 is not set. Binance Smart Chain (BSC) mainnet deployments won't be available");
+	process.env.MNEMONIC56 = FAKE_MNEMONIC;
+}
+else if(process.env.P_KEY56 && !process.env.P_KEY56.startsWith("0x")) {
+	console.warn("P_KEY56 doesn't start with 0x. Appended 0x");
+	process.env.P_KEY56 = "0x" + process.env.P_KEY56;
+}
+if(!process.env.MNEMONIC97 && !process.env.P_KEY97) {
+	console.warn("neither MNEMONIC97 nor P_KEY97 is not set. Binance Smart Chain (BSC) testnet deployments won't be available");
+	process.env.MNEMONIC97 = FAKE_MNEMONIC;
+}
+else if(process.env.P_KEY97 && !process.env.P_KEY97.startsWith("0x")) {
+	console.warn("P_KEY97 doesn't start with 0x. Appended 0x");
+	process.env.P_KEY137 = "0x" + process.env.P_KEY97;
+}
 if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
 	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments may not be available");
 	process.env.INFURA_KEY = "";
@@ -102,6 +158,18 @@ if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
 if(!process.env.ETHERSCAN_KEY) {
 	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
 	process.env.ETHERSCAN_KEY = "";
+}
+if(!process.env.ETHERSCAN_KEY) {
+	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
+	process.env.ETHERSCAN_KEY = "";
+}
+if(!process.env.POLYSCAN_KEY) {
+	console.warn("POLYSCAN_KEY is not set. Deployed smart contract code verification won't be available on polyscan");
+	process.env.POLYSCAN_KEY = "";
+}
+if(!process.env.BSCSCAN_KEY) {
+	console.warn("BSCSCAN_KEY is not set. Deployed smart contract code verification won't be available on BscScan");
+	process.env.BSCSCAN_KEY = "";
 }
 
 /**
@@ -153,6 +221,28 @@ module.exports = {
 			url: get_endpoint_url("goerli"),
 			accounts: get_accounts(process.env.P_KEY5, process.env.MNEMONIC5),
 		},
+		// matic/polygon L2 mainnet
+		// https://polygonscan.com/
+		polygon: {
+			url: "https://polygon-rpc.com/",
+			accounts: get_accounts(process.env.P_KEY137, process.env.MNEMONIC137),
+		},
+		// matic/polygon L1 testnet – Mumbai
+		// https://mumbai.polygonscan.com/
+		mumbai: {
+			url: "https://rpc-mumbai.maticvigil.com",
+			accounts: get_accounts(process.env.P_KEY80001, process.env.MNEMONIC80001),
+		},
+		// Binance Smart Chain (BSC) L2 mainnet
+		binance: {
+			url: "https://bsc-dataseed1.binance.org/",
+			accounts: get_accounts(process.env.P_KEY56, process.env.MNEMONIC56),
+		},
+		// Binance Smart Chain (BSC) L2 testnet
+		binance_testnet: {
+			url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
+			accounts: get_accounts(process.env.P_KEY97, process.env.MNEMONIC97),
+		},
 	},
 
 	// Configure Solidity compiler
@@ -194,9 +284,24 @@ module.exports = {
 	// Configure etherscan integration
 	// https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html
 	etherscan: {
-		// Your API key for Etherscan
-		// Obtain one at https://etherscan.io/
-		apiKey: process.env.ETHERSCAN_KEY
+		// list of supported networks: npx hardhat verify --list-networks
+		apiKey: {
+			// Your API key for Etherscan
+			// Obtain one at https://etherscan.io/
+			mainnet: process.env.ETHERSCAN_KEY,
+			ropsten: process.env.ETHERSCAN_KEY,
+			rinkeby: process.env.ETHERSCAN_KEY,
+			kovan: process.env.ETHERSCAN_KEY,
+			goerli: process.env.ETHERSCAN_KEY,
+			// Your API key for Polygonscan
+			// Obtain one at https://polygonscan.com/
+			polygon: process.env.POLYSCAN_KEY,
+			polygonMumbai: process.env.POLYSCAN_KEY,
+			// Your API key for BSC Scan
+			// Obtain one at https://bscscan.com/
+			bsc: process.env.BSCSCAN_KEY,
+			bscTestnet: process.env.BSCSCAN_KEY,
+		}
 	},
 
 	// hardhat-gas-reporter will be disabled by default, use REPORT_GAS environment variable to enable it
@@ -277,5 +382,5 @@ function get_endpoint_url(network_name) {
  * @return either [p_key] if p_key is defined, or {mnemonic} if mnemonic is defined
  */
 function get_accounts(p_key, mnemonic) {
-	return p_key? [p_key]: mnemonic? {mnemonic}: undefined;
+	return p_key? [p_key]: mnemonic? {mnemonic, initialIndex: 0}: undefined;
 }
