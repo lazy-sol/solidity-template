@@ -349,6 +349,7 @@ To rerun the deployment script and continue partially completed script skip the 
 (do not cleanup the [deployments](./deployments) folder).
 
 ## Contributing
-// TODO:
+Please see the [Contribution Guide](./CONTRIBUTING.md) document to get understanding on how to report issues,
+contribute to the source code, fix bugs, introduce new features, etc.
 
 (c) 2017–2023 Basil Gorin
