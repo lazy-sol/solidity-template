@@ -35,7 +35,14 @@ const {
 const {
 	erc20_deploy_restricted,
 	upgradeable_erc20_deploy_restricted,
+	S0,
 } = require("./include/deployment_routines");
+
+// deployment fixture routines in use
+const {
+	get_erc20_deployment,
+	get_erc20_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
 
 // run AccessControl (ACL) tests
 contract("ERC20: AccessControl (ACL) tests", function(accounts) {
@@ -52,7 +59,12 @@ contract("ERC20: AccessControl (ACL) tests", function(accounts) {
 			// deploy token
 			let token;
 			beforeEach(async function() {
-				token = await deployment_fn(a0, H0);
+				// a0 and H0 are ignored when using a fixture
+				token = await deployment_fn.call(this, a0, H0);
+				// when using a fixture, there is no initial token supply minted
+				await token.mint(H0, S0,{from: a0});
+				// disable all the features to make the deployment "restricted"
+				await token.updateFeatures(0, {from: a0});
 			});
 
 			const by = a1;
@@ -168,6 +180,6 @@ contract("ERC20: AccessControl (ACL) tests", function(accounts) {
 	}
 
 	// run the suite
-	acl_suite("ERC20Impl", erc20_deploy_restricted);
-	acl_suite("UpgradeableERC20", upgradeable_erc20_deploy_restricted);
+	acl_suite("ERC20Impl", get_erc20_deployment);
+	acl_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
 });

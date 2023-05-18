@@ -26,6 +26,12 @@ const {
 	upgradeable_erc721_deploy,
 } = require("./include/deployment_routines");
 
+// deployment fixture routines in use
+const {
+	get_erc721_deployment,
+	get_erc721_upgradeable_deployment,
+} = require("../include/deployment_fixture_routines");
+
 // run Mint/Burn ERC721 Tests addons
 contract("ERC721: Mint/Burn Tests addons", function(accounts) {
 	// extract accounts to be used:
@@ -39,7 +45,8 @@ contract("ERC721: Mint/Burn Tests addons", function(accounts) {
 		describe(`${contract_name}: Mint/Burn Tests addons`, function() {
 			let erc721;
 			beforeEach(async function() {
-				erc721 = await deployment_fn(a0);
+				// a0 is ignored when using a fixture
+				erc721 = await deployment_fn.call(this, a0);
 			});
 
 			const _by = a0;
@@ -68,6 +75,6 @@ contract("ERC721: Mint/Burn Tests addons", function(accounts) {
 		});
 	}
 
-	run_erc721_mint_burn_tests_addon("ERC721Impl", erc721_deploy);
-	run_erc721_mint_burn_tests_addon("UpgradeableERC721", upgradeable_erc721_deploy);
+	run_erc721_mint_burn_tests_addon("ERC721Impl", get_erc721_deployment);
+	run_erc721_mint_burn_tests_addon("UpgradeableERC721", get_erc721_upgradeable_deployment);
 });
