@@ -25,8 +25,7 @@ const {
 
 // deployment utils (contract state printers)
 const {
-	print_erc20_acl_details,
-	print_nft_acl_details,
+	print_contract_details,
 } = require("../scripts/deployment_utils");
 
 // to be picked up and executed by hardhat-deploy plugin
@@ -62,7 +61,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		const contract = new web3.eth.Contract(deployment.abi, deployment.address);
 
 		// print ERC20 impl deployment details
-		await print_erc20_acl_details(A0, deployment.abi, deployment.address);
+		await print_contract_details(A0, deployment.abi, deployment.address);
 	}
 
 	{
@@ -84,7 +83,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		const contract = new web3.eth.Contract(deployment.abi, deployment.address);
 
 		// print ERC721 impl deployment details
-		await print_nft_acl_details(A0, deployment.abi, deployment.address);
+		await print_contract_details(A0, deployment.abi, deployment.address);
 	}
 };
 

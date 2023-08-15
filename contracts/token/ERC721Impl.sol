@@ -156,9 +156,10 @@ abstract contract ERC721Impl is MintableERC721, BurnableERC721, ERC721Enumerable
 	/**
 	 * @inheritdoc IERC165
 	 */
-	function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
+	function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Enumerable, ERC721URIStorage) returns (bool) {
 		// calculate based on own and inherited interfaces
 		return ERC721Enumerable.supportsInterface(interfaceId)
+			|| ERC721URIStorage.supportsInterface(interfaceId)
 			|| interfaceId == type(MintableERC721).interfaceId
 			|| interfaceId == type(BurnableERC721).interfaceId;
 	}

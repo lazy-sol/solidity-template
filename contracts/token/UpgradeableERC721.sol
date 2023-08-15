@@ -165,15 +165,19 @@ abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721Enu
 		__ERC721_init(_name, _symbol);
 		__ERC721Enumerable_init_unchained();
 		__ERC721URIStorage_init_unchained();
-		UpgradeableAccessControl._postConstruct(_owner);
+		InitializableAccessControl._postConstruct(_owner);
 	}
 
 	/**
 	 * @inheritdoc IERC165Upgradeable
 	 */
-	function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Upgradeable, ERC721EnumerableUpgradeable) returns (bool) {
+	function supportsInterface(bytes4 interfaceId) public view virtual override(
+		ERC721EnumerableUpgradeable,
+		ERC721URIStorageUpgradeable
+	) returns (bool) {
 		// calculate based on own and inherited interfaces
 		return ERC721EnumerableUpgradeable.supportsInterface(interfaceId)
+			|| ERC721URIStorageUpgradeable.supportsInterface(interfaceId)
 			|| interfaceId == type(MintableERC721).interfaceId
 			|| interfaceId == type(BurnableERC721).interfaceId;
 	}

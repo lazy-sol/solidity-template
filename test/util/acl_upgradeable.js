@@ -102,7 +102,7 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 				});
 			});
 			it("direct initialization of the implementation (bypassing proxy) fails", async function() {
-				await expectRevert(impl1.postConstruct({from: by}), "invalid context");
+				await expectRevert(impl1.postConstruct({from: by}), "Initializable: contract is already initialized");
 			});
 			it("direct upgrade of the implementation (bypassing proxy) fails", async function() {
 				await expectRevert(impl1.upgradeTo(impl2.address, {from: by}), "Function must be called through delegatecall");
@@ -126,7 +126,7 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 				await expectRevert(acl.upgradeTo(impl2.address, {from: by}), "access denied");
 			});
 			it("direct initialization of the implementation (bypassing proxy) fails", async function() {
-				await expectRevert(impl1.postConstruct({from: by}), "invalid context");
+				await expectRevert(impl1.postConstruct({from: by}), "Initializable: contract is already initialized");
 			});
 			it("direct upgrade of the implementation (bypassing proxy) fails", async function() {
 				await expectRevert(impl1.upgradeTo(impl2.address, {from: by}), "Function must be called through delegatecall");

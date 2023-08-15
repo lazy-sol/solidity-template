@@ -51,7 +51,7 @@ Following steps were tested to work in macOS Catalina
     ```cd solidity-template```
 3. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) – latest  
     ```brew install nvm```
-4. Install [Node package manager (npm)](https://www.npmjs.com/) and [Node.js](https://nodejs.org/) – version 16.9.0+  
+4. Install [Node package manager (npm)](https://www.npmjs.com/) and [Node.js](https://nodejs.org/) – version 16.20.0+  
     ```nvm install 16```
 5. Activate node version installed  
     ```nvm use 16```
@@ -61,14 +61,14 @@ Following steps were tested to work in macOS Catalina
 ### Troubleshooting ###
 * After executing ```nvm use 16``` I get  
     ```
-    nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.9.0"
-    Run `npm config delete prefix` or `nvm use --delete-prefix v16.9.0` to unset it.
+    nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local/Cellar/nvm/0.39.3/versions/node/v16.20.0"
+    Run `npm config delete prefix` or `nvm use --delete-prefix v16.20.0` to unset it.
     ```
     Fix:  
     ```
-    nvm use --delete-prefix v16.9.0
+    nvm use --delete-prefix v16.20.0
     npm config delete prefix
-    npm config set prefix "/usr/local/Cellar/nvm/0.37.2/versions/node/v16.9.0"
+    npm config set prefix "/usr/local/Cellar/nvm/0.39.3/versions/node/v16.20.0"
     ```
 * After executing ```npm install``` I get
     ```
@@ -179,7 +179,7 @@ If both infura and alchemy keys are set, alchemy is used.
 
     You can use MetaMask to export private keys: https://metamask.io/
 
-    Note: you can use the same private key for test networks (ropsten, rinkeby, kovan, and goerli).
+    Note: you can use the same private key for test networks (ropsten, rinkeby, kovan, goerli, mumbai, and bsc testnet).
     Always use a separate one for mainnet, keep it secure.
 
 2. Create an alchemy API key at https://alchemy.com/

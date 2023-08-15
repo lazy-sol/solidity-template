@@ -47,7 +47,6 @@ pragma solidity ^0.8.4;
  *
  * @author Basil Gorin
  */
-// TODO: add version history: 2018-2021
 abstract contract AccessControl {
 	/**
 	 * @notice Privileged addresses with defined roles/permissions
@@ -59,8 +58,11 @@ abstract contract AccessControl {
 	 * @dev Bitmask 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 	 *      represents all possible permissions
 	 * @dev 'This' address mapping represents global features of the smart contract
+	 *
+	 * @dev We keep the mapping private to prevent direct writes to it from the inheriting
+	 *      contracts, `getRole()` and `updateRole()` functions should be used instead
 	 */
-	mapping(address => uint256) public userRoles;
+	mapping(address => uint256) private userRoles;
 
 	/**
 	 * @notice Access manager is responsible for assigning the roles to users,
@@ -85,21 +87,18 @@ abstract contract AccessControl {
 	 * @param _by operator which called the function
 	 * @param _to address which was granted/revoked permissions
 	 * @param _requested permissions requested
-	 * @param _actual permissions effectively set
+	 * @param _assigned permissions effectively set
 	 */
-	event RoleUpdated(address indexed _by, address indexed _to, uint256 _requested, uint256 _actual);
+	event RoleUpdated(address indexed _by, address indexed _to, uint256 _requested, uint256 _assigned);
 
 	/**
-	 * @notice Creates an access control instance,  setting the contract owner to have full privileges
+	 * @notice Creates an access control instance, setting the contract owner to have full privileges
 	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
 	constructor(address _owner) {
-		// contract creator has full privileges
-		userRoles[_owner] = FULL_PRIVILEGES_MASK;
-
-		// fire an event
-		emit RoleUpdated(msg.sender, _owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
+		// grant owner full privileges
+		__setRole(_owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
 	}
 
 	/**
@@ -110,8 +109,8 @@ abstract contract AccessControl {
 	 * @return 256-bit bitmask of the features enabled
 	 */
 	function features() public view returns (uint256) {
-		// features are stored in 'this' address  mapping of `userRoles` structure
-		return userRoles[address(this)];
+		// features are stored in 'this' address mapping of `userRoles`
+		return getRole(address(this));
 	}
 
 	/**
@@ -129,6 +128,21 @@ abstract contract AccessControl {
 	}
 
 	/**
+	 * @notice Reads the permissions (role) for a given user from the `userRoles` mapping
+	 *
+	 * @dev Having a simple getter instead of making the mapping public
+	 *      allows enforcing the encapsulation of the mapping and protects from
+	 *      writing to it directly in the inheriting smart contracts
+	 *
+	 * @param operator address of a user to read permissions for,
+	 *      or self address to read global features of the smart contract
+	 */
+	function getRole(address operator) public view returns(uint256) {
+		// read the value from `userRoles` and return
+		return userRoles[operator];
+	}
+
+	/**
 	 * @notice Updates set of permissions (role) for a given user,
 	 *      taking into account sender's permissions.
 	 *
@@ -137,8 +151,8 @@ abstract contract AccessControl {
 	 *      copying senders' permissions (role) to the user
 	 * @dev Requires transaction sender to have `ROLE_ACCESS_MANAGER` permission
 	 *
-	 * @param operator address of a user to alter permissions for or zero
-	 *      to alter global features of the smart contract
+	 * @param operator address of a user to alter permissions for,
+	 *       or self address to alter global features of the smart contract
 	 * @param role bitmask representing a set of permissions to
 	 *      enable/disable for a user specified
 	 */
@@ -147,10 +161,7 @@ abstract contract AccessControl {
 		require(isSenderInRole(ROLE_ACCESS_MANAGER), "access denied");
 
 		// evaluate the role and reassign it
-		userRoles[operator] = evaluateBy(msg.sender, userRoles[operator], role);
-
-		// fire an event
-		emit RoleUpdated(msg.sender, operator, role, userRoles[operator]);
+		__setRole(operator, role, evaluateBy(msg.sender, getRole(operator), role));
 	}
 
 	/**
@@ -188,7 +199,7 @@ abstract contract AccessControl {
 	 */
 	function evaluateBy(address operator, uint256 target, uint256 desired) public view returns (uint256) {
 		// read operator's permissions
-		uint256 p = userRoles[operator];
+		uint256 p = getRole(operator);
 
 		// taking into account operator's permissions,
 		// 1) enable the permissions desired on the `target`
@@ -231,7 +242,30 @@ abstract contract AccessControl {
 	 */
 	function isOperatorInRole(address operator, uint256 required) public view returns (bool) {
 		// delegate call to `__hasRole`, passing operator's permissions (role)
-		return __hasRole(userRoles[operator], required);
+		return __hasRole(getRole(operator), required);
+	}
+
+	/**
+	 * @dev Sets the `assignedRole` role to the operator, logs both `requestedRole` and `actualRole`
+	 *
+	 * @dev Unsafe:
+	 *      provides direct write access to `userRoles` mapping without any security checks,
+	 *      doesn't verify the executor (msg.sender) permissions,
+	 *      must be kept private at all times
+	 *
+	 * @param operator address of a user to alter permissions for,
+	 *       or self address to alter global features of the smart contract
+	 * @param requestedRole bitmask representing a set of permissions requested
+	 *      to be enabled/disabled for a user specified, used only to be logged into event
+	 * @param assignedRole bitmask representing a set of permissions to
+	 *      enable/disable for a user specified, used to update the mapping and to be logged into event
+	 */
+	function __setRole(address operator, uint256 requestedRole, uint256 assignedRole) private {
+		// assign the role to the operator
+		userRoles[operator] = assignedRole;
+
+		// fire an event
+		emit RoleUpdated(msg.sender, operator, requestedRole, assignedRole);
 	}
 
 	/**
@@ -241,7 +275,7 @@ abstract contract AccessControl {
 	 * @param required required role
 	 * @return true if actual has required role (all permissions), false otherwise
 	 */
-	function __hasRole(uint256 actual, uint256 required) internal pure returns (bool) {
+	function __hasRole(uint256 actual, uint256 required) private pure returns (bool) {
 		// check the bitmask for the role required and return the result
 		return actual & required == required;
 	}

@@ -25,8 +25,7 @@ const {
 
 // deployment utils (contract state printers)
 const {
-	print_erc20_acl_details,
-	print_nft_acl_details,
+	print_contract_details,
 } = require("../scripts/deployment_utils");
 
 // to be picked up and executed by hardhat-deploy plugin
@@ -81,7 +80,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		const proxy_deployment = await deployments.get("ERC20_Proxy");
 
 		// print ERC20 proxy deployment details
-		await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
+		await print_contract_details(A0, v1_deployment.abi, proxy_deployment.address);
 	}
 
 	{
@@ -121,7 +120,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		// get ERC721 proxy deployment details
 		const proxy_deployment = await deployments.get("ERC721_Proxy");
 		// print ERC721 proxy deployment details
-		await print_nft_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
+		await print_contract_details(A0, v1_deployment.abi, proxy_deployment.address);
 	}
 };
 

@@ -1,9 +1,7 @@
 // Both Truffle and Hardhat with Truffle make an instance of web3 available in the global scope
 
 // BN constants, functions to work with BN
-const BN = web3.utils.BN;
-const toBN = web3.utils.toBN;
-const isBN = web3.utils.isBN;
+const {BN, toBN, isBN} = web3.utils;
 
 // 2^256
 const TWO256 = (new BN(2)).pow(new BN(256));
@@ -67,6 +65,7 @@ function print_amt(amt, dm = new BN(10).pow(new BN(18))) {
 	}
 	const THOUSAND = new BN(1_000);
 	const MILLION = new BN(1_000_000);
+	const BILLION = new BN(1_000_000_000);
 	if(amt.div(dm).lt(THOUSAND)) {
 		return dm.lt(MILLION)? amt.div(dm).toNumber(): amt.div(MILLION).toNumber() / dm.div(MILLION).toNumber() + '';
 	}
@@ -74,8 +73,12 @@ function print_amt(amt, dm = new BN(10).pow(new BN(18))) {
 		const k = amt.div(dm).toNumber() / 1000;
 		return k + "k";
 	}
-	const m = amt.div(dm).div(THOUSAND).toNumber() / 1000;
-	return m + "m";
+	else if(amt.div(dm).lt(BILLION)) {
+		const m = amt.div(dm).toNumber() / 1000;
+		return m + "m";
+	}
+	const b = amt.div(dm).div(MILLION).toNumber() / 1000;
+	return b + "g";
 }
 
 // graphically draw amounts array as a string to be printed in the consoles

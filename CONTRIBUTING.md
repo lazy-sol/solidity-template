@@ -1,9 +1,8 @@
 # Contribution Guide
 
-Thank you for your interest in <solidity-template>, and your will to contribute to it and its ecosystem.
+Thank you for your interest in solidity-template, and your will to contribute to it and its ecosystem.
 This document will help you with the guidelines, tips, and advises on how to contribute into the project(s).
 
-The projects are hosted in the [vgorin](https://github.com/vogrin/) on GitHub.
 This guide is intended for both the Public/Community Contributors and core team,
 though the levels of access and processes may slightly differ between these types.
 This will be noted where possible.
@@ -32,7 +31,7 @@ DeFi protocols (staking, yield farming, vesting, etc.), and other components.
 
 ## Reporting Issues
 
-Please open an issue in [GitHub](https://github.com/vgorin/) if you find a bug or have a feature request.
+Please open an issue in [GitHub](https://github.com/vgorin/solidity-template) if you find a bug or have a feature request.
 
 Before submitting a bug report or feature request, double check and make sure it hasn't been submitted already.
 

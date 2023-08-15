@@ -20,8 +20,7 @@ const {
 
 // deployment utils (contract state printers)
 const {
-	print_erc20_acl_details,
-	print_nft_acl_details,
+	print_contract_details,
 } = require("../scripts/deployment_utils");
 
 // to be picked up and executed by hardhat-deploy plugin
@@ -45,7 +44,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		const v1_deployment = await deployments.get("ERC20_v1");
 
 		// print proxy info, and determine if transfers are enabled
-		const {features} = await print_erc20_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
+		const {features} = await print_contract_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF);
@@ -71,7 +70,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 		const v1_deployment = await deployments.get("ERC721_v1");
 
 		// print proxy info, and determine if transfers are enabled
-		const {features} = await print_nft_acl_details(A0, v1_deployment.abi, proxy_deployment.address);
+		const {features} = await print_contract_details(A0, v1_deployment.abi, proxy_deployment.address);
 
 		// verify if transfers are enabled and enable if required
 		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF | FEATURE_OWN_BURNS | FEATURE_BURNS_ON_BEHALF);

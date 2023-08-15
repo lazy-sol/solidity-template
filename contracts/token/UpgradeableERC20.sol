@@ -93,7 +93,7 @@ abstract contract UpgradeableERC20 is IERC165, ERC20Upgradeable, UpgradeableAcce
 	function _postConstruct(string memory _name, string memory _symbol, address _owner) internal virtual initializer {
 		// execute all parent initializers in cascade
 		__ERC20_init(_name, _symbol);
-		UpgradeableAccessControl._postConstruct(_owner);
+		InitializableAccessControl._postConstruct(_owner);
 	}
 
 	/**
