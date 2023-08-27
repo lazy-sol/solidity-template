@@ -19,6 +19,21 @@ Note: search for "awesome" and replace with your own project name
 
 # Yet Another Awesome Project #
 
+Put yet another awesome short project description here.
+
+## Table of Contents
+* [Frameworks and Tooling](#frameworks-and-tooling)
+* [Repository Description](#repository-description)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Alternative Configuration: Using Private Keys instead of Mnemonics, and Alchemy instead of Infura](#alternative-configuration-using-private-keys-instead-of-mnemonics-and-alchemy-instead-of-infura)
+* [Using Custom JSON-RPC Endpoint URL](#using-custom-json-rpc-endpoint-url)
+* [Testing](#testing)
+* [Test Coverage](#test-coverage)
+* [Deployment](#deployment)
+* [Contributing](#contributing)
+
+## Frameworks and Tooling
 The project is built using
 * [Hardhat](https://hardhat.org/), a popular Ethereum development environment
     * Why not standalone [Truffle](https://www.trufflesuite.com/truffle)?
@@ -159,7 +174,7 @@ export POLYSCAN_KEY="VF9IZLVDRA03VE3K5S46EADMW6VNV0V73U"
 export BSCSCAN_KEY="ZP0UMWCA2H12WKQKEK8OGAGZ6ZFL2D0S4C"
 ```
 
-## Alternative Configuration: Using Private Keys instead of Mnemonics, and Alchemy instead if Infura ##
+## Alternative Configuration: Using Private Keys instead of Mnemonics, and Alchemy instead of Infura ##
 Alternatively to using mnemonics, private keys can be used instead.
 When both mnemonics and private keys are set in the environment variables, private keys are used.
 

@@ -150,16 +150,12 @@ if(!process.env.MNEMONIC97 && !process.env.P_KEY97) {
 }
 else if(process.env.P_KEY97 && !process.env.P_KEY97.startsWith("0x")) {
 	console.warn("P_KEY97 doesn't start with 0x. Appended 0x");
-	process.env.P_KEY137 = "0x" + process.env.P_KEY97;
+	process.env.P_KEY97 = "0x" + process.env.P_KEY97;
 }
 if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
 	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments may not be available");
 	process.env.INFURA_KEY = "";
 	process.env.ALCHEMY_KEY = "";
-}
-if(!process.env.ETHERSCAN_KEY) {
-	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
-	process.env.ETHERSCAN_KEY = "";
 }
 if(!process.env.ETHERSCAN_KEY) {
 	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
@@ -252,7 +248,16 @@ module.exports = {
 		// https://hardhat.org/guides/compile-contracts.html
 		compilers: [
 			{ // project main compiler version
-				version: "0.8.11",
+				version: "0.8.4",
+				settings: {
+					optimizer: {
+						enabled: true,
+						runs: 200
+					}
+				}
+			},
+			{ // used to compile USDT mock
+				version: "0.4.11",
 				settings: {
 					optimizer: {
 						enabled: true,
@@ -295,26 +300,6 @@ module.exports = {
 			// ERC1967 is used to deploy upgradeable contracts
 			"@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
 		],
-	},
-
-	// namedAccounts allows you to associate names to addresses and have them configured per chain
-	// https://github.com/wighawag/hardhat-deploy#1-namedaccounts-ability-to-name-addresses
-	namedAccounts: {
-		// CheckpointManager, see https://wiki.polygon.technology/docs/pos/design/bridge/l1-l2-communication/fx-portal
-		CheckpointManager:  {
-			"mainnet": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-			"goerli": "0x2890bA17EfE978480615e330ecB65333b880928e",
-		},
-		// FxRoot, see https://wiki.polygon.technology/docs/pos/design/bridge/l1-l2-communication/fx-portal
-		FxRoot: {
-			"mainnet": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-			"goerli": "0x3d1d3E34f7fB6D26245E6640E1c50710eFFf15bA",
-		},
-		// FxChild, see https://wiki.polygon.technology/docs/pos/design/bridge/l1-l2-communication/fx-portal
-		FxChild: {
-			"polygon": "0x8397259c983751DAf40400790063935a11afa28a",
-			"mumbai": "0xCf73231F28B7331BBe3124B907840A94851f9f11",
-		},
 	},
 }
 

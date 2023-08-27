@@ -17,13 +17,18 @@ const FULL_PRIVILEGES_MASK = TWO.pow(new BN(256)).subn(1);
 // All 16 features enabled
 const FEATURE_ALL = 0x0000_FFFF;
 
-// negates the role (permission set) provided
-function not(...roles) {
+// combine the role (permission set) provided
+function or(...roles) {
 	let roles_sum = new BN(0);
 	for(let role of roles) {
 		roles_sum = roles_sum.or(new BN(role));
 	}
-	return FULL_PRIVILEGES_MASK.xor(roles_sum);
+	return roles_sum;
+}
+
+// negates the role (permission set) provided
+function not(...roles) {
+	return FULL_PRIVILEGES_MASK.xor(or(...roles));
 }
 
 // Start: ===== ERC20/ERC721 =====
@@ -60,6 +65,7 @@ module.exports = {
 	ROLE_UPGRADE_MANAGER,
 	FULL_PRIVILEGES_MASK,
 	FEATURE_ALL,
+	or,
 	not,
 	FEATURE_TRANSFERS,
 	FEATURE_TRANSFERS_ON_BEHALF,

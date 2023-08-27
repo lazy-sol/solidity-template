@@ -148,16 +148,12 @@ if(!process.env.MNEMONIC97 && !process.env.P_KEY97) {
 }
 else if(process.env.P_KEY97 && !process.env.P_KEY97.startsWith("0x")) {
 	console.warn("P_KEY97 doesn't start with 0x. Appended 0x");
-	process.env.P_KEY137 = "0x" + process.env.P_KEY97;
+	process.env.P_KEY97 = "0x" + process.env.P_KEY97;
 }
 if(!process.env.INFURA_KEY && !process.env.ALCHEMY_KEY) {
 	console.warn("neither INFURA_KEY nor ALCHEMY_KEY is not set. Deployments may not be available");
 	process.env.INFURA_KEY = "";
 	process.env.ALCHEMY_KEY = "";
-}
-if(!process.env.ETHERSCAN_KEY) {
-	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
-	process.env.ETHERSCAN_KEY = "";
 }
 if(!process.env.ETHERSCAN_KEY) {
 	console.warn("ETHERSCAN_KEY is not set. Deployed smart contract code verification won't be available");
@@ -250,7 +246,7 @@ module.exports = {
 		// https://hardhat.org/guides/compile-contracts.html
 		compilers: [
 			{ // project main compiler version
-				version: "0.8.11",
+				version: "0.8.4",
 				settings: {
 					optimizer: {
 						enabled: true,

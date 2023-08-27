@@ -7,7 +7,7 @@ const {BN, toBN, isBN} = web3.utils;
 const TWO256 = (new BN(2)).pow(new BN(256));
 
 // crypto is used to get enough randomness for the random BN generation
-const {randomBytes} = require('crypto');
+const {randomBytes} = require("crypto");
 
 // generates random BN in a [0, 2^256) range: r ∈ [0, 2^256)
 function random_bn256() {
