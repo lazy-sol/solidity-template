@@ -1,4 +1,4 @@
-// run: npx hardhat deploy --network goerli --tags v1_features
+// run: npx hardhat deploy --network goerli --tags setup-AwesomeERC20
 
 // script is built for hardhat-deploy plugin:
 // A Hardhat Plugin For Replicable Deployments And Easy Testing
@@ -12,10 +12,7 @@ const {
 
 // ACL token features and roles
 const {
-	FEATURE_TRANSFERS,
-	FEATURE_TRANSFERS_ON_BEHALF,
-	FEATURE_OWN_BURNS,
-	FEATURE_BURNS_ON_BEHALF,
+	FEATURE_ALL,
 } = require("../scripts/include/features_roles");
 
 // deployment utils (contract state printers)
@@ -34,22 +31,23 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 	const balance = await web3.eth.getBalance(A0);
 
 	// print initial debug information
+	console.log("script: %o", require("path").basename(__filename));
 	console.log("network %o %o", chainId, network.name);
-	console.log("service account %o, nonce: %o, balance: %o ETH", A0, nonce, print_amt(balance));
+	console.log("accounts: %o, service account %o, nonce: %o, balance: %o ETH", accounts.length, A0, nonce, print_amt(balance));
 
-	// ERC20
+	// setup AwesomeERC20
 	{
-		// get the v1 implementation and proxy deployments
-		const deployment = await deployments.get("ERC20");
+		// get deployment details
+		const deployment = await deployments.get("AwesomeERC20");
+		const contract = new web3.eth.Contract(deployment.abi, deployment.address);
 
 		// print proxy info, and determine if transfers are enabled
 		const {features} = await print_contract_details(A0, deployment.abi, deployment.address);
 
 		// verify if transfers are enabled and enable if required
-		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF);
+		const requested_features = toBN(FEATURE_ALL);
 		if(!features.eq(requested_features)) {
-			// prepare the updateFeatures call bytes for ERC20 contract call
-			const contract = new web3.eth.Contract(deployment.abi, deployment.address);
+			// prepare the updateFeatures call bytes for the contract call
 			const call_data = contract.methods.updateFeatures(requested_features).encodeABI();
 
 			// update the features as required
@@ -58,32 +56,7 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 				to: deployment.address,
 				data: call_data, // updateFeatures(requested_features)
 			});
-			console.log("ERC20.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
-		}
-	}
-
-	// ERC721
-	{
-		// get the implementation and proxy deployments
-		const deployment = await deployments.get("ERC721");
-
-		// print proxy info, and determine if transfers are enabled
-		const {features} = await print_contract_details(A0, deployment.abi, deployment.address);
-
-		// verify if transfers are enabled and enable if required
-		const requested_features = toBN(FEATURE_TRANSFERS | FEATURE_TRANSFERS_ON_BEHALF | FEATURE_OWN_BURNS | FEATURE_BURNS_ON_BEHALF);
-		if(!features.eq(requested_features)) {
-			// prepare the updateFeatures call bytes for ERC721 contract call
-			const contract = new web3.eth.Contract(deployment.abi, deployment.address);
-			const update_features_data = contract.methods.updateFeatures(requested_features).encodeABI();
-
-			// update the features as required
-			const receipt = await deployments.rawTx({
-				from: A0,
-				to: deployment.address,
-				data: update_features_data, // updateFeatures(requested_features)
-			});
-			console.log("ERC721.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
+			console.log("AwesomeERC20.updateFeatures(%o): %o", requested_features.toString(2), receipt.transactionHash);
 		}
 	}
 };
@@ -93,5 +66,5 @@ module.exports = async function({deployments, getChainId, getNamedAccounts, getU
 // Then if another deploy script has such tag as a dependency, then when the latter deploy script has a specific tag
 // and that tag is requested, the dependency will be executed first.
 // https://www.npmjs.com/package/hardhat-deploy#deploy-scripts-tags-and-dependencies
-module.exports.tags = ["v1_features"];
-module.exports.dependencies = ["v1_deploy"];
+module.exports.tags = ["setup-AwesomeERC20"];
+module.exports.dependencies = ["AwesomeERC20"];

@@ -62,5 +62,5 @@ contract("ERC20: ERC165 Interface ID tests", function(accounts) {
 	}
 
 	erc165_suite("ERC20Impl", get_erc20_deployment);
-	erc165_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
+	erc165_suite("ERC20v1.sol", get_erc20_upgradeable_deployment);
 });

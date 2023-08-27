@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../token/UpgradeableERC20.sol";
+import "../token/upgradeable/ERC20v1.sol";
 
 /**
  * @title Zeppelin ERC20 Mock
@@ -11,7 +11,7 @@ import "../token/UpgradeableERC20.sol";
  *
  * @author Basil Gorin
  */
-contract UpgradeableERC20Mock is UpgradeableERC20 {
+contract ERC20v1Mock is ERC20v1 {
 	/**
 	 * @dev "Constructor replacement" for upgradeable, must be execute immediately after deployment
 	 *      see https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#initializers
@@ -33,7 +33,7 @@ contract UpgradeableERC20Mock is UpgradeableERC20 {
  *
  * @author Basil Gorin
  */
-contract UpgradeableERC20Mock2 is UpgradeableERC20 {
+contract ERC20v2Mock is ERC20v1 {
 	// add version!
 	string public version;
 

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../interfaces/ERC20Spec.sol";
-import "../interfaces/ERC721SpecExt.sol";
-import "../lib/SafeERC20.sol";
-import "../utils/UpgradeableAccessControl.sol";
+import "../../interfaces/ERC20Spec.sol";
+import "../../interfaces/ERC721SpecExt.sol";
+import "../../lib/SafeERC20.sol";
+import "../../utils/UpgradeableAccessControl.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 
@@ -21,7 +21,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URISto
  *
  * @author Basil Gorin
  */
-abstract contract UpgradeableERC721 is MintableERC721, BurnableERC721, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, UpgradeableAccessControl {
+abstract contract ERC721v1 is MintableERC721, BurnableERC721, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, UpgradeableAccessControl {
 	// using ERC20.transfer wrapper from OpenZeppelin adopted SafeERC20
 	using SafeERC20 for ERC20;
 

@@ -57,7 +57,7 @@ async function erc20_deploy_restricted(a0, H0 = a0, name = NAME, symbol = SYMBOL
  * @param H0 initial token holder address
  * @param name token name, ERC20 compatible descriptive name
  * @param symbol token symbol, ERC20 compatible abbreviated name
- * @returns UpgradeableERC20 instance
+ * @returns ERC20v1.sol instance
  */
 async function upgradeable_erc20_deploy(a0, H0 = a0, name = NAME, symbol = SYMBOL) {
 	// deploy the token
@@ -77,11 +77,11 @@ async function upgradeable_erc20_deploy(a0, H0 = a0, name = NAME, symbol = SYMBO
  * @param H0 initial token holder address
  * @param name token name, ERC20 compatible descriptive name
  * @param symbol token symbol, ERC20 compatible abbreviated name
- * @returns UpgradeableERC20 instance
+ * @returns ERC20v1.sol instance
  */
 async function upgradeable_erc20_deploy_restricted(a0, H0 = a0, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
-	const ERC20Contract = artifacts.require("./UpgradeableERC20Mock");
+	const ERC20Contract = artifacts.require("./ERC20v1Mock");
 	const Proxy = artifacts.require("./ERC1967Proxy");
 
 	// deploy an instance without a proxy
@@ -110,11 +110,11 @@ async function upgradeable_erc20_deploy_restricted(a0, H0 = a0, name = NAME, sym
  * @param proxy previously deployed instance (as a proxy)
  * @param name token name, ERC20 compatible descriptive name
  * @param symbol token symbol, ERC20 compatible abbreviated name
- * @returns UpgradeableERC20 instance
+ * @returns ERC20v1.sol instance
  */
 async function upgradeable_erc20_upgrade_restricted(a0, proxy, name = NAME, symbol = SYMBOL) {
 	// smart contracts required
-	const ERC20Contract = artifacts.require("./UpgradeableERC20Mock2");
+	const ERC20Contract = artifacts.require("./ERC20v2Mock");
 
 	// deploy new instance without a proxy
 	const instance = await ERC20Contract.new({from: a0});

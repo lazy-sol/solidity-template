@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../token/UpgradeableERC721.sol";
+import "../token/upgradeable/ERC721v1.sol";
 
 /**
  * @title Zeppelin ERC721 Mock
@@ -11,7 +11,7 @@ import "../token/UpgradeableERC721.sol";
  *
  * @author Basil Gorin
  */
-contract UpgradeableERC721Mock is UpgradeableERC721 {
+contract ERC721v1Mock is ERC721v1 {
 	/**
 	 * @dev "Constructor replacement" for upgradeable, must be execute immediately after deployment
 	 *      see https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#initializers
@@ -33,7 +33,7 @@ contract UpgradeableERC721Mock is UpgradeableERC721 {
  *
  * @author Basil Gorin
  */
-contract UpgradeableERC721Mock2 is UpgradeableERC721 {
+contract ERC721v2Mock is ERC721v1 {
 	// add version!
 	string public version;
 

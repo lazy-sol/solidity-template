@@ -13,7 +13,7 @@ async function get_erc20_deployment() {
 	await deployments.fixture();
 
 	// get deployed contract address
-	const {address} = await deployments.get("ERC20");
+	const {address} = await deployments.get("AwesomeERC20");
 
 	// connect to the contract instance and return it
 	const Contract = artifacts.require("./ERC20Mock");
@@ -31,10 +31,10 @@ async function get_erc20_upgradeable_deployment() {
 	await deployments.fixture();
 
 	// get deployed contract address
-	const {address} = await deployments.get("ERC20_Proxy");
+	const {address} = await deployments.get("AwesomeERC20_Proxy");
 
 	// connect to the contract instance and return it
-	const Contract = artifacts.require("./UpgradeableERC20Mock");
+	const Contract = artifacts.require("./ERC20v1Mock");
 	return await Contract.at(address);
 }
 
@@ -49,7 +49,7 @@ async function get_erc721_deployment() {
 	await deployments.fixture();
 
 	// get deployed contract address
-	const {address} = await deployments.get("ERC721");
+	const {address} = await deployments.get("AwesomeERC721");
 
 	// connect to the contract instance and return it
 	const Contract = artifacts.require("./ERC721Mock");
@@ -67,10 +67,10 @@ async function get_erc721_upgradeable_deployment() {
 	await deployments.fixture();
 
 	// get deployed contract address
-	const {address} = await deployments.get("ERC721_Proxy");
+	const {address} = await deployments.get("AwesomeERC721_Proxy");
 
 	// connect to the contract instance and return it
-	const Contract = artifacts.require("./UpgradeableERC721Mock");
+	const Contract = artifacts.require("./ERC721v1Mock");
 	return await Contract.at(address);
 }
 

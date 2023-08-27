@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../utils/UpgradeableAccessControl.sol";
+import "../../utils/UpgradeableAccessControl.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
@@ -13,7 +13,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
  *
  * @author Basil Gorin
  */
-abstract contract UpgradeableERC20 is IERC165, ERC20Upgradeable, UpgradeableAccessControl {
+abstract contract ERC20v1 is IERC165, ERC20Upgradeable, UpgradeableAccessControl {
 	/**
 	 * @notice Enables ERC20 transfers of the tokens
 	 *      (transfer by the token owner himself)

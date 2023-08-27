@@ -81,5 +81,5 @@ contract("ERC20: Mint/Burn Tests addons", function(accounts) {
 	}
 
 	run_erc20_mint_burn_tests_addon("ERC20Impl", get_erc20_deployment);
-	run_erc20_mint_burn_tests_addon("UpgradeableERC20", get_erc20_upgradeable_deployment);
+	run_erc20_mint_burn_tests_addon("ERC20v1.sol", get_erc20_upgradeable_deployment);
 });

@@ -137,5 +137,5 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 
 	// run the suite
 	rescue_suite("ERC721Impl", get_erc721_deployment);
-	rescue_suite("UpgradeableERC721", get_erc721_upgradeable_deployment);
+	rescue_suite("ERC721v1.sol", get_erc721_upgradeable_deployment);
 });

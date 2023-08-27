@@ -79,5 +79,5 @@ contract("ERC721: OpenZeppelin ERC721 Tests", function(accounts) {
 	// run the suite
 	// TODO: use fixtures (currently slows down the test significantly)
 	zeppelin_suite("ERC721Impl", erc721_deploy);
-	zeppelin_suite("UpgradeableERC721", upgradeable_erc721_deploy);
+	zeppelin_suite("ERC721v1.sol", upgradeable_erc721_deploy);
 });

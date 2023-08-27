@@ -181,5 +181,5 @@ contract("ERC20: AccessControl (ACL) tests", function(accounts) {
 
 	// run the suite
 	acl_suite("ERC20Impl", get_erc20_deployment);
-	acl_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
+	acl_suite("ERC20v1.sol", get_erc20_upgradeable_deployment);
 });

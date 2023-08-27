@@ -96,5 +96,5 @@ contract("ERC20: OpenZeppelin ERC20 Tests", function(accounts) {
 	}
 
 	zeppelin_suite("ERC20Impl", get_erc20_deployment);
-	zeppelin_suite("UpgradeableERC20", get_erc20_upgradeable_deployment);
+	zeppelin_suite("ERC20v1.sol", get_erc20_upgradeable_deployment);
 });

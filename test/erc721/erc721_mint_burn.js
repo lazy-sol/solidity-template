@@ -76,5 +76,5 @@ contract("ERC721: Mint/Burn Tests addons", function(accounts) {
 	}
 
 	run_erc721_mint_burn_tests_addon("ERC721Impl", get_erc721_deployment);
-	run_erc721_mint_burn_tests_addon("UpgradeableERC721", get_erc721_upgradeable_deployment);
+	run_erc721_mint_burn_tests_addon("ERC721v1.sol", get_erc721_upgradeable_deployment);
 });

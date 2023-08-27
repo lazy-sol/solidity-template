@@ -325,5 +325,5 @@ contract("ERC721: AccessControl (ACL) tests", function(accounts) {
 
 	// run the suite
 	acl_suite("ERC721Impl", get_erc721_deployment);
-	acl_suite("UpgradeableERC721", get_erc721_upgradeable_deployment);
+	acl_suite("ERC721v1.sol", get_erc721_upgradeable_deployment);
 });
