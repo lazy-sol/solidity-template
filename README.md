@@ -335,33 +335,39 @@ To run fresh deployment (goerli):
 
 1. Delete [deployments/goerli](./deployments/goerli) folder contents.
 
-2. Run the deployment of interest with the ```npx hardhat deploy``` command
+2. Run the deployment of interest with the ```npx hardhat AwesomeERC20_Proxy``` command
     ```
-    npx hardhat deploy --network goerli --tags v1_deploy
+    npx hardhat deploy --network goerli --tags AwesomeERC20_Proxy
     ```
-    where ```v1_deploy``` specifies the deployment script tag to run,
+    where ```AwesomeERC20_Proxy``` specifies the deployment script tag to run (optional),
     and ```--network goerli``` specifies the network to run script for
     (see [hardhat.config.js](./hardhat.config.js) for network definitions).
 
-3. Verify source code on Etherscan with the ```npx hardhat etherscan-verify``` command
+3. Verify source code on Etherscan with the ```npm run verify-goerli``` command
     ```
-    npx hardhat etherscan-verify --network goerli
+    npm run verify-goerli
     ```
-
-4. Enable the roles (see Access Control) required by the protocol
-    ```
-    npx hardhat deploy --network goerli --tags v1_roles
-    ```
-    Note: this step can be done via Etherscan UI manually
-
-5. Enable the features (see Access Control) required by the protocol
-    ```
-    npx hardhat deploy --network goerli --tags v1_features
-    ```
-    Note: this step can be done via Etherscan UI manually
 
 To rerun the deployment script and continue partially completed script skip the first step
 (do not cleanup the [deployments](./deployments) folder).
+
+To upgrade the contract(s) (goerli):
+
+1. Delete the implementation deployment of the contract you wish to upgrade from the
+   [deployments/goerli](./deployments/goerli) folder
+
+2. Run the upgrade script of interest with the ```npx hardhat deploy``` command
+    ```
+    npx hardhat deploy --network goerli --tags upgrade-AwesomeERC20v1
+    ```
+   where ```upgrade-AwesomeERC20v1``` specifies the upgrade script tag to run (optional),
+   and ```--network goerli``` specifies the network to run script for
+   (see [hardhat.config.js](./hardhat.config.js) for network definitions).
+
+4. Verify source code on Etherscan with the ```npm run verify-goerli``` command
+    ```
+    npm run verify-goerli
+    ```
 
 ## Contributing
 Please see the [Contribution Guide](./CONTRIBUTING.md) document to get understanding on how to report issues,
