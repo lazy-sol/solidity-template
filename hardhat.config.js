@@ -55,10 +55,6 @@ require('dotenv').config()
 // https://hardhat.org/guides/truffle-testing.html
 require("@nomiclabs/hardhat-truffle5");
 
-// enable etherscan integration
-// https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html
-require("@nomiclabs/hardhat-etherscan");
-
 // enable Solidity-coverage
 // https://hardhat.org/plugins/solidity-coverage.html
 require("solidity-coverage");
@@ -275,29 +271,6 @@ module.exports = {
 		enableTimeouts: false,
 		// https://github.com/mochajs/mocha/issues/3813
 		timeout: false,
-	},
-
-	// Configure etherscan integration
-	// https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html
-	etherscan: {
-		// list of supported networks: npx hardhat verify --list-networks
-		apiKey: {
-			// Your API key for Etherscan
-			// Obtain one at https://etherscan.io/
-			mainnet: process.env.ETHERSCAN_KEY,
-			ropsten: process.env.ETHERSCAN_KEY,
-			rinkeby: process.env.ETHERSCAN_KEY,
-			kovan: process.env.ETHERSCAN_KEY,
-			goerli: process.env.ETHERSCAN_KEY,
-			// Your API key for Polygonscan
-			// Obtain one at https://polygonscan.com/
-			polygon: process.env.POLYSCAN_KEY,
-			polygonMumbai: process.env.POLYSCAN_KEY,
-			// Your API key for BSC Scan
-			// Obtain one at https://bscscan.com/
-			bsc: process.env.BSCSCAN_KEY,
-			bscTestnet: process.env.BSCSCAN_KEY,
-		}
 	},
 
 	// hardhat-gas-reporter will be disabled by default, use REPORT_GAS environment variable to enable it
