@@ -2,7 +2,7 @@
 
 // import the core ACL behaviour to use
 const {
-	behavesLikeACL
+	behavesLikeACL,
 } = require("./include/acl.behaviour");
 
 // deployment routines in use

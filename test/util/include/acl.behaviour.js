@@ -69,7 +69,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, set)).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: set,
@@ -93,7 +93,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, not(remove))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: not(remove),
@@ -119,7 +119,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, set)).to.be.false;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: set,
@@ -144,7 +144,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, MAX_UINT256)).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: not(remove),
@@ -176,7 +176,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, role.and(set))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: set,
@@ -201,7 +201,7 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, not(role.and(remove)))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
+							expectEvent(receipt, "RoleUpdated", {
 								_by: by,
 								_to: to_fn(to),
 								_requested: not(remove),
