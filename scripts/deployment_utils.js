@@ -62,6 +62,20 @@ async function print_contract_details(a0, abi, address, operator_address) {
 		// ignored
 	}
 
+	// try to read OZ Ownable data
+	try {
+		const owner = await web3_contract.methods.owner().call();
+		return_data = Object.assign(return_data, {owner})
+		table_data.push(
+			...[
+				{"key": "OZ Owner", "value": owner},
+			]
+		);
+	}
+	catch(e) {
+		// ignored
+	}
+
 	// try to read initializable data
 	try {
 		const version = parseInt(await web3_contract.methods.getInitializedVersion().call());

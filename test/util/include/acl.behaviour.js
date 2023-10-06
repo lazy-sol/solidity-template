@@ -69,11 +69,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, set)).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: set,
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: set,
+								assigned: set,
 							});
 						});
 					});
@@ -93,11 +92,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, not(remove))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: not(remove),
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: not(remove),
 							});
 						});
 					});
@@ -119,11 +117,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, set)).to.be.false;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: "0",
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: set,
+								assigned: "0",
 							});
 						});
 					});
@@ -144,11 +141,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, MAX_UINT256)).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: MAX_UINT256,
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: MAX_UINT256,
 							});
 						});
 					});
@@ -176,11 +172,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, role.and(set))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: role.and(set),
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: set,
+								assigned: role.and(set),
 							});
 						});
 					});
@@ -201,11 +196,10 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 							expect(await check_fn(to, not(role.and(remove)))).to.be.true;
 						});
 						it('"RoleUpdated" event', async function() {
-							await expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: not(role.and(remove)),
+							expectEvent(receipt, "RoleUpdated", {
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: not(role.and(remove)),
 							});
 						});
 					});
