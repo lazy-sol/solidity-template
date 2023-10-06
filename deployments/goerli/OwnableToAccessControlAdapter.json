@@ -1,0 +1,613 @@
+{
+  "address": "0x494f702df96dc220BFB0A64525B489c32fbc9e81",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_target",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "role",
+          "type": "uint256"
+        }
+      ],
+      "name": "AccessRoleUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "result",
+          "type": "bytes"
+        }
+      ],
+      "name": "ExecutionComplete",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "requested",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assigned",
+          "type": "uint256"
+        }
+      ],
+      "name": "RoleUpdated",
+      "type": "event"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [],
+      "name": "ROLE_ACCESS_MANAGER",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ROLE_ACCESS_ROLES_MANAGER",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "name": "accessRoles",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "target",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "desired",
+          "type": "uint256"
+        }
+      ],
+      "name": "evaluateBy",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "execute",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "features",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "getRole",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "required",
+          "type": "uint256"
+        }
+      ],
+      "name": "isFeatureEnabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "required",
+          "type": "uint256"
+        }
+      ],
+      "name": "isOperatorInRole",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "required",
+          "type": "uint256"
+        }
+      ],
+      "name": "isSenderInRole",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "target",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "internalType": "uint256",
+          "name": "role",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateAccessRole",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "signature",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "role",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateAccessRole",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_mask",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateFeatures",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "role",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateRole",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0xdf365fa857a2efcedaf804bd8a8ac363d54bd3ec8bcd1ffdaf590f3728c70068",
+  "receipt": {
+    "to": null,
+    "from": "0x5F185Da55f7BBD9217E3b3CeE06b180721FA6d34",
+    "contractAddress": "0x494f702df96dc220BFB0A64525B489c32fbc9e81",
+    "transactionIndex": 4,
+    "gasUsed": "654499",
+    "logsBloom": "0x00000000000000000000000000000000000800000000000000040000000000000000000000000000000400000000000000000000000000000000000000000004000000000000800000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080001000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xf31bfa8be129c51711f8a4a90930253d49db42afdc0ec9f3c917e6394d6ed892",
+    "transactionHash": "0xdf365fa857a2efcedaf804bd8a8ac363d54bd3ec8bcd1ffdaf590f3728c70068",
+    "logs": [
+      {
+        "transactionIndex": 4,
+        "blockNumber": 9819168,
+        "transactionHash": "0xdf365fa857a2efcedaf804bd8a8ac363d54bd3ec8bcd1ffdaf590f3728c70068",
+        "address": "0x494f702df96dc220BFB0A64525B489c32fbc9e81",
+        "topics": [
+          "0xe9be537308880e0f56b7d7cfd7abf85f14c4934486d138f848b92a0cbaf659b4",
+          "0x0000000000000000000000005f185da55f7bbd9217e3b3cee06b180721fa6d34"
+        ],
+        "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "logIndex": 6,
+        "blockHash": "0xf31bfa8be129c51711f8a4a90930253d49db42afdc0ec9f3c917e6394d6ed892"
+      }
+    ],
+    "blockNumber": 9819168,
+    "cumulativeGasUsed": "1200085",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x99234E308Cfd78E720900b062A8aA66823884345"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "b8d652414859a9aeb122869768cd60b4",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_target\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"role\",\"type\":\"uint256\"}],\"name\":\"AccessRoleUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"result\",\"type\":\"bytes\"}],\"name\":\"ExecutionComplete\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"requested\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"assigned\",\"type\":\"uint256\"}],\"name\":\"RoleUpdated\",\"type\":\"event\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"ROLE_ACCESS_MANAGER\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ROLE_ACCESS_ROLES_MANAGER\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"name\":\"accessRoles\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"target\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"desired\",\"type\":\"uint256\"}],\"name\":\"evaluateBy\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"features\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"getRole\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"required\",\"type\":\"uint256\"}],\"name\":\"isFeatureEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"required\",\"type\":\"uint256\"}],\"name\":\"isOperatorInRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"required\",\"type\":\"uint256\"}],\"name\":\"isSenderInRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"target\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"role\",\"type\":\"uint256\"}],\"name\":\"updateAccessRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"signature\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"role\",\"type\":\"uint256\"}],\"name\":\"updateAccessRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_mask\",\"type\":\"uint256\"}],\"name\":\"updateFeatures\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"role\",\"type\":\"uint256\"}],\"name\":\"updateRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"author\":\"Basil Gorin\",\"details\":\"Installation Flow      Prerequisite: deployed OZ Ownable contract (target contract) address (target_address)      1. Deploy the AccessControl Adapter bound to the already deployed OZ Ownable contract         (specify the target OZ Ownable contract address in the constructor upon the deployment)            const adapter = await (artifacts.require(\\\"OwnableToAccessControlAdapter\\\")).new(target_address);      2. Define what Ownable-restricted public functions on the target contract you'd like to be able         to provide access to through the adapter contract      3. Map every such function with the role required to execute it using `updateAccessRole()` function         For example, to be able to provide an access to the transferOwnership(address) function, you could do            const ROLE_TRANSFER_OWNERSHIP_MANAGER = 0x00010000;            await adapter.updateAccessRole(\\\"transferOwnership(address)\\\", ROLE_TRANSFER_OWNERSHIP_MANAGER);      4. Provide the roles to the corresponding operators as you would usually do with AccessControl         For example, if you wish an address 0x00000000000000000000000000000000000Ff1CE to grant an access to the         transferOwnership(address) function on the target, you could do            const operator = \\\"0x00000000000000000000000000000000000Ff1CE\\\";            await adapter.updateRole(operator, ROLE_TRANSFER_OWNERSHIP_MANAGER);      5. Transfer the ownership of the target contract to the deployed AccessControl Adapter contract         Note that you can also do steps 2-4 after the step 5Usage Flow      Prerequisite: installed AccessControl Adapter with the access to at least one restricted target contract      function configured      To execute the restricted access function on the target contract via the AccessControl Adapter      1. Use target contract ABI to construct a low-level function call calldata         For example, to construct the transferOwnership() function calldata to transfer the ownership to the         0x00000000000000000000000000000000DEAdc0De address, you could do            const to = \\\"0x00000000000000000000000000000000DEAdc0De\\\";            const calldata = target.contract.methods.transferOwnership(to).encodeABI();       2. Execute a low-level function call on the AccessControl Adapter contract using the constructed calldata          For example, to execute the transferOwnership() function (prepared in step 1), you could do            await web3.eth.sendTransaction({                from: operator,                to: adapter.address,                data: calldata,            }        3. It is also ok to add an ether to the transaction by adding a value field to the `sendTransaction` call,           as well as sending plain ether transfer transaction, as long as target contract has payable functions,           and/or has a default payable receiver\",\"events\":{\"AccessRoleUpdated(bytes4,uint256)\":{\"details\":\"Fired in `updateAccessRole` when the `accessRoles` mapping is updated\",\"params\":{\"role\":\"effective required role to execute the function defined by the selector\",\"selector\":\"selector of the function which corresponding access role was updated\"}},\"ExecutionComplete(bytes4,bytes,bytes)\":{\"details\":\"Logs function execution result on the target if the execution completed successfully\",\"params\":{\"data\":\"full calldata payload passed to the target contract (includes the 4-bytes selector)\",\"result\":\"execution response from the target contract\",\"selector\":\"selector of the function which was executed on the target contract\"}}},\"kind\":\"dev\",\"methods\":{\"constructor\":{\"details\":\"Deploys an AccessControl Adapter binding it to the target OZ Ownable contract,      and setting the ownership of the adapter itself to the deployer\",\"params\":{\"_target\":\"target OZ Ownable contract address\"}},\"evaluateBy(address,uint256,uint256)\":{\"details\":\"Calculated based on:      1) operator's own permission set read from userRoles[operator]      2) target permission set - what is already set on the target      3) desired permission set - what do we want set target toCorner cases:      1) Operator is super admin and its permission set is `FULL_PRIVILEGES_MASK`:        `desired` bitset is returned regardless of the `target` permission set value        (what operator sets is what they get)      2) Operator with no permissions (zero bitset):        `target` bitset is returned regardless of the `desired` value        (operator has no authority and cannot modify anything)Example:      Consider an operator with the permissions bitmask     00001111      is about to modify the target permission set          01010101      Operator wants to set that permission set to          00110011      Based on their role, an operator has the permissions      to update only lowest 4 bits on the target, meaning that      high 4 bits of the target set in this example is left      unchanged and low 4 bits get changed as desired:      01010011\",\"params\":{\"desired\":\"desired set of permissions operator would like to set\",\"operator\":\"address of the contract operator which is about to set the permissions\",\"target\":\"input set of permissions to operator is going to modify\"},\"returns\":{\"_0\":\"resulting set of permissions given operator will set\"}},\"execute(bytes)\":{\"details\":\"Low-level execute of the data calldata on the target contractThis function extracts the target function selector from the calldata specified      and verifies transaction executor permission to access the function on the target      using the `accessRoles` mappingThrows if there is no `accessRoles` mapping configured for the functionThrows if transaction executor role doesn't contain the required role from `accessRoles` mappingThrows if execution on the target returns an error\",\"params\":{\"data\":\"low-level calldata to be passed as is to the target contract for the execution\"},\"returns\":{\"_0\":\"the response from the target contract after the successful execution\"}},\"features()\":{\"details\":\"Effectively reads userRoles role for the contract itself\",\"returns\":{\"_0\":\"256-bit bitmask of the features enabled\"}},\"getRole(address)\":{\"details\":\"Having a simple getter instead of making the mapping public      allows enforcing the encapsulation of the mapping and protects from      writing to it directly in the inheriting smart contracts\",\"params\":{\"operator\":\"address of a user to read permissions for,      or self address to read global features of the smart contract\"}},\"isFeatureEnabled(uint256)\":{\"params\":{\"required\":\"set of features to check against\"},\"returns\":{\"_0\":\"true if all the features requested are enabled, false otherwise\"}},\"isOperatorInRole(address,uint256)\":{\"params\":{\"operator\":\"address of the user to check role for\",\"required\":\"set of permissions (role) to check\"},\"returns\":{\"_0\":\"true if all the permissions requested are enabled, false otherwise\"}},\"isSenderInRole(uint256)\":{\"params\":{\"required\":\"set of permissions (role) to check against\"},\"returns\":{\"_0\":\"true if all the permissions requested are enabled, false otherwise\"}},\"updateAccessRole(bytes4,uint256)\":{\"details\":\"Updates the access role required to execute the function defined by its selector      on the target contractMore on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html\",\"params\":{\"role\":\"role required to execute this function, or zero to disable      access to the specified function for everyone\",\"selector\":\"function selector on the target contract, for example      0xf2fde38b selector corresponds to the \\\"transferOwnership(address)\\\" function\"}},\"updateAccessRole(string,uint256)\":{\"details\":\"Updates the access role required to execute the function defined by its signature      on the target contractMore on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html\",\"params\":{\"role\":\"role required to execute this function, or zero to disable      access to the specified function for everyone\",\"signature\":\"function signature on the target contract, for example      \\\"transferOwnership(address)\\\"\"}},\"updateFeatures(uint256)\":{\"details\":\"Requires transaction sender to have `ROLE_ACCESS_MANAGER` permissionFunction is left for backward compatibility with older versions\",\"params\":{\"_mask\":\"bitmask representing a set of features to enable/disable\"}},\"updateRole(address,uint256)\":{\"details\":\"Setting role to zero is equivalent to removing an all permissionsSetting role to `FULL_PRIVILEGES_MASK` is equivalent to      copying senders' permissions (role) to the userRequires transaction sender to have `ROLE_ACCESS_MANAGER` permission\",\"params\":{\"operator\":\"address of a user to alter permissions for,       or self address to alter global features of the smart contract\",\"role\":\"bitmask representing a set of permissions to      enable/disable for a user specified\"}}},\"stateVariables\":{\"ROLE_ACCESS_ROLES_MANAGER\":{\"details\":\"Role ROLE_ACCESS_MANAGER allows modifying `accessRoles` mapping\"},\"accessRoles\":{\"details\":\"Access roles mapping stores the roles required to access the functions on the      target contract, guarding it from the unauthorized accessMaps function selector (bytes4) on the target contract to the access role (permission)      required to execute the function\"},\"target\":{\"details\":\"Target OZ Ownable contract AccessControl Adapter executes the transactions onTarget contract must transfer its ownership to the AccessControl Adapter\"}},\"title\":\"OZ Ownable to AccessControl Adapter (short: AccessControl Adapter)\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"ROLE_ACCESS_MANAGER()\":{\"notice\":\"Access manager is responsible for assigning the roles to users,      enabling/disabling global features of the smart contractAccess manager can add, remove and update user roles,      remove and update global features\"},\"ROLE_ACCESS_ROLES_MANAGER()\":{\"notice\":\"Access Roles manager is responsible for assigning the access roles to functions\"},\"evaluateBy(address,uint256,uint256)\":{\"notice\":\"Determines the permission bitmask an operator can set on the      target permission setUsed to calculate the permission bitmask to be set when requested     in `updateRole` and `updateFeatures` functions\"},\"features()\":{\"notice\":\"Retrieves globally set of features enabled\"},\"getRole(address)\":{\"notice\":\"Reads the permissions (role) for a given user from the `userRoles` mapping\"},\"isFeatureEnabled(uint256)\":{\"notice\":\"Checks if requested set of features is enabled globally on the contract\"},\"isOperatorInRole(address,uint256)\":{\"notice\":\"Checks if operator has all the permissions (role) required\"},\"isSenderInRole(uint256)\":{\"notice\":\"Checks if transaction sender `msg.sender` has all the permissions required\"},\"updateFeatures(uint256)\":{\"notice\":\"Updates set of the globally enabled features (`features`),      taking into account sender's permissions\"},\"updateRole(address,uint256)\":{\"notice\":\"Updates set of permissions (role) for a given user,      taking into account sender's permissions.\"}},\"notice\":\"Helper contract allowing to change the access model of the already deployed      OpenZeppelin Ownable contract to the AccessControl model\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/utils/OwnableToAccessControlAdapter.sol\":\"OwnableToAccessControlAdapter\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/utils/AccessControl.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.4;\\n\\n/**\\n * @title Access Control List\\n *\\n * @notice Access control smart contract provides an API to check\\n *      if a specific operation is permitted globally and/or\\n *      if a particular user has a permission to execute it.\\n *\\n * @notice It deals with two main entities: features and roles.\\n *\\n * @notice Features are designed to be used to enable/disable public functions\\n *      of the smart contract (used by a wide audience).\\n * @notice User roles are designed to control the access to restricted functions\\n *      of the smart contract (used by a limited set of maintainers).\\n *\\n * @notice Terms \\\"role\\\", \\\"permissions\\\" and \\\"set of permissions\\\" have equal meaning\\n *      in the documentation text and may be used interchangeably.\\n * @notice Terms \\\"permission\\\", \\\"single permission\\\" implies only one permission bit set.\\n *\\n * @notice Access manager is a special role which allows to grant/revoke other roles.\\n *      Access managers can only grant/revoke permissions which they have themselves.\\n *      As an example, access manager with no other roles set can only grant/revoke its own\\n *      access manager permission and nothing else.\\n *\\n * @notice Access manager permission should be treated carefully, as a super admin permission:\\n *      Access manager with even no other permission can interfere with another account by\\n *      granting own access manager permission to it and effectively creating more powerful\\n *      permission set than its own.\\n *\\n * @dev Both current and OpenZeppelin AccessControl implementations feature a similar API\\n *      to check/know \\\"who is allowed to do this thing\\\".\\n * @dev Zeppelin implementation is more flexible:\\n *      - it allows setting unlimited number of roles, while current is limited to 256 different roles\\n *      - it allows setting an admin for each role, while current allows having only one global admin\\n * @dev Current implementation is more lightweight:\\n *      - it uses only 1 bit per role, while Zeppelin uses 256 bits\\n *      - it allows setting up to 256 roles at once, in a single transaction, while Zeppelin allows\\n *        setting only one role in a single transaction\\n *\\n * @dev This smart contract is designed to be inherited by other\\n *      smart contracts which require access control management capabilities.\\n *\\n * @dev Access manager permission has a bit 255 set.\\n *      This bit must not be used by inheriting contracts for any other permissions/features.\\n *\\n * @author Basil Gorin\\n */\\nabstract contract AccessControl {\\n\\t/**\\n\\t * @notice Privileged addresses with defined roles/permissions\\n\\t * @notice In the context of ERC20/ERC721 tokens these can be permissions to\\n\\t *      allow minting or burning tokens, transferring on behalf and so on\\n\\t *\\n\\t * @dev Maps user address to the permissions bitmask (role), where each bit\\n\\t *      represents a permission\\n\\t * @dev Bitmask 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF\\n\\t *      represents all possible permissions\\n\\t * @dev 'This' address mapping represents global features of the smart contract\\n\\t *\\n\\t * @dev We keep the mapping private to prevent direct writes to it from the inheriting\\n\\t *      contracts, `getRole()` and `updateRole()` functions should be used instead\\n\\t */\\n\\tmapping(address => uint256) private userRoles;\\n\\n\\t/**\\n\\t * @notice Access manager is responsible for assigning the roles to users,\\n\\t *      enabling/disabling global features of the smart contract\\n\\t * @notice Access manager can add, remove and update user roles,\\n\\t *      remove and update global features\\n\\t *\\n\\t * @dev Role ROLE_ACCESS_MANAGER allows modifying user roles and global features\\n\\t * @dev Role ROLE_ACCESS_MANAGER has single bit at position 255 enabled\\n\\t */\\n\\tuint256 public constant ROLE_ACCESS_MANAGER = 0x8000000000000000000000000000000000000000000000000000000000000000;\\n\\n\\t/**\\n\\t * @dev Bitmask representing all the possible permissions (super admin role)\\n\\t * @dev Has all the bits are enabled (2^256 - 1 value)\\n\\t */\\n\\tuint256 private constant FULL_PRIVILEGES_MASK = type(uint256).max; // before 0.8.0: uint256(-1) overflows to 0xFFFF...\\n\\n\\t/**\\n\\t * @dev Fired in updateRole() and updateFeatures()\\n\\t *\\n\\t * @param operator address which was granted/revoked permissions\\n\\t * @param requested permissions requested\\n\\t * @param assigned permissions effectively set\\n\\t */\\n\\tevent RoleUpdated(address indexed operator, uint256 requested, uint256 assigned);\\n\\n\\t/**\\n\\t * @notice Creates an access control instance, setting the contract owner to have full privileges\\n\\t *\\n\\t * @param _owner smart contract owner having full privileges\\n\\t */\\n\\tconstructor(address _owner) {\\n\\t\\t// grant owner full privileges\\n\\t\\t__setRole(_owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);\\n\\t}\\n\\n\\t/**\\n\\t * @notice Retrieves globally set of features enabled\\n\\t *\\n\\t * @dev Effectively reads userRoles role for the contract itself\\n\\t *\\n\\t * @return 256-bit bitmask of the features enabled\\n\\t */\\n\\tfunction features() public view returns (uint256) {\\n\\t\\t// features are stored in 'this' address mapping of `userRoles`\\n\\t\\treturn getRole(address(this));\\n\\t}\\n\\n\\t/**\\n\\t * @notice Updates set of the globally enabled features (`features`),\\n\\t *      taking into account sender's permissions\\n\\t *\\n\\t * @dev Requires transaction sender to have `ROLE_ACCESS_MANAGER` permission\\n\\t * @dev Function is left for backward compatibility with older versions\\n\\t *\\n\\t * @param _mask bitmask representing a set of features to enable/disable\\n\\t */\\n\\tfunction updateFeatures(uint256 _mask) public {\\n\\t\\t// delegate call to `updateRole`\\n\\t\\tupdateRole(address(this), _mask);\\n\\t}\\n\\n\\t/**\\n\\t * @notice Reads the permissions (role) for a given user from the `userRoles` mapping\\n\\t *\\n\\t * @dev Having a simple getter instead of making the mapping public\\n\\t *      allows enforcing the encapsulation of the mapping and protects from\\n\\t *      writing to it directly in the inheriting smart contracts\\n\\t *\\n\\t * @param operator address of a user to read permissions for,\\n\\t *      or self address to read global features of the smart contract\\n\\t */\\n\\tfunction getRole(address operator) public view returns(uint256) {\\n\\t\\t// read the value from `userRoles` and return\\n\\t\\treturn userRoles[operator];\\n\\t}\\n\\n\\t/**\\n\\t * @notice Updates set of permissions (role) for a given user,\\n\\t *      taking into account sender's permissions.\\n\\t *\\n\\t * @dev Setting role to zero is equivalent to removing an all permissions\\n\\t * @dev Setting role to `FULL_PRIVILEGES_MASK` is equivalent to\\n\\t *      copying senders' permissions (role) to the user\\n\\t * @dev Requires transaction sender to have `ROLE_ACCESS_MANAGER` permission\\n\\t *\\n\\t * @param operator address of a user to alter permissions for,\\n\\t *       or self address to alter global features of the smart contract\\n\\t * @param role bitmask representing a set of permissions to\\n\\t *      enable/disable for a user specified\\n\\t */\\n\\tfunction updateRole(address operator, uint256 role) public {\\n\\t\\t// caller must have a permission to update user roles\\n\\t\\trequire(isSenderInRole(ROLE_ACCESS_MANAGER), \\\"access denied\\\");\\n\\n\\t\\t// evaluate the role and reassign it\\n\\t\\t__setRole(operator, role, evaluateBy(msg.sender, getRole(operator), role));\\n\\t}\\n\\n\\t/**\\n\\t * @notice Determines the permission bitmask an operator can set on the\\n\\t *      target permission set\\n\\t * @notice Used to calculate the permission bitmask to be set when requested\\n\\t *     in `updateRole` and `updateFeatures` functions\\n\\t *\\n\\t * @dev Calculated based on:\\n\\t *      1) operator's own permission set read from userRoles[operator]\\n\\t *      2) target permission set - what is already set on the target\\n\\t *      3) desired permission set - what do we want set target to\\n\\t *\\n\\t * @dev Corner cases:\\n\\t *      1) Operator is super admin and its permission set is `FULL_PRIVILEGES_MASK`:\\n\\t *        `desired` bitset is returned regardless of the `target` permission set value\\n\\t *        (what operator sets is what they get)\\n\\t *      2) Operator with no permissions (zero bitset):\\n\\t *        `target` bitset is returned regardless of the `desired` value\\n\\t *        (operator has no authority and cannot modify anything)\\n\\t *\\n\\t * @dev Example:\\n\\t *      Consider an operator with the permissions bitmask     00001111\\n\\t *      is about to modify the target permission set          01010101\\n\\t *      Operator wants to set that permission set to          00110011\\n\\t *      Based on their role, an operator has the permissions\\n\\t *      to update only lowest 4 bits on the target, meaning that\\n\\t *      high 4 bits of the target set in this example is left\\n\\t *      unchanged and low 4 bits get changed as desired:      01010011\\n\\t *\\n\\t * @param operator address of the contract operator which is about to set the permissions\\n\\t * @param target input set of permissions to operator is going to modify\\n\\t * @param desired desired set of permissions operator would like to set\\n\\t * @return resulting set of permissions given operator will set\\n\\t */\\n\\tfunction evaluateBy(address operator, uint256 target, uint256 desired) public view returns (uint256) {\\n\\t\\t// read operator's permissions\\n\\t\\tuint256 p = getRole(operator);\\n\\n\\t\\t// taking into account operator's permissions,\\n\\t\\t// 1) enable the permissions desired on the `target`\\n\\t\\ttarget |= p & desired;\\n\\t\\t// 2) disable the permissions desired on the `target`\\n\\t\\ttarget &= FULL_PRIVILEGES_MASK ^ (p & (FULL_PRIVILEGES_MASK ^ desired));\\n\\n\\t\\t// return calculated result\\n\\t\\treturn target;\\n\\t}\\n\\n\\t/**\\n\\t * @notice Checks if requested set of features is enabled globally on the contract\\n\\t *\\n\\t * @param required set of features to check against\\n\\t * @return true if all the features requested are enabled, false otherwise\\n\\t */\\n\\tfunction isFeatureEnabled(uint256 required) public view returns (bool) {\\n\\t\\t// delegate call to `__hasRole`, passing `features` property\\n\\t\\treturn __hasRole(features(), required);\\n\\t}\\n\\n\\t/**\\n\\t * @notice Checks if transaction sender `msg.sender` has all the permissions required\\n\\t *\\n\\t * @param required set of permissions (role) to check against\\n\\t * @return true if all the permissions requested are enabled, false otherwise\\n\\t */\\n\\tfunction isSenderInRole(uint256 required) public view returns (bool) {\\n\\t\\t// delegate call to `isOperatorInRole`, passing transaction sender\\n\\t\\treturn isOperatorInRole(msg.sender, required);\\n\\t}\\n\\n\\t/**\\n\\t * @notice Checks if operator has all the permissions (role) required\\n\\t *\\n\\t * @param operator address of the user to check role for\\n\\t * @param required set of permissions (role) to check\\n\\t * @return true if all the permissions requested are enabled, false otherwise\\n\\t */\\n\\tfunction isOperatorInRole(address operator, uint256 required) public view returns (bool) {\\n\\t\\t// delegate call to `__hasRole`, passing operator's permissions (role)\\n\\t\\treturn __hasRole(getRole(operator), required);\\n\\t}\\n\\n\\t/**\\n\\t * @dev Sets the `assignedRole` role to the operator, logs both `requestedRole` and `actualRole`\\n\\t *\\n\\t * @dev Unsafe:\\n\\t *      provides direct write access to `userRoles` mapping without any security checks,\\n\\t *      doesn't verify the executor (msg.sender) permissions,\\n\\t *      must be kept private at all times\\n\\t *\\n\\t * @param operator address of a user to alter permissions for,\\n\\t *       or self address to alter global features of the smart contract\\n\\t * @param requestedRole bitmask representing a set of permissions requested\\n\\t *      to be enabled/disabled for a user specified, used only to be logged into event\\n\\t * @param assignedRole bitmask representing a set of permissions to\\n\\t *      enable/disable for a user specified, used to update the mapping and to be logged into event\\n\\t */\\n\\tfunction __setRole(address operator, uint256 requestedRole, uint256 assignedRole) private {\\n\\t\\t// assign the role to the operator\\n\\t\\tuserRoles[operator] = assignedRole;\\n\\n\\t\\t// fire an event\\n\\t\\temit RoleUpdated(operator, requestedRole, assignedRole);\\n\\t}\\n\\n\\t/**\\n\\t * @dev Checks if role `actual` contains all the permissions required `required`\\n\\t *\\n\\t * @param actual existent role\\n\\t * @param required required role\\n\\t * @return true if actual has required role (all permissions), false otherwise\\n\\t */\\n\\tfunction __hasRole(uint256 actual, uint256 required) private pure returns (bool) {\\n\\t\\t// check the bitmask for the role required and return the result\\n\\t\\treturn actual & required == required;\\n\\t}\\n}\\n\",\"keccak256\":\"0xa2abb1e200ca54059c3b25160a780dd49c3f5215e5224f60e578160464589901\",\"license\":\"MIT\"},\"contracts/utils/OwnableToAccessControlAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.4;\\n\\nimport \\\"./AccessControl.sol\\\";\\n\\n/**\\n * @title OZ Ownable to AccessControl Adapter (short: AccessControl Adapter)\\n *\\n * @notice Helper contract allowing to change the access model of the already deployed\\n *      OpenZeppelin Ownable contract to the AccessControl model\\n *\\n * @dev Installation Flow\\n *      Prerequisite: deployed OZ Ownable contract (target contract) address (target_address)\\n *\\n *      1. Deploy the AccessControl Adapter bound to the already deployed OZ Ownable contract\\n *         (specify the target OZ Ownable contract address in the constructor upon the deployment)\\n *\\n *            const adapter = await (artifacts.require(\\\"OwnableToAccessControlAdapter\\\")).new(target_address);\\n *\\n *      2. Define what Ownable-restricted public functions on the target contract you'd like to be able\\n *         to provide access to through the adapter contract\\n *\\n *      3. Map every such function with the role required to execute it using `updateAccessRole()` function\\n *         For example, to be able to provide an access to the transferOwnership(address) function, you could do\\n *\\n *            const ROLE_TRANSFER_OWNERSHIP_MANAGER = 0x00010000;\\n *            await adapter.updateAccessRole(\\\"transferOwnership(address)\\\", ROLE_TRANSFER_OWNERSHIP_MANAGER);\\n *\\n *      4. Provide the roles to the corresponding operators as you would usually do with AccessControl\\n *         For example, if you wish an address 0x00000000000000000000000000000000000Ff1CE to grant an access to the\\n *         transferOwnership(address) function on the target, you could do\\n *\\n *            const operator = \\\"0x00000000000000000000000000000000000Ff1CE\\\";\\n *            await adapter.updateRole(operator, ROLE_TRANSFER_OWNERSHIP_MANAGER);\\n *\\n *      5. Transfer the ownership of the target contract to the deployed AccessControl Adapter contract\\n *         Note that you can also do steps 2-4 after the step 5\\n *\\n * @dev Usage Flow\\n *      Prerequisite: installed AccessControl Adapter with the access to at least one restricted target contract\\n *      function configured\\n *\\n *      To execute the restricted access function on the target contract via the AccessControl Adapter\\n *      1. Use target contract ABI to construct a low-level function call calldata\\n *         For example, to construct the transferOwnership() function calldata to transfer the ownership to the\\n *         0x00000000000000000000000000000000DEAdc0De address, you could do\\n *\\n *            const to = \\\"0x00000000000000000000000000000000DEAdc0De\\\";\\n *            const calldata = target.contract.methods.transferOwnership(to).encodeABI();\\n *\\n *       2. Execute a low-level function call on the AccessControl Adapter contract using the constructed calldata\\n *          For example, to execute the transferOwnership() function (prepared in step 1), you could do\\n *\\n *            await web3.eth.sendTransaction({\\n *                from: operator,\\n *                to: adapter.address,\\n *                data: calldata,\\n *            }\\n *\\n *        3. It is also ok to add an ether to the transaction by adding a value field to the `sendTransaction` call,\\n *           as well as sending plain ether transfer transaction, as long as target contract has payable functions,\\n *           and/or has a default payable receiver\\n *\\n * @author Basil Gorin\\n */\\ncontract OwnableToAccessControlAdapter is AccessControl {\\n\\t/**\\n\\t * @dev Target OZ Ownable contract AccessControl Adapter executes the transactions on\\n\\t *\\n\\t * @dev Target contract must transfer its ownership to the AccessControl Adapter\\n\\t */\\n\\taddress public immutable target;\\n\\n\\t/**\\n\\t * @dev Access roles mapping stores the roles required to access the functions on the\\n\\t *      target contract, guarding it from the unauthorized access\\n\\t *\\n\\t * @dev Maps function selector (bytes4) on the target contract to the access role (permission)\\n\\t *      required to execute the function\\n\\t */\\n\\tmapping(bytes4 => uint256) public accessRoles;\\n\\n\\t/**\\n\\t * @notice Access Roles manager is responsible for assigning the access roles to functions\\n\\t *\\n\\t * @dev Role ROLE_ACCESS_MANAGER allows modifying `accessRoles` mapping\\n\\t */\\n\\tuint256 public constant ROLE_ACCESS_ROLES_MANAGER = 0x2000000000000000000000000000000000000000000000000000000000000000;\\n\\n\\t/**\\n\\t * @dev Fired in `updateAccessRole` when the `accessRoles` mapping is updated\\n\\t *\\n\\t * @param selector selector of the function which corresponding access role was updated\\n\\t * @param role effective required role to execute the function defined by the selector\\n\\t */\\n\\tevent AccessRoleUpdated(bytes4 selector, uint256 role);\\n\\n\\t/**\\n\\t * @dev Logs function execution result on the target if the execution completed successfully\\n\\t *\\n\\t * @param selector selector of the function which was executed on the target contract\\n\\t * @param data full calldata payload passed to the target contract (includes the 4-bytes selector)\\n\\t * @param result execution response from the target contract\\n\\t */\\n\\tevent ExecutionComplete(bytes4 selector, bytes data, bytes result);\\n\\n\\t/**\\n\\t * @dev Deploys an AccessControl Adapter binding it to the target OZ Ownable contract,\\n\\t *      and setting the ownership of the adapter itself to the deployer\\n\\t *\\n\\t * @param _target target OZ Ownable contract address\\n\\t */\\n\\tconstructor(address _target) AccessControl(msg.sender) {\\n\\t\\t// verify the inputs\\n\\t\\trequire(_target != address(0), \\\"zero address\\\");\\n\\n\\t\\t// initialize internal contract state\\n\\t\\ttarget = _target;\\n\\t}\\n\\n\\t/**\\n\\t * @dev Updates the access role required to execute the function defined by its signature\\n\\t *      on the target contract\\n\\t *\\n\\t * @dev More on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html\\n\\t *\\n\\t * @param signature function signature on the target contract, for example\\n\\t *      \\\"transferOwnership(address)\\\"\\n\\t * @param role role required to execute this function, or zero to disable\\n\\t *      access to the specified function for everyone\\n\\t */\\n\\tfunction updateAccessRole(string memory signature, uint256 role) public {\\n\\t\\t// delegate to `updateAccessRole(bytes4, uint256)`\\n\\t\\tupdateAccessRole(bytes4(keccak256(bytes(signature))), role);\\n\\t}\\n\\n\\t/**\\n\\t * @dev Updates the access role required to execute the function defined by its selector\\n\\t *      on the target contract\\n\\t *\\n\\t * @dev More on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html\\n\\t *\\n\\t * @param selector function selector on the target contract, for example\\n\\t *      0xf2fde38b selector corresponds to the \\\"transferOwnership(address)\\\" function\\n\\t * @param role role required to execute this function, or zero to disable\\n\\t *      access to the specified function for everyone\\n\\t */\\n\\tfunction updateAccessRole(bytes4 selector, uint256 role) public {\\n\\t\\t// verify the access permission\\n\\t\\trequire(isSenderInRole(ROLE_ACCESS_ROLES_MANAGER), \\\"access denied\\\");\\n\\n\\t\\t// update the function access role\\n\\t\\taccessRoles[selector] = role;\\n\\n\\t\\t// emit an event\\n\\t\\temit AccessRoleUpdated(selector, role);\\n\\t}\\n\\n\\t/**\\n\\t * @dev Low-level execute of the data calldata on the target contract\\n\\t *\\n\\t * @dev This function extracts the target function selector from the calldata specified\\n\\t *      and verifies transaction executor permission to access the function on the target\\n\\t *      using the `accessRoles` mapping\\n\\t *\\n\\t * @dev Throws if there is no `accessRoles` mapping configured for the function\\n\\t * @dev Throws if transaction executor role doesn't contain the required role from `accessRoles` mapping\\n\\t * @dev Throws if execution on the target returns an error\\n\\t *\\n\\t * @param data low-level calldata to be passed as is to the target contract for the execution\\n\\t * @return the response from the target contract after the successful execution\\n\\t */\\n\\tfunction execute(bytes memory data) public payable returns(bytes memory) {\\n\\t\\t// extract the selector (first 4 bytes as bytes4) using assembly\\n\\t\\tbytes4 selector;\\n\\t\\tassembly {\\n\\t\\t\\t// load the first word after the length field\\n\\t\\t\\tselector := mload(add(data, 32))\\n\\t\\t}\\n\\n\\t\\t// zero data length means we're trying to execute the receive() function on\\n\\t\\t// the target and supply some ether to the target; in this case we don't need a security check\\n\\t\\t// if the data is present, we're executing some real function and must do a security check\\n\\t\\tif(data.length != 0) {\\n\\t\\t\\t// determine the role required to access the function\\n\\t\\t\\tuint256 roleRequired = accessRoles[selector];\\n\\n\\t\\t\\t// verify function access role was already set\\n\\t\\t\\trequire(roleRequired != 0, \\\"access role not set\\\");\\n\\n\\t\\t\\t// verify the access permission\\n\\t\\t\\trequire(isSenderInRole(roleRequired), \\\"access denied\\\");\\n\\t\\t}\\n\\n\\t\\t// execute the call on the target\\n\\t\\t(bool success, bytes memory result) = address(target).call{value: msg.value}(data);\\n\\n\\t\\t// verify the execution completed successfully\\n\\t\\trequire(success, \\\"execution failed\\\");\\n\\n\\t\\t// emit an event\\n\\t\\temit ExecutionComplete(selector, data, result);\\n\\n\\t\\t// return the result\\n\\t\\treturn result;\\n\\t}\\n\\n\\t/**\\n\\t * @dev Proxies the ether sent to the AccessControl Adapter to the target contract\\n\\t *\\n\\t * @dev Throws if target contract doesn't have the default payable receiver, i.e. doesn't accept ether\\n\\t */\\n\\treceive() external payable {\\n\\t\\t// delegate to `execute(bytes)`\\n\\t\\texecute(bytes(\\\"\\\"));\\n\\t}\\n\\n\\t/**\\n\\t * @dev Calls the target contract with the calldata specified in the transaction\\n\\t *\\n\\t * @dev See `execute()` function for details\\n\\t * @dev Use `execute()` function directly if the target contract function signature collides\\n\\t *      with any of the AccessControl Adapter functions signature\\n\\t */\\n\\tfallback() external payable {\\n\\t\\t// msg.data contains full calldata: function selector + encoded function arguments (if any)\\n\\t\\t// delegate to `execute(bytes)`\\n\\t\\texecute(msg.data);\\n\\t}\\n}\\n\",\"keccak256\":\"0x8c8c926806eda0cd9f1626acb2f5b703992e6dc63ef0836ff0e1bd20ee6da37f\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a060405234801561001057600080fd5b50604051610ba2380380610ba283398101604081905261002f916100f4565b3361003d816000198061009c565b506001600160a01b0381166100875760405162461bcd60e51b815260206004820152600c60248201526b7a65726f206164647265737360a01b604482015260640160405180910390fd5b60601b6001600160601b031916608052610122565b6001600160a01b0383166000818152602081815260409182902084905581518581529081018490527fe9be537308880e0f56b7d7cfd7abf85f14c4934486d138f848b92a0cbaf659b4910160405180910390a2505050565b600060208284031215610105578081fd5b81516001600160a01b038116811461011b578182fd5b9392505050565b60805160601c610a5b610147600039600081816102fc01526104340152610a5b6000f3fe6080604052600436106100ec5760003560e01c8063725f36261161008a578063d4b8399211610059578063d4b83992146102ea578063d5bb7f6714610336578063f822d5aa14610356578063fcc2c078146103765761010c565b8063725f362614610262578063ae5b102e14610292578063ae682e2e146102b2578063c688d693146102ca5761010c565b806334e48c9e116100c657806334e48c9e146101d257806344276733146101ea578063491d2611146102205780635defb40d146102425761010c565b806309c5eabe1461014c5780630e82fe25146101755780632b521416146101b05761010c565b3661010c5761010960405180602001604052806000815250610396565b50005b6101096000368080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061039692505050565b61015f61015a366004610863565b610396565b60405161016c91906109a5565b60405180910390f35b34801561018157600080fd5b506101a261019036600461082e565b60016020526000908152604090205481565b60405190815260200161016c565b3480156101bc57600080fd5b50306000908152602081905260409020546101a2565b3480156101de57600080fd5b506101a2600160fd1b81565b3480156101f657600080fd5b506101a26102053660046107b9565b6001600160a01b031660009081526020819052604090205490565b34801561022c57600080fd5b5061024061023b366004610848565b610535565b005b34801561024e57600080fd5b5061024061025d3660046108b1565b6105b7565b34801561026e57600080fd5b5061028261027d366004610907565b6105cc565b604051901515815260200161016c565b34801561029e57600080fd5b506102406102ad3660046107d3565b6105ee565b3480156102be57600080fd5b506101a2600160ff1b81565b3480156102d657600080fd5b506102826102e53660046107d3565b61064a565b3480156102f657600080fd5b5061031e7f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161016c565b34801561034257600080fd5b50610240610351366004610907565b610673565b34801561036257600080fd5b506101a26103713660046107fc565b610680565b34801561038257600080fd5b50610282610391366004610907565b6106ab565b60208101518151606091901561042f576001600160e01b03198116600090815260016020526040902054806104085760405162461bcd60e51b81526020600482015260136024820152721858d8d95cdcc81c9bdb19481b9bdd081cd95d606a1b60448201526064015b60405180910390fd5b610411816106ab565b61042d5760405162461bcd60e51b81526004016103ff906109b8565b505b6000807f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316348660405161046b919061094b565b60006040518083038185875af1925050503d80600081146104a8576040519150601f19603f3d011682016040523d82523d6000602084013e6104ad565b606091505b5091509150816104f25760405162461bcd60e51b815260206004820152601060248201526f195e1958dd5d1a5bdb8819985a5b195960821b60448201526064016103ff565b7f57a62eca76fc623c92f161d2a4b851851ece707135ce2af1eec256d660571b6d83868360405161052593929190610967565b60405180910390a1949350505050565b610542600160fd1b6106ab565b61055e5760405162461bcd60e51b81526004016103ff906109b8565b6001600160e01b03198216600081815260016020908152604091829020849055815192835282018390527fdb8ed917742b49e83acd1322bcaa8f18b1e5f78a70784c43ea14db7ab50e628d910160405180910390a15050565b6105c8828051906020012082610535565b5050565b306000908152602081905260408120546105e8905b8316831490565b92915050565b6105fb600160ff1b6106ab565b6106175760405162461bcd60e51b81526004016103ff906109b8565b6105c882826106453361063f876001600160a01b031660009081526020819052604090205490565b86610680565b6106b7565b6001600160a01b03821660009081526020819052604081205461066c906105e1565b9392505050565b61067d30826105ee565b50565b6001600160a01b03929092166000908152602081905260409020546000198084188216189216171690565b60006105e8338361064a565b6001600160a01b0383166000818152602081815260409182902084905581518581529081018490527fe9be537308880e0f56b7d7cfd7abf85f14c4934486d138f848b92a0cbaf659b4910160405180910390a2505050565b600067ffffffffffffffff8084111561072a5761072a610a0f565b604051601f8501601f19908116603f0116810190828211818310171561075257610752610a0f565b8160405280935085815286868601111561076b57600080fd5b858560208301376000602087830101525050509392505050565b80356001600160a01b038116811461079c57600080fd5b919050565b80356001600160e01b03198116811461079c57600080fd5b6000602082840312156107ca578081fd5b61066c82610785565b600080604083850312156107e5578081fd5b6107ee83610785565b946020939093013593505050565b600080600060608486031215610810578081fd5b61081984610785565b95602085013595506040909401359392505050565b60006020828403121561083f578081fd5b61066c826107a1565b6000806040838503121561085a578182fd5b6107ee836107a1565b600060208284031215610874578081fd5b813567ffffffffffffffff81111561088a578182fd5b8201601f8101841361089a578182fd5b6108a98482356020840161070f565b949350505050565b600080604083850312156108c3578182fd5b823567ffffffffffffffff8111156108d9578283fd5b8301601f810185136108e9578283fd5b6108f88582356020840161070f565b95602094909401359450505050565b600060208284031215610918578081fd5b5035919050565b600081518084526109378160208601602086016109df565b601f01601f19169290920160200192915050565b6000825161095d8184602087016109df565b9190910192915050565b63ffffffff60e01b84168152606060208201526000610989606083018561091f565b828103604084015261099b818561091f565b9695505050505050565b60208152600061066c602083018461091f565b6020808252600d908201526c1858d8d95cdcc819195b9a5959609a1b604082015260600190565b60005b838110156109fa5781810151838201526020016109e2565b83811115610a09576000848401525b50505050565b634e487b7160e01b600052604160045260246000fdfea264697066735822122011b4428d8359d39172f811140007a87bdc934210e914e782b8d68f29be2e91c664736f6c63430008040033",
+  "deployedBytecode": "0x6080604052600436106100ec5760003560e01c8063725f36261161008a578063d4b8399211610059578063d4b83992146102ea578063d5bb7f6714610336578063f822d5aa14610356578063fcc2c078146103765761010c565b8063725f362614610262578063ae5b102e14610292578063ae682e2e146102b2578063c688d693146102ca5761010c565b806334e48c9e116100c657806334e48c9e146101d257806344276733146101ea578063491d2611146102205780635defb40d146102425761010c565b806309c5eabe1461014c5780630e82fe25146101755780632b521416146101b05761010c565b3661010c5761010960405180602001604052806000815250610396565b50005b6101096000368080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061039692505050565b61015f61015a366004610863565b610396565b60405161016c91906109a5565b60405180910390f35b34801561018157600080fd5b506101a261019036600461082e565b60016020526000908152604090205481565b60405190815260200161016c565b3480156101bc57600080fd5b50306000908152602081905260409020546101a2565b3480156101de57600080fd5b506101a2600160fd1b81565b3480156101f657600080fd5b506101a26102053660046107b9565b6001600160a01b031660009081526020819052604090205490565b34801561022c57600080fd5b5061024061023b366004610848565b610535565b005b34801561024e57600080fd5b5061024061025d3660046108b1565b6105b7565b34801561026e57600080fd5b5061028261027d366004610907565b6105cc565b604051901515815260200161016c565b34801561029e57600080fd5b506102406102ad3660046107d3565b6105ee565b3480156102be57600080fd5b506101a2600160ff1b81565b3480156102d657600080fd5b506102826102e53660046107d3565b61064a565b3480156102f657600080fd5b5061031e7f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161016c565b34801561034257600080fd5b50610240610351366004610907565b610673565b34801561036257600080fd5b506101a26103713660046107fc565b610680565b34801561038257600080fd5b50610282610391366004610907565b6106ab565b60208101518151606091901561042f576001600160e01b03198116600090815260016020526040902054806104085760405162461bcd60e51b81526020600482015260136024820152721858d8d95cdcc81c9bdb19481b9bdd081cd95d606a1b60448201526064015b60405180910390fd5b610411816106ab565b61042d5760405162461bcd60e51b81526004016103ff906109b8565b505b6000807f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316348660405161046b919061094b565b60006040518083038185875af1925050503d80600081146104a8576040519150601f19603f3d011682016040523d82523d6000602084013e6104ad565b606091505b5091509150816104f25760405162461bcd60e51b815260206004820152601060248201526f195e1958dd5d1a5bdb8819985a5b195960821b60448201526064016103ff565b7f57a62eca76fc623c92f161d2a4b851851ece707135ce2af1eec256d660571b6d83868360405161052593929190610967565b60405180910390a1949350505050565b610542600160fd1b6106ab565b61055e5760405162461bcd60e51b81526004016103ff906109b8565b6001600160e01b03198216600081815260016020908152604091829020849055815192835282018390527fdb8ed917742b49e83acd1322bcaa8f18b1e5f78a70784c43ea14db7ab50e628d910160405180910390a15050565b6105c8828051906020012082610535565b5050565b306000908152602081905260408120546105e8905b8316831490565b92915050565b6105fb600160ff1b6106ab565b6106175760405162461bcd60e51b81526004016103ff906109b8565b6105c882826106453361063f876001600160a01b031660009081526020819052604090205490565b86610680565b6106b7565b6001600160a01b03821660009081526020819052604081205461066c906105e1565b9392505050565b61067d30826105ee565b50565b6001600160a01b03929092166000908152602081905260409020546000198084188216189216171690565b60006105e8338361064a565b6001600160a01b0383166000818152602081815260409182902084905581518581529081018490527fe9be537308880e0f56b7d7cfd7abf85f14c4934486d138f848b92a0cbaf659b4910160405180910390a2505050565b600067ffffffffffffffff8084111561072a5761072a610a0f565b604051601f8501601f19908116603f0116810190828211818310171561075257610752610a0f565b8160405280935085815286868601111561076b57600080fd5b858560208301376000602087830101525050509392505050565b80356001600160a01b038116811461079c57600080fd5b919050565b80356001600160e01b03198116811461079c57600080fd5b6000602082840312156107ca578081fd5b61066c82610785565b600080604083850312156107e5578081fd5b6107ee83610785565b946020939093013593505050565b600080600060608486031215610810578081fd5b61081984610785565b95602085013595506040909401359392505050565b60006020828403121561083f578081fd5b61066c826107a1565b6000806040838503121561085a578182fd5b6107ee836107a1565b600060208284031215610874578081fd5b813567ffffffffffffffff81111561088a578182fd5b8201601f8101841361089a578182fd5b6108a98482356020840161070f565b949350505050565b600080604083850312156108c3578182fd5b823567ffffffffffffffff8111156108d9578283fd5b8301601f810185136108e9578283fd5b6108f88582356020840161070f565b95602094909401359450505050565b600060208284031215610918578081fd5b5035919050565b600081518084526109378160208601602086016109df565b601f01601f19169290920160200192915050565b6000825161095d8184602087016109df565b9190910192915050565b63ffffffff60e01b84168152606060208201526000610989606083018561091f565b828103604084015261099b818561091f565b9695505050505050565b60208152600061066c602083018461091f565b6020808252600d908201526c1858d8d95cdcc819195b9a5959609a1b604082015260600190565b60005b838110156109fa5781810151838201526020016109e2565b83811115610a09576000848401525b50505050565b634e487b7160e01b600052604160045260246000fdfea264697066735822122011b4428d8359d39172f811140007a87bdc934210e914e782b8d68f29be2e91c664736f6c63430008040033",
+  "devdoc": {
+    "author": "Basil Gorin",
+    "details": "Installation Flow      Prerequisite: deployed OZ Ownable contract (target contract) address (target_address)      1. Deploy the AccessControl Adapter bound to the already deployed OZ Ownable contract         (specify the target OZ Ownable contract address in the constructor upon the deployment)            const adapter = await (artifacts.require(\"OwnableToAccessControlAdapter\")).new(target_address);      2. Define what Ownable-restricted public functions on the target contract you'd like to be able         to provide access to through the adapter contract      3. Map every such function with the role required to execute it using `updateAccessRole()` function         For example, to be able to provide an access to the transferOwnership(address) function, you could do            const ROLE_TRANSFER_OWNERSHIP_MANAGER = 0x00010000;            await adapter.updateAccessRole(\"transferOwnership(address)\", ROLE_TRANSFER_OWNERSHIP_MANAGER);      4. Provide the roles to the corresponding operators as you would usually do with AccessControl         For example, if you wish an address 0x00000000000000000000000000000000000Ff1CE to grant an access to the         transferOwnership(address) function on the target, you could do            const operator = \"0x00000000000000000000000000000000000Ff1CE\";            await adapter.updateRole(operator, ROLE_TRANSFER_OWNERSHIP_MANAGER);      5. Transfer the ownership of the target contract to the deployed AccessControl Adapter contract         Note that you can also do steps 2-4 after the step 5Usage Flow      Prerequisite: installed AccessControl Adapter with the access to at least one restricted target contract      function configured      To execute the restricted access function on the target contract via the AccessControl Adapter      1. Use target contract ABI to construct a low-level function call calldata         For example, to construct the transferOwnership() function calldata to transfer the ownership to the         0x00000000000000000000000000000000DEAdc0De address, you could do            const to = \"0x00000000000000000000000000000000DEAdc0De\";            const calldata = target.contract.methods.transferOwnership(to).encodeABI();       2. Execute a low-level function call on the AccessControl Adapter contract using the constructed calldata          For example, to execute the transferOwnership() function (prepared in step 1), you could do            await web3.eth.sendTransaction({                from: operator,                to: adapter.address,                data: calldata,            }        3. It is also ok to add an ether to the transaction by adding a value field to the `sendTransaction` call,           as well as sending plain ether transfer transaction, as long as target contract has payable functions,           and/or has a default payable receiver",
+    "events": {
+      "AccessRoleUpdated(bytes4,uint256)": {
+        "details": "Fired in `updateAccessRole` when the `accessRoles` mapping is updated",
+        "params": {
+          "role": "effective required role to execute the function defined by the selector",
+          "selector": "selector of the function which corresponding access role was updated"
+        }
+      },
+      "ExecutionComplete(bytes4,bytes,bytes)": {
+        "details": "Logs function execution result on the target if the execution completed successfully",
+        "params": {
+          "data": "full calldata payload passed to the target contract (includes the 4-bytes selector)",
+          "result": "execution response from the target contract",
+          "selector": "selector of the function which was executed on the target contract"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "Deploys an AccessControl Adapter binding it to the target OZ Ownable contract,      and setting the ownership of the adapter itself to the deployer",
+        "params": {
+          "_target": "target OZ Ownable contract address"
+        }
+      },
+      "evaluateBy(address,uint256,uint256)": {
+        "details": "Calculated based on:      1) operator's own permission set read from userRoles[operator]      2) target permission set - what is already set on the target      3) desired permission set - what do we want set target toCorner cases:      1) Operator is super admin and its permission set is `FULL_PRIVILEGES_MASK`:        `desired` bitset is returned regardless of the `target` permission set value        (what operator sets is what they get)      2) Operator with no permissions (zero bitset):        `target` bitset is returned regardless of the `desired` value        (operator has no authority and cannot modify anything)Example:      Consider an operator with the permissions bitmask     00001111      is about to modify the target permission set          01010101      Operator wants to set that permission set to          00110011      Based on their role, an operator has the permissions      to update only lowest 4 bits on the target, meaning that      high 4 bits of the target set in this example is left      unchanged and low 4 bits get changed as desired:      01010011",
+        "params": {
+          "desired": "desired set of permissions operator would like to set",
+          "operator": "address of the contract operator which is about to set the permissions",
+          "target": "input set of permissions to operator is going to modify"
+        },
+        "returns": {
+          "_0": "resulting set of permissions given operator will set"
+        }
+      },
+      "execute(bytes)": {
+        "details": "Low-level execute of the data calldata on the target contractThis function extracts the target function selector from the calldata specified      and verifies transaction executor permission to access the function on the target      using the `accessRoles` mappingThrows if there is no `accessRoles` mapping configured for the functionThrows if transaction executor role doesn't contain the required role from `accessRoles` mappingThrows if execution on the target returns an error",
+        "params": {
+          "data": "low-level calldata to be passed as is to the target contract for the execution"
+        },
+        "returns": {
+          "_0": "the response from the target contract after the successful execution"
+        }
+      },
+      "features()": {
+        "details": "Effectively reads userRoles role for the contract itself",
+        "returns": {
+          "_0": "256-bit bitmask of the features enabled"
+        }
+      },
+      "getRole(address)": {
+        "details": "Having a simple getter instead of making the mapping public      allows enforcing the encapsulation of the mapping and protects from      writing to it directly in the inheriting smart contracts",
+        "params": {
+          "operator": "address of a user to read permissions for,      or self address to read global features of the smart contract"
+        }
+      },
+      "isFeatureEnabled(uint256)": {
+        "params": {
+          "required": "set of features to check against"
+        },
+        "returns": {
+          "_0": "true if all the features requested are enabled, false otherwise"
+        }
+      },
+      "isOperatorInRole(address,uint256)": {
+        "params": {
+          "operator": "address of the user to check role for",
+          "required": "set of permissions (role) to check"
+        },
+        "returns": {
+          "_0": "true if all the permissions requested are enabled, false otherwise"
+        }
+      },
+      "isSenderInRole(uint256)": {
+        "params": {
+          "required": "set of permissions (role) to check against"
+        },
+        "returns": {
+          "_0": "true if all the permissions requested are enabled, false otherwise"
+        }
+      },
+      "updateAccessRole(bytes4,uint256)": {
+        "details": "Updates the access role required to execute the function defined by its selector      on the target contractMore on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html",
+        "params": {
+          "role": "role required to execute this function, or zero to disable      access to the specified function for everyone",
+          "selector": "function selector on the target contract, for example      0xf2fde38b selector corresponds to the \"transferOwnership(address)\" function"
+        }
+      },
+      "updateAccessRole(string,uint256)": {
+        "details": "Updates the access role required to execute the function defined by its signature      on the target contractMore on function signatures and selectors: https://docs.soliditylang.org/en/develop/abi-spec.html",
+        "params": {
+          "role": "role required to execute this function, or zero to disable      access to the specified function for everyone",
+          "signature": "function signature on the target contract, for example      \"transferOwnership(address)\""
+        }
+      },
+      "updateFeatures(uint256)": {
+        "details": "Requires transaction sender to have `ROLE_ACCESS_MANAGER` permissionFunction is left for backward compatibility with older versions",
+        "params": {
+          "_mask": "bitmask representing a set of features to enable/disable"
+        }
+      },
+      "updateRole(address,uint256)": {
+        "details": "Setting role to zero is equivalent to removing an all permissionsSetting role to `FULL_PRIVILEGES_MASK` is equivalent to      copying senders' permissions (role) to the userRequires transaction sender to have `ROLE_ACCESS_MANAGER` permission",
+        "params": {
+          "operator": "address of a user to alter permissions for,       or self address to alter global features of the smart contract",
+          "role": "bitmask representing a set of permissions to      enable/disable for a user specified"
+        }
+      }
+    },
+    "stateVariables": {
+      "ROLE_ACCESS_ROLES_MANAGER": {
+        "details": "Role ROLE_ACCESS_MANAGER allows modifying `accessRoles` mapping"
+      },
+      "accessRoles": {
+        "details": "Access roles mapping stores the roles required to access the functions on the      target contract, guarding it from the unauthorized accessMaps function selector (bytes4) on the target contract to the access role (permission)      required to execute the function"
+      },
+      "target": {
+        "details": "Target OZ Ownable contract AccessControl Adapter executes the transactions onTarget contract must transfer its ownership to the AccessControl Adapter"
+      }
+    },
+    "title": "OZ Ownable to AccessControl Adapter (short: AccessControl Adapter)",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "ROLE_ACCESS_MANAGER()": {
+        "notice": "Access manager is responsible for assigning the roles to users,      enabling/disabling global features of the smart contractAccess manager can add, remove and update user roles,      remove and update global features"
+      },
+      "ROLE_ACCESS_ROLES_MANAGER()": {
+        "notice": "Access Roles manager is responsible for assigning the access roles to functions"
+      },
+      "evaluateBy(address,uint256,uint256)": {
+        "notice": "Determines the permission bitmask an operator can set on the      target permission setUsed to calculate the permission bitmask to be set when requested     in `updateRole` and `updateFeatures` functions"
+      },
+      "features()": {
+        "notice": "Retrieves globally set of features enabled"
+      },
+      "getRole(address)": {
+        "notice": "Reads the permissions (role) for a given user from the `userRoles` mapping"
+      },
+      "isFeatureEnabled(uint256)": {
+        "notice": "Checks if requested set of features is enabled globally on the contract"
+      },
+      "isOperatorInRole(address,uint256)": {
+        "notice": "Checks if operator has all the permissions (role) required"
+      },
+      "isSenderInRole(uint256)": {
+        "notice": "Checks if transaction sender `msg.sender` has all the permissions required"
+      },
+      "updateFeatures(uint256)": {
+        "notice": "Updates set of the globally enabled features (`features`),      taking into account sender's permissions"
+      },
+      "updateRole(address,uint256)": {
+        "notice": "Updates set of permissions (role) for a given user,      taking into account sender's permissions."
+      }
+    },
+    "notice": "Helper contract allowing to change the access model of the already deployed      OpenZeppelin Ownable contract to the AccessControl model",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 7,
+        "contract": "contracts/utils/OwnableToAccessControlAdapter.sol:OwnableToAccessControlAdapter",
+        "label": "userRoles",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 254,
+        "contract": "contracts/utils/OwnableToAccessControlAdapter.sol:OwnableToAccessControlAdapter",
+        "label": "accessRoles",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_bytes4,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bytes4": {
+        "encoding": "inplace",
+        "label": "bytes4",
+        "numberOfBytes": "4"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_bytes4,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_bytes4",
+        "label": "mapping(bytes4 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
