@@ -111,12 +111,11 @@ abstract contract InitializableAccessControl is Initializable {
 	/**
 	 * @dev Fired in updateRole() and updateFeatures()
 	 *
-	 * @param _by operator which called the function
-	 * @param _to address which was granted/revoked permissions
-	 * @param _requested permissions requested
-	 * @param _assigned permissions effectively set
+	 * @param operator address which was granted/revoked permissions
+	 * @param requested permissions requested
+	 * @param assigned permissions effectively set
 	 */
-	event RoleUpdated(address indexed _by, address indexed _to, uint256 _requested, uint256 _assigned);
+	event RoleUpdated(address indexed operator, uint256 requested, uint256 assigned);
 
 	/**
 	 * @dev Creates/deploys the ACL implementation to be used in a proxy
@@ -320,7 +319,7 @@ abstract contract InitializableAccessControl is Initializable {
 		userRoles[operator] = assignedRole;
 
 		// fire an event
-		emit RoleUpdated(msg.sender, operator, requestedRole, assignedRole);
+		emit RoleUpdated(operator, requestedRole, assignedRole);
 	}
 
 	/**

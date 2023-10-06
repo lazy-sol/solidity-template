@@ -70,10 +70,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: set,
+								operator: to_fn(to),
+								requested: set,
+								assigned: set,
 							});
 						});
 					});
@@ -94,10 +93,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: not(remove),
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: not(remove),
 							});
 						});
 					});
@@ -120,10 +118,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: "0",
+								operator: to_fn(to),
+								requested: set,
+								assigned: "0",
 							});
 						});
 					});
@@ -145,10 +142,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: MAX_UINT256,
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: MAX_UINT256,
 							});
 						});
 					});
@@ -177,10 +173,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: set,
-								_assigned: role.and(set),
+								operator: to_fn(to),
+								requested: set,
+								assigned: role.and(set),
 							});
 						});
 					});
@@ -202,10 +197,9 @@ function behavesLikeACL(deployment_fn, a0, a1, a2) {
 						});
 						it('"RoleUpdated" event', async function() {
 							expectEvent(receipt, "RoleUpdated", {
-								_by: by,
-								_to: to_fn(to),
-								_requested: not(remove),
-								_assigned: not(role.and(remove)),
+								operator: to_fn(to),
+								requested: not(remove),
+								assigned: not(role.and(remove)),
 							});
 						});
 					});
