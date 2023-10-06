@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity >=0.6.2; // breaking changes in .call() (0.5.0), allow .call{}() (0.6.2)
 
 import "./AccessControl.sol";
 
@@ -69,7 +69,7 @@ contract OwnableToAccessControlAdapter is AccessControl {
 	 *
 	 * @dev Target contract must transfer its ownership to the AccessControl Adapter
 	 */
-	address public immutable target;
+	address public target;
 
 	/**
 	 * @dev Access roles mapping stores the roles required to access the functions on the
@@ -110,7 +110,7 @@ contract OwnableToAccessControlAdapter is AccessControl {
 	 *
 	 * @param _target target OZ Ownable contract address
 	 */
-	constructor(address _target) AccessControl(msg.sender) {
+	constructor(address _target) public AccessControl(msg.sender) {
 		// verify the inputs
 		require(_target != address(0), "zero address");
 

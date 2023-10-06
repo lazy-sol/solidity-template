@@ -1,20 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../utils/AccessControl.sol";
 import "../utils/UpgradeableAccessControl.sol";
-
-/**
- * @title Access Control Mock
- *
- * @notice Used to test the AccessControl core functionality
- *
- * @author Basil Gorin
- */
-contract AccessControlMock is AccessControl {
-	// set contract owner to the deployer address
-	constructor() AccessControl(msg.sender) {}
-}
 
 /**
  * @title Upgradeable Access Control Mock

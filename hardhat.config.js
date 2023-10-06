@@ -67,6 +67,10 @@ require("hardhat-gas-reporter");
 // https://github.com/ItsNickBarry/hardhat-dependency-compiler
 require("hardhat-dependency-compiler");
 
+// copy compiled Solidity bytecode directly from the NPM dependencies.
+// https://github.com/vgorin/hardhat-dependency-injector
+require("hardhat-dependency-injector");
+
 // adds a mechanism to deploy contracts to any network,
 // keeping track of them and replicating the same environment for testing
 // https://www.npmjs.com/package/hardhat-deploy
@@ -285,6 +289,15 @@ module.exports = {
 		paths: [
 			// ERC1967 is used to deploy upgradeable contracts
 			"@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+		],
+	},
+
+	// copy compiled Solidity bytecode directly from NPM dependencies
+	// https://github.com/vgorin/hardhat-dependency-injector
+	dependencyInjector: {
+		paths: [
+			// OwnableToAccessControlAdapter is deployed to facade OZ Ownable contract
+			"solidity-access-control/artifacts/contracts/OwnableToAccessControlAdapter.sol",
 		],
 	},
 }

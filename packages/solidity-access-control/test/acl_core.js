@@ -7,7 +7,7 @@ const {
 
 // deployment routines in use
 const {
-	acl_mock_deploy,
+	access_control_deploy,
 } = require("./include/deployment_routines");
 
 // run AccessControl (ACL) tests
@@ -20,5 +20,5 @@ contract("AccessControl (ACL) Core tests", function(accounts) {
 	const [A0, a0, H0, a1, a2, a3] = accounts;
 
 	// run the core ACL behaviour test
-	behavesLikeACL(acl_mock_deploy, a0, a1, a2);
+	behavesLikeACL(access_control_deploy, a0, a1, a2);
 });

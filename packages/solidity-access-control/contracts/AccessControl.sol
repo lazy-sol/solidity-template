@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity >=0.4.22; // require with message (0.4.22), pure/view modifiers (0.4.16), hardhat (0.4.11)
 
 /**
- * @title Access Control List
+ * @title Role-based Access Control (RBAC)
  *
  * @notice Access control smart contract provides an API to check
  *      if a specific operation is permitted globally and/or
  *      if a particular user has a permission to execute it.
+ *
+ * @notice Although it is possible to deploy it, its intended use is to be inherited from
+ *      by other contracts having restricted access functions to be protected
+ *      with the role-based access control (RBAC)
  *
  * @notice It deals with two main entities: features and roles.
  *
@@ -47,7 +51,7 @@ pragma solidity ^0.8.4;
  *
  * @author Basil Gorin
  */
-abstract contract AccessControl {
+contract AccessControl {
 	/**
 	 * @notice Privileged addresses with defined roles/permissions
 	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
@@ -79,7 +83,7 @@ abstract contract AccessControl {
 	 * @dev Bitmask representing all the possible permissions (super admin role)
 	 * @dev Has all the bits are enabled (2^256 - 1 value)
 	 */
-	uint256 private constant FULL_PRIVILEGES_MASK = type(uint256).max; // before 0.8.0: uint256(-1) overflows to 0xFFFF...
+	uint256 private constant FULL_PRIVILEGES_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
 
 	/**
 	 * @dev Fired in updateRole() and updateFeatures()
@@ -95,7 +99,7 @@ abstract contract AccessControl {
 	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
-	constructor(address _owner) {
+	constructor(address _owner) public { // required to be compilable by 0.6.x
 		// grant owner full privileges
 		__setRole(_owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
 	}
