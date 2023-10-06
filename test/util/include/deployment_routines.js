@@ -1,3 +1,8 @@
+// deployment routines to reuse
+const {
+	usdt_deploy,
+} = require("../../erc20/include/deployment_routines");
+
 /**
  * Deploys Access Control Mock
  *
@@ -52,9 +57,32 @@ async function upgradeable_acl_mock_deploy_via_proxy(a0, version) {
 	return {proxy: await ACL.at(proxy.address), implementation: instance};
 }
 
+async function ownable_to_acl_adapter_deploy(a0, target) {
+	// deploy the target if required
+	if(!target) {
+		target = await usdt_deploy(a0);
+	}
+	// wrap the target into the Ownable if required
+	else if(!target.address) {
+		const Ownable = artifacts.require("Ownable");
+		target = await Ownable.at(target);
+	}
+
+	// deploy adapter
+	const OwnableToAccessControlAdapter = artifacts.require("OwnableToAccessControlAdapter");
+	const adapter = await OwnableToAccessControlAdapter.new(target.address, {from: a0});
+
+	// transfer ownership to the adapter
+	await target.transferOwnership(adapter.address, {from: a0});
+
+	// return both instances
+	return {target, adapter};
+}
+
 // export public deployment API
 module.exports = {
 	acl_mock_deploy,
 	upgradeable_acl_mock_deploy,
 	upgradeable_acl_mock_deploy_via_proxy,
+	ownable_to_acl_adapter_deploy,
 }
