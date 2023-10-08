@@ -11,6 +11,9 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
  *      if a specific operation is permitted globally and/or
  *      if a particular user has a permission to execute it.
  *
+ * @notice This contract is inherited by other contracts requiring the role-based access control (RBAC)
+ *      protection for the restricted access functions
+ *
  * @notice It deals with two main entities: features and roles.
  *
  * @notice Features are designed to be used to enable/disable public functions

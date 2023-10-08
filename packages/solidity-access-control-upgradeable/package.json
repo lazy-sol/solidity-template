@@ -1,5 +1,5 @@
 {
-  "name": "solidity-access-control-upgradeable",
+  "name": "@lazy-sol/access-control-upgradeable",
   "version": "1.0.0",
   "description": "Enable the modular plug and play (PnP) architecture for your dapp by incorporating the role-based access control (RBAC) into the smart contracts",
   "main": "index.js",

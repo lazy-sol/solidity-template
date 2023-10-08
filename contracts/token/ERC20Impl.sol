@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "solidity-access-control/contracts/AccessControl.sol";
+import "@lazy-sol/access-control/contracts/AccessControl.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 

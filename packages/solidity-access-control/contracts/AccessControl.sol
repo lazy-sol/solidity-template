@@ -8,9 +8,8 @@ pragma solidity >=0.4.22; // require with message (0.4.22), pure/view modifiers 
  *      if a specific operation is permitted globally and/or
  *      if a particular user has a permission to execute it.
  *
- * @notice Although it is possible to deploy it, its intended use is to be inherited from
- *      by other contracts having restricted access functions to be protected
- *      with the role-based access control (RBAC)
+ * @notice This contract is inherited by other contracts requiring the role-based access control (RBAC)
+ *      protection for the restricted access functions
  *
  * @notice It deals with two main entities: features and roles.
  *
@@ -51,7 +50,7 @@ pragma solidity >=0.4.22; // require with message (0.4.22), pure/view modifiers 
  *
  * @author Basil Gorin
  */
-contract AccessControl {
+abstract contract AccessControl {
 	/**
 	 * @dev Privileged addresses with defined roles/permissions
 	 * @dev In the context of ERC20/ERC721 tokens these can be permissions to
@@ -95,11 +94,26 @@ contract AccessControl {
 	event RoleUpdated(address indexed operator, uint256 requested, uint256 assigned);
 
 	/**
+	 * @notice Function modifier making a function defined as public behave as restricted
+	 *      (so that only a pre-configured set of accounts can execute it)
+	 *
+	 * @param role the role transaction executor is required to have;
+	 *      the function throws an "access denied" exception if this condition is not met
+	 */
+	modifier restrictedTo(uint256 role) {
+		// verify the access permission
+		require(isSenderInRole(role), "access denied");
+
+		// execute the rest of the function
+		_;
+	}
+
+	/**
 	 * @notice Creates an access control instance, setting the contract owner to have full privileges
 	 *
 	 * @param _owner smart contract owner having full privileges
 	 */
-	constructor(address _owner) public { // required to be compilable by 0.6.x
+	constructor(address _owner) internal { // visibility modifier is required to be compilable with 0.6.x
 		// grant owner full privileges
 		__setRole(_owner, FULL_PRIVILEGES_MASK, FULL_PRIVILEGES_MASK);
 	}

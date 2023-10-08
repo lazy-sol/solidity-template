@@ -29,11 +29,11 @@ async function usdt_deploy(a0, H0 = a0) {
  * @returns AccessControl instance
  */
 async function access_control_deploy(a0) {
-	// smart contracts required
-	const ACL = artifacts.require("AccessControl");
+	// deploy the OwnableToAccessControlAdapter which is an AccessControl
+	const {adapter} = await ownable_to_acl_adapter_deploy(a0);
 
-	// deploy ACL and return the reference
-	return await ACL.new(a0, {from: a0});
+	// return the instance
+	return adapter;
 }
 
 /**

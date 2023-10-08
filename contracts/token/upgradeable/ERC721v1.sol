@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import "../../interfaces/ERC20Spec.sol";
 import "../../interfaces/ERC721SpecExt.sol";
-import "solidity-access-control-upgradeable/contracts/UpgradeableAccessControl.sol";
+import "@lazy-sol/access-control-upgradeable/contracts/UpgradeableAccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
