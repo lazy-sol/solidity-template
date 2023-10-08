@@ -53,8 +53,8 @@ pragma solidity >=0.4.22; // require with message (0.4.22), pure/view modifiers 
  */
 contract AccessControl {
 	/**
-	 * @notice Privileged addresses with defined roles/permissions
-	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
+	 * @dev Privileged addresses with defined roles/permissions
+	 * @dev In the context of ERC20/ERC721 tokens these can be permissions to
 	 *      allow minting or burning tokens, transferring on behalf and so on
 	 *
 	 * @dev Maps user address to the permissions bitmask (role), where each bit
@@ -132,6 +132,9 @@ contract AccessControl {
 
 	/**
 	 * @notice Reads the permissions (role) for a given user from the `userRoles` mapping
+	 *      (privileged addresses with defined roles/permissions)
+	 * @notice In the context of ERC20/ERC721 tokens these can be permissions to
+	 *      allow minting or burning tokens, transferring on behalf and so on
 	 *
 	 * @dev Having a simple getter instead of making the mapping public
 	 *      allows enforcing the encapsulation of the mapping and protects from

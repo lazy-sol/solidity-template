@@ -18,13 +18,13 @@ const {
 // BN constants and utilities
 const {
 	random_bn255,
-} = require("../../../scripts/include/bn_utils");
+} = require("./bn_utils");
 
 // ACL core features and roles
 const {
 	not,
 	ROLE_ACCESS_MANAGER,
-} = require("../../../scripts/include/features_roles");
+} = require("./features_roles");
 
 /**
  * ACL core behaviour

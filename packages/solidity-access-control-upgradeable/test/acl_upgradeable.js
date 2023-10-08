@@ -17,17 +17,11 @@ const {
 	MAX_UINT256,
 } = constants;
 
-// BN constants and utilities
-const {
-	random_bn255,
-} = require("../../scripts/include/bn_utils");
-
 // ACL core features and roles
 const {
 	not,
-	ROLE_ACCESS_MANAGER,
 	ROLE_UPGRADE_MANAGER,
-} = require("../../scripts/include/features_roles");
+} = require("./include/features_roles");
 
 // import the core ACL behaviour to use
 const {
@@ -36,8 +30,8 @@ const {
 
 // deployment routines in use
 const {
-	upgradeable_acl_mock_deploy,
-	upgradeable_acl_mock_deploy_via_proxy,
+	upgradeable_acl_deploy,
+	upgradeable_acl_deploy_via_proxy,
 } = require("./include/deployment_routines");
 
 // run UpgradeableAccessControl (U-ACL) tests
@@ -51,11 +45,11 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 
 	// run the core ACL behaviour test
 	behavesLikeACL(async function() {
-		return (await upgradeable_acl_mock_deploy_via_proxy(a0)).proxy;
+		return (await upgradeable_acl_deploy_via_proxy(a0)).proxy;
 	}, a0, a1, a2);
 	behavesLikeACL(async function() {
-		const {proxy: acl} = await upgradeable_acl_mock_deploy_via_proxy(a0);
-		const v2 = await upgradeable_acl_mock_deploy(a0, 2);
+		const {proxy: acl} = await upgradeable_acl_deploy_via_proxy(a0);
+		const v2 = await upgradeable_acl_deploy(a0, 2);
 		await acl.upgradeTo(v2.address, {from: a0});
 		return acl;
 	}, a0, a1, a2);
@@ -67,13 +61,13 @@ contract("UpgradeableAccessControl (U-ACL) Core tests", function(accounts) {
 	// deploy the ACL
 	let acl, impl1;
 	beforeEach(async function() {
-		({proxy: acl, implementation: impl1} = await upgradeable_acl_mock_deploy_via_proxy(a0));
+		({proxy: acl, implementation: impl1} = await upgradeable_acl_deploy_via_proxy(a0));
 	});
 
 	describe("when there is new (v2) implementation available", function() {
 		let impl2;
 		beforeEach(async function() {
-			impl2 = await upgradeable_acl_mock_deploy(a0, 2);
+			impl2 = await upgradeable_acl_deploy(a0, 2);
 		});
 		describe("when performed by UPGRADE_MANAGER", function() {
 			beforeEach(async function() {

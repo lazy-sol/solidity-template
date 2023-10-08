@@ -8,7 +8,7 @@
  */
 async function usdt_deploy(a0, H0 = a0) {
 	// smart contracts required
-	const USDTContract = artifacts.require("./TetherToken");
+	const USDTContract = artifacts.require("TetherToken");
 
 	// deploy the token
 	const token = await USDTContract.new(0, "Tether USD", "USDT", 6, {from: a0});
@@ -30,7 +30,7 @@ async function usdt_deploy(a0, H0 = a0) {
  */
 async function access_control_deploy(a0) {
 	// smart contracts required
-	const ACL = artifacts.require("./AccessControl");
+	const ACL = artifacts.require("AccessControl");
 
 	// deploy ACL and return the reference
 	return await ACL.new(a0, {from: a0});
