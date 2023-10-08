@@ -297,7 +297,7 @@ module.exports = {
 	dependencyInjector: {
 		paths: [
 			// OwnableToAccessControlAdapter is deployed to facade OZ Ownable contract
-			"solidity-access-control/artifacts/contracts/OwnableToAccessControlAdapter.sol",
+			"@lazy-sol/access-control/artifacts/contracts/OwnableToAccessControlAdapter.sol",
 		],
 	},
 }
