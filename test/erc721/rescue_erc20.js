@@ -114,13 +114,16 @@ contract("ERC721: rescue ERC20 tokens test", function(accounts) {
 				it("cannot rescue more than all the tokens", async function() {
 					await expectRevert(
 						token.rescueErc20(erc20.address, a1, value.addn(1), {from: a0}),
-						erc20_compliant? "ERC20: transfer amount exceeds balance": "ERC20 low-level call failed"
+						erc20_compliant? "ERC20: transfer amount exceeds balance": "SafeERC20: low-level call failed"
 					);
 				});
 				if(erc20_compliant) {
 					it("reverts if ERC20 transfer fails", async function() {
 						await erc20.setTransferSuccessOverride(false, {from: a0});
-						await expectRevert(token.rescueErc20(erc20.address, a1, 1, {from: a0}), "ERC20 transfer failed");
+						await expectRevert(
+							token.rescueErc20(erc20.address, a1, 1, {from: a0}),
+							"SafeERC20: ERC20 operation did not succeed"
+						);
 					});
 				}
 			}
