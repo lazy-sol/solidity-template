@@ -57,7 +57,7 @@ async function ownable_to_acl_adapter_deploy(a0, target) {
 
 	// deploy adapter
 	const OwnableToAccessControlAdapter = artifacts.require("OwnableToAccessControlAdapter");
-	const adapter = await OwnableToAccessControlAdapter.new(target.address, {from: a0});
+	const adapter = await OwnableToAccessControlAdapter.new(target.address, a0, {from: a0});
 
 	// transfer ownership to the adapter
 	await target.transferOwnership(adapter.address, {from: a0});

@@ -109,8 +109,9 @@ contract OwnableToAccessControlAdapter is AccessControl {
 	 *      and setting the ownership of the adapter itself to the deployer
 	 *
 	 * @param _target target OZ Ownable contract address
+	 * @param _owner smart contract owner having full privileges
 	 */
-	constructor(address _target) public AccessControl(msg.sender) {
+	constructor(address _target, address _owner) public AccessControl(_owner) {
 		// verify the inputs
 		require(_target != address(0), "zero address");
 

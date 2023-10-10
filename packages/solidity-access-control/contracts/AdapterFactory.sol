@@ -44,7 +44,8 @@ contract AdapterFactory {
 		require(Ownable(targetAddress).owner() == msg.sender, "not an owner");
 
 		// deploy the OwnableToAccessControlAdapter
-		address adapterAddress = address(new OwnableToAccessControlAdapter(targetAddress));
+		// and set its ownership immediately to the tx executor (msg.sender)
+		address adapterAddress = address(new OwnableToAccessControlAdapter(targetAddress, msg.sender));
 
 		// emit an event
 		emit NewOwnableToAccessControlAdapterDeployed(adapterAddress, targetAddress);
