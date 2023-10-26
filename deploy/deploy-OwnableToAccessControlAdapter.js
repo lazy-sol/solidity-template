@@ -11,12 +11,6 @@ const {
 	print_amt,
 } = require("../scripts/include/bn_utils");
 
-// token name and symbol
-const {
-	NAME,
-	SYMBOL,
-} = require("../scripts/include/erc20_constants");
-
 // deployment utils (contract state printers)
 const {
 	print_contract_details,
