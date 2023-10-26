@@ -61,7 +61,7 @@ require("solidity-coverage");
 
 // enable hardhat-gas-reporter
 // https://hardhat.org/plugins/hardhat-gas-reporter.html
-require("hardhat-gas-reporter");
+// require("hardhat-gas-reporter");
 
 // compile Solidity sources directly from NPM dependencies
 // https://github.com/ItsNickBarry/hardhat-dependency-compiler
