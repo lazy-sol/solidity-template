@@ -237,4 +237,4 @@ See also: [Gitlab Testing Standards](https://docs.gitlab.com/ee/development/test
 
 Prepared by Basil Gorin
 
-(c) 2017–2023 Basil Gorin
+(c) 2017–2024 Basil Gorin
