@@ -237,4 +237,5 @@ See also: [Gitlab Testing Standards](https://docs.gitlab.com/ee/development/test
 
 Prepared by Basil Gorin
 
-(c) 2017–2024 Basil Gorin
+(c) 2017–2024 Basil Gorin  
+(c) 2024–2025 Lazy So\[u\]l

@@ -374,4 +374,5 @@ To upgrade the contract(s) (goerli):
 Please see the [Contribution Guide](./CONTRIBUTING.md) document to get understanding on how to report issues,
 contribute to the source code, fix bugs, introduce new features, etc.
 
-(c) 2017–2024 Basil Gorin
+(c) 2017–2024 Basil Gorin  
+(c) 2024–2025 Lazy So\[u\]l
